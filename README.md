@@ -2,11 +2,11 @@
 
 ## labs:
 
-- |[`lab-00`](https://github.com/CS3A-classroom/lab0_writeup)|, [basic_test.cpp](basic_tests/lab-00/basic_test.cpp)|
-- |[`lab-01 array functions`]()|, [basic_test.cpp]|
-- |[`lab-02`]()|, [basic_test.cpp]|
-- |[`lab-03`]()| |
-- |[`lab-0`5]()| |
+- |[`lab-00`](https://github.com/CS3A-classroom/lab0_writeup), [basic_test.cpp](basic_tests/lab-00/basic_test.cpp)<br/>
+- |[`lab-01 array functions`](), [basic_test.cpp]<br/>
+- |[`lab-02`](), [basic_test.cpp]<br/>
+- |[`lab-03`]()<br/>
+- |[`lab-0`5]()<br/>
 
 ## chapter 9:
 

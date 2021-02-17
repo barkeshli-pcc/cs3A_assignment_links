@@ -1,4 +1,10 @@
-# Assignment links:
+# <p align="center">DO NOT _accept_ these assigments </p>
+
+## <p align="center">until you are told to do so by me.</p>
+
+<br/>
+
+# <p align="center">CS 3A Assignment links:</p>
 
 ## labs:
 

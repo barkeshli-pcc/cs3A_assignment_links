@@ -16,19 +16,19 @@ bool test_basic_add_entry(bool debug = false){
   int capacity = MINIMUM_CAPACITY;
   int *arr = allocate<int>(capacity);
   int size = 0;
-  for (int i = 0; i < 10; i++){
+  for (int i = 0; i < 15; i++){
     cout << "adding [" << i << "] ";
     arr = add_entry(arr, i, size, capacity);
-    print_list(arr, size, capacity);
+    print_array(arr, size, capacity);
   }
 
-  int* index = search_entry(arr, 4, size);
+  int* index = search_entry(arr, size, 4);
   cout << endl
        << "search_entry returned: " << *index << endl;
 
   arr = remove_entry(arr, 4, size, capacity);
   cout << "removed [4]: ";
-  print_list(arr, size, capacity);
+  print_array(arr, size, capacity);
   cout << endl
        << endl;
 
@@ -37,7 +37,7 @@ bool test_basic_add_entry(bool debug = false){
     int item;
     arr = remove_last_entry(arr, item, size, capacity);
     cout << "removed: [" << item << "] ";
-    print_list(arr, size, capacity);
+    print_array(arr, size, capacity);
   }
     cout << "----- end of function --------" << endl;
 
@@ -68,6 +68,26 @@ int main(int argc, char **argv) {
 
 /*
 
+
+build git:(master) ✗  😊 $> tr ..
+..
+├── _tests
+│   ├── _test_files
+│   ├── _test_includes
+│   └── other
+│       └── cmake
+├── build
+│   ├── bin
+│   └── lib
+├── cmake
+└── includes
+    ├── add_entry
+    └── array_functions
+
+12 directories, 0 files
+build git:(master) ✗  😊 $> ./bin/basic_test
+
+
 ---------- running basic_test ---------
 
 
@@ -76,37 +96,47 @@ int main(int argc, char **argv) {
 [----------] 1 test from TEST_BASIC
 [ RUN      ] TEST_BASIC.TestBasic
 MINIMUM_CAPACITY: 3
-adding [0] (1/3) [    0 ]
-adding [1] (2/3) [    0     1 ]
-adding [2] (3/3) [    0     1     2 ]
-adding [3] (4/6) [    0     1     2     3 ]
-adding [4] (5/6) [    0     1     2     3     4 ]
-adding [5] (6/6) [    0     1     2     3     4     5 ]
-adding [6] (7/12) [    0     1     2     3     4     5     6 ]
-adding [7] (8/12) [    0     1     2     3     4     5     6     7 ]
-adding [8] (9/12) [    0     1     2     3     4     5     6     7     8 ]
+adding [0] ( 1/ 3) [    0 ]
+adding [1] ( 2/ 3) [    0     1 ]
+adding [2] ( 3/ 3) [    0     1     2 ]
+adding [3] ( 4/ 6) [    0     1     2     3 ]
+adding [4] ( 5/ 6) [    0     1     2     3     4 ]
+adding [5] ( 6/ 6) [    0     1     2     3     4     5 ]
+adding [6] ( 7/12) [    0     1     2     3     4     5     6 ]
+adding [7] ( 8/12) [    0     1     2     3     4     5     6     7 ]
+adding [8] ( 9/12) [    0     1     2     3     4     5     6     7     8 ]
 adding [9] (10/12) [    0     1     2     3     4     5     6     7     8     9 ]
+adding [10] (11/12) [    0     1     2     3     4     5     6     7     8     9    10 ]
+adding [11] (12/12) [    0     1     2     3     4     5     6     7     8     9    10    11 ]
+adding [12] (13/24) [    0     1     2     3     4     5     6     7     8     9    10    11    12 ]
+adding [13] (14/24) [    0     1     2     3     4     5     6     7     8     9    10    11    12    13 ]
+adding [14] (15/24) [    0     1     2     3     4     5     6     7     8     9    10    11    12    13    14 ]
 
 search_entry returned: 4
-removed [4]: (9/12) [    0     1     2     3     5     6     7     8     9 ]
+removed [4]: (14/24) [    0     1     2     3     5     6     7     8     9    10    11    12    13    14 ]
 
 
-removed: [9] (8/12) [    0     1     2     3     5     6     7     8 ]
-removed: [8] (7/12) [    0     1     2     3     5     6     7 ]
-removed: [7] (6/12) [    0     1     2     3     5     6 ]
-removed: [6] (5/12) [    0     1     2     3     5 ]
-removed: [5] (4/12) [    0     1     2     3 ]
-removed: [3] (3/6) [    0     1     2 ]
-removed: [2] (2/6) [    0     1 ]
-removed: [1] (1/3) [    0 ]
-removed: [0] (0/3) []
+removed: [14] (13/24) [    0     1     2     3     5     6     7     8     9    10    11    12    13 ]
+removed: [13] (12/24) [    0     1     2     3     5     6     7     8     9    10    11    12 ]
+removed: [12] (11/24) [    0     1     2     3     5     6     7     8     9    10    11 ]
+removed: [11] (10/24) [    0     1     2     3     5     6     7     8     9    10 ]
+removed: [10] ( 9/24) [    0     1     2     3     5     6     7     8     9 ]
+removed: [9] ( 8/24) [    0     1     2     3     5     6     7     8 ]
+removed: [8] ( 7/24) [    0     1     2     3     5     6     7 ]
+removed: [7] ( 6/12) [    0     1     2     3     5     6 ]
+removed: [6] ( 5/12) [    0     1     2     3     5 ]
+removed: [5] ( 4/12) [    0     1     2     3 ]
+removed: [3] ( 3/ 6) [    0     1     2 ]
+removed: [2] ( 2/ 6) [    0     1 ]
+removed: [1] ( 1/ 3) [    0 ]
+removed: [0] ( 0/ 3) []
 ----- end of function --------
-[       OK ] TEST_BASIC.TestBasic (2 ms)
-[----------] 1 test from TEST_BASIC (2 ms total)
+[       OK ] TEST_BASIC.TestBasic (0 ms)
+[----------] 1 test from TEST_BASIC (0 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test case ran. (2 ms total)
+[==========] 1 test from 1 test case ran. (1 ms total)
 [  PASSED  ] 1 test.
-
+build git:(master) ✗  😊 $> 
 
 */

@@ -235,7 +235,7 @@ build git:(master) ✗  😊 $> ./bin/basic_test
  - one more shift at 20: (11/20) [    0     0    10    20    20    30    30    40    50    60    60 ]
 
 
- -- shift_right()
+ -- shift_left()
         array now:  (11/20) [    0     0    10    20    20    30    30    40    50    60    60 ]
  - shift left at 60:(10/20) [    0     0    10    20    20    30    30    40    50    60 ]
  - shift left at 60:( 9/20) [    0     0    10    20    20    30    30    40    50 ]

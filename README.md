@@ -9,7 +9,7 @@
 ## labs:
 
 - [`lab-00 clone, status, add, commit, and push`](https://github.com/CS3A-classroom/lab0_writeup), [basic_test.cpp](basic_tests/lab-00/basic_test.cpp)<br/>
-- [`lab-01 array library testing suite`](https://classroom.github.com/a/p02xacUI), [basic_test.cpp]<br/>
+- [`lab-01 array library testing suite`](https://classroom.github.com/a/p02xacUI), [basic_test.cpp](basic_tests/lab-01/basic_test.cpp)<br/>
 - [`lab-02`], [basic_test.cpp]<br/>
 - [`lab-03`], [basic_test.cpp]<br/>
 - [`lab-0`5], [basic_test.cpp]<br/>
@@ -20,7 +20,7 @@
 - [`09.p2 delete_repeats`](https://classroom.github.com/a/vZtmeQ3x), [basic_test.cpp](basic_tests/09-p2-delete_repeats/basic_test.cpp)<br />
 - [`09-03 union_intersection`], [basic_test.cpp](basic_tests/09-03-union_intersection/basic_test.cpp)<br />
 - [`09.00 EXTRA: fun_with_dynamic_arrays`](https://classroom.github.com/a/vZcOyz9U), [NO basic_test.cpp]<br />
-- [`09-p6 add_entry`](https://classroom.github.com/a/lhTwoGSe), [basic_test,cpp](basic_tests/09-p6-add_entry/basic_test.cpp)<br />
+- [`09-p6 add_entry`](https://classroom.github.com/a/lhTwoGSe), [basic_test.cpp](basic_tests/09-p6-add_entry/basic_test.cpp)<br />
 - [`09-p3-p5 lab_and_plane`](https://classroom.github.com/a/n8CIYltG), [basic_test.cpp](basic_tests/09-p3-lab_and_plane/basic_test.cpp)<br />
 
 ## chapter 10, 11:

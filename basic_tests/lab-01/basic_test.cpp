@@ -182,7 +182,7 @@ int main(int argc, char **argv) {
 }
 /*
 <pre>
-build git:(master) ✗  😊 $> tr ..                   
+build git:(master) ✗  😊 $> tr ..
 ..
 ├── _tests
 │   ├── _test_files
@@ -219,12 +219,8 @@ build git:(master) ✗  😊 $> ./bin/basic_test
 
 
  -- copy function()  (@@)-----
- copy_array():     ( 7) [    0    10    20    30    40    50    60 ]
- copy_array(): ( 7/ 7) [    0    10    20    30    40    50    60 ]
- copy_array(): It's exactly the smae as copy_array.
-    May delete later.
-
-
+ void copy_array(dest, src, size):  ( 7) [    0    10    20    30    40    50    60 ]
+ T* copy_array(src, siae):       ( 7/ 7) [    0    10    20    30    40    50    60 ]
 
 
 
@@ -247,11 +243,6 @@ build git:(master) ✗  😊 $> ./bin/basic_test
  - shift left at 20:( 7/20) [    0     0    10    30    30    40    50 ]
 
 
- -- reallocate(), resize_array()
-resize array is exactly the same as reallocate, I think
-I will not be testing this function. Feel free to disregard.
-
-
  -- array_string()
         array now:  ( 7/20) [    0     0    10    30    30    40    50 ]
   array to string: [0 0 10 30 30 40 50 ][7]
@@ -262,12 +253,13 @@ I will not be testing this function. Feel free to disregard.
 
 
  ==========  end basic test  =================
-[       OK ] POINTER_ARRAY_FUNCS.PointerArrayFuncsTest (0 ms)
-[----------] 1 test from POINTER_ARRAY_FUNCS (0 ms total)
+[       OK ] POINTER_ARRAY_FUNCS.PointerArrayFuncsTest (1 ms)
+[----------] 1 test from POINTER_ARRAY_FUNCS (1 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test case ran. (0 ms total)
+[==========] 1 test from 1 test case ran. (1 ms total)
 [  PASSED  ] 1 test.
 build git:(master) ✗  😊 $> 
+
 </pre>
 */

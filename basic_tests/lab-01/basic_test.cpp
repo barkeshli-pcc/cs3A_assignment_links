@@ -116,7 +116,7 @@ bool pointer_array_functions_basic_test(bool debug = true)
 
 
   //-- --- -- --- -- --- -- --- -- --- -- --- -- --- -- --- -- --- -- --- 
-  cout << "\n\n -- shift_right()" << endl;
+  cout << "\n\n -- shift_left()" << endl;
   //-- --- -- --- -- --- -- --- -- --- -- --- -- --- -- --- -- --- -- ---
 
   cout << "        array now:  " ;

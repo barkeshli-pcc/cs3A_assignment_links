@@ -11,7 +11,7 @@
 using namespace std;
 
 
-bool test_basic_add_entry(bool debug = false){
+bool test_basic_add_entry_int(bool debug = false){
   cout << "MINIMUM_CAPACITY: " << MINIMUM_CAPACITY << endl;
   int capacity = MINIMUM_CAPACITY;
   int *arr = allocate<int>(capacity);
@@ -43,14 +43,56 @@ bool test_basic_add_entry(bool debug = false){
 
   return true;
 }
+
+bool test_basic_add_entry_string(bool debug = false){
+  cout << "MINIMUM_CAPACITY: " << MINIMUM_CAPACITY << endl;
+  int capacity = MINIMUM_CAPACITY;
+  string *arr = allocate<string>(capacity);
+  string list[10] = {"vector", "BST", "Pair", "Map", "Multimap", "Stack", "Queue"};
+  int size = 0;
+  for (int i = 0; i < 7; i++){
+    cout << "adding [" << i << "] ";
+    arr = add_entry(arr, string(list[i]), size, capacity);
+    print_array(arr, size, capacity);
+  }
+
+  string* index = search_entry(arr, size,string("Map"));
+  cout << endl
+       << "search_entry returned: " << *index << endl;
+
+  arr = remove_entry(arr, string("Map"), size, capacity);
+  cout << "removed [Map]: ";
+  print_array(arr, size, capacity);
+  cout << endl
+       << endl;
+
+  for (int i = size - 1; i >= 0; i--)
+  {
+    string item;
+    arr = remove_last_entry(arr, item, size, capacity);
+    cout << "removed: [" << item << "] ";
+    print_array(arr, size, capacity);
+  }
+    cout << "----- end of function --------" << endl;
+
+  return true;
+}
+
+
 //----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
 //Lord help me! 
 bool debug = false;
 //----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
 
 
-TEST(TEST_BASIC, TestBasic){
-  bool success =test_basic_add_entry(debug);
+TEST(TEST_BASIC, TestBasicInt){
+  bool success =test_basic_add_entry_int(debug);
+  EXPECT_EQ(success, true);
+}
+
+
+TEST(TEST_BASIC, TestBasicString){
+  bool success =test_basic_add_entry_string(debug);
   EXPECT_EQ(success, true);
 }
 
@@ -88,13 +130,14 @@ build git:(master) ✗  😊 $> tr ..
 build git:(master) ✗  😊 $> ./bin/basic_test
 
 
+
 ---------- running basic_test ---------
 
 
-[==========] Running 1 test from 1 test case.
+[==========] Running 2 tests from 1 test case.
 [----------] Global test environment set-up.
-[----------] 1 test from TEST_BASIC
-[ RUN      ] TEST_BASIC.TestBasic
+[----------] 2 tests from TEST_BASIC
+[ RUN      ] TEST_BASIC.TestBasicInt
 MINIMUM_CAPACITY: 3
 adding [0] ( 1/ 3) [    0 ]
 adding [1] ( 2/ 3) [    0     1 ]
@@ -131,12 +174,33 @@ removed: [2] ( 2/ 6) [    0     1 ]
 removed: [1] ( 1/ 3) [    0 ]
 removed: [0] ( 0/ 3) []
 ----- end of function --------
-[       OK ] TEST_BASIC.TestBasic (0 ms)
-[----------] 1 test from TEST_BASIC (0 ms total)
+[       OK ] TEST_BASIC.TestBasicInt (3 ms)
+[ RUN      ] TEST_BASIC.TestBasicString
+MINIMUM_CAPACITY: 3
+adding [0] ( 1/ 3) [vector ]
+adding [1] ( 2/ 3) [vector   BST ]
+adding [2] ( 3/ 3) [vector   BST  Pair ]
+adding [3] ( 4/ 6) [vector   BST  Pair   Map ]
+adding [4] ( 5/ 6) [vector   BST  Pair   Map Multimap ]
+adding [5] ( 6/ 6) [vector   BST  Pair   Map Multimap Stack ]
+adding [6] ( 7/12) [vector   BST  Pair   Map Multimap Stack Queue ]
+
+search_entry returned: Map
+removed [Map]: ( 6/12) [vector   BST  Pair Multimap Stack Queue ]
+
+
+removed: [Queue] ( 5/12) [vector   BST  Pair Multimap Stack ]
+removed: [Stack] ( 4/12) [vector   BST  Pair Multimap ]
+removed: [Multimap] ( 3/ 6) [vector   BST  Pair ]
+removed: [Pair] ( 2/ 6) [vector   BST ]
+removed: [BST] ( 1/ 3) [vector ]
+removed: [vector] ( 0/ 3) []
+----- end of function --------
+[       OK ] TEST_BASIC.TestBasicString (1 ms)
+[----------] 2 tests from TEST_BASIC (4 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test case ran. (1 ms total)
-[  PASSED  ] 1 test.
-build git:(master) ✗  😊 $> 
-
+[==========] 2 tests from 1 test case ran. (4 ms total)
+[  PASSED  ] 2 tests.
+build git:(master)  😊 $> 
 */

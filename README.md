@@ -26,7 +26,7 @@
 
 ## chapter 10, 11:
 
-- [`10-p6 counter_type`], [`basic_test.cpp`](basic_tests/10-p6-counter_type/basic_test.cpp)<br />
+- [`10-p6 counter_type`](https://classroom.github.com/a/QE5CLJ1-), [`basic_test.cpp`](basic_tests/10-p6-counter_type/basic_test.cpp)<br />
 - [`10-p6 moms_counter`], [`basic_test.cpp`]<br />
 - [`11-p2 rational`], [`basic_test.cpp`](basic_tests/11-p2-rational/basic_test.cpp)<br />
 - [`11-p1-vector`], [`basic_test.cpp`](basic_tests/11-p1-vector/basic_test.cpp)<br />

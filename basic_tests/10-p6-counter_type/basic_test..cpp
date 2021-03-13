@@ -61,8 +61,14 @@ int main(int argc, char **argv) {
 
 
 /*
+10_e3_counter_type git:(master)  😊 $> tree  includes
+includes
+└── counter_type
+    ├── counter_type.cpp
+    └── counter_type.h
 
-➜  build git:(master) ✗ ./bin/basic_test true
+1 directory, 2 files
+
 
 
 ----------running basic_test.cpp---------
@@ -70,63 +76,49 @@ int main(int argc, char **argv) {
 
 [==========] Running 1 test from 1 test case.
 [----------] Global test environment set-up.
-[----------] 1 test from TEST_LAB_N_PLANE
-[ RUN      ] TEST_LAB_N_PLANE.BasicTest
+[----------] 1 test from TEST_BASIC_TEST
+[ RUN      ] TEST_BASIC_TEST.BasicTest
 
 
------ basic_test_lab_n_plane(): 
-sizes:     3    4    5    1    3
-    0    0    0
-    0    0    0    0
-    0    0    0    0    0
-    0
-    0    0    0
+Instantiation: 
+*count: 5
 
-logging in lab: 2, station 1: 
-    0    0    0
-    0    0    0    0
-    0 1234    0    0    0
-    0
-    0    0    0
+incrementing: 
++count: 6, is_error: 0
++count: 7, is_error: 0
++count: 8, is_error: 0
++count: 9, is_error: 0
++count: 10, is_error: 0
 
-write labs[0][2] <- 99: 
-    0    0   99
-    0    0    0    0
-    0 1234    0    0    0
-    0
-    0    0    0
+decrementing: 
+-count: 9, is_error: 0
+-count: 8, is_error: 0
+-count: 7, is_error: 0
+-count: 6, is_error: 0
+-count: 5, is_error: 0
+-count: 4, is_error: 0
+-count: 3, is_error: 0
+-count: 2, is_error: 0
+-count: 1, is_error: 0
+-count: 0, is_error: 0
 
-get_twod(4,2) <- 33: 
-    0    0   99
-    0    0    0    0
-    0 1234    0    0    0
-    0
-    0    0   33
+After the loop: 
+count: 0, is_error: 1
 
-reading labs[4][2]: 33
-
-get(0,2): 99
-
-found 33 at: [4][2]
-
-loggin out id: 1234
-    0    0   99
-    0    0    0    0
-    0    0    0    0    0
-    0
-    0    0   33
-
-Deallocating two-d array 'labs' 
+resetting: 
+count: 0, is_error: 0
 
 
----------- D O N E ----------
-[       OK ] TEST_LAB_N_PLANE.BasicTest (4 ms)
-[----------] 1 test from TEST_LAB_N_PLANE (4 ms total)
+--------------- D O N E ---------------
+[       OK ] TEST_BASIC_TEST.BasicTest (0 ms)
+[----------] 1 test from TEST_BASIC_TEST (0 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test case ran. (4 ms total)
+[==========] 1 test from 1 test case ran. (0 ms total)
 [  PASSED  ] 1 test.
-➜  build git:(master) ✗ 
+build git:(master)  😊 $> 
+
+
 
 
 */

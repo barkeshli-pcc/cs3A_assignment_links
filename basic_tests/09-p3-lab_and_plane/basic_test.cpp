@@ -176,7 +176,7 @@ bool basic_test_plane(bool debug = false){
   row = 3;
   seat = 3;
   cout << "\ncancelled "<<row+1<<char('A'+seat)<< "(["<<row<<"]["<<seat<<"]" << endl;
-  if(reserve(plane, row, seat)){
+  if(cancel(plane, row, seat)){
     cout << "  FAIL: this seat was not occupied, but canceled!" << endl;
   }
   else{

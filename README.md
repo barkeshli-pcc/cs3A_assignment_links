@@ -10,9 +10,10 @@
 
 - [`lab-00 clone, status, add, commit, and push`](https://github.com/CS3A-classroom/lab0_writeup), [basic_test.cpp](basic_tests/lab-00/basic_test.cpp)<br/>
 - [`lab-01 array library testing suite`](https://classroom.github.com/a/p02xacUI), [basic_test.cpp](basic_tests/lab-01/basic_test.cpp)<br/>
-- [`lab-02`], [basic_test.cpp]<br/>
-- [`lab-03`], [basic_test.cpp]<br/>
-- [`lab-0`5], [basic_test.cpp]<br/>
+- [`lab-02`](https://classroom.github.com/a/c8S8DcIV), [basic_test.cpp]<br/>
+- [`lab-03`](https://classroom.github.com/a/Z0BSqLU_), [basic_test.cpp]<br/>
+- [`lab-04`](https://classroom.github.com/a/h0VMUsCY), [basic_test.cpp]<br/>
+- [`lab-05`](https://classroom.github.com/a/glS7JhNr), [basic_test.cpp]<br/>
 
 ## chapter 9:
 

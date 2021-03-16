@@ -275,8 +275,8 @@ td[3][4] is a valid location.
 td[13][4] is NOT a valid location.
 td[3][14] is NOT a valid location.
 ---- end test two d functions ----------
-[       OK ] TWO_D_ARRAYS.BasicTest (1 ms)
-[----------] 1 test from TWO_D_ARRAYS (1 ms total)
+[       OK ] TWO_D_ARRAYS.BasicTest (0 ms)
+[----------] 1 test from TWO_D_ARRAYS (0 ms total)
 
 [----------] 2 tests from TEST_LAB_N_PLANE
 [ RUN      ] TEST_LAB_N_PLANE.BasicTestLab
@@ -329,7 +329,7 @@ Deallocating two-d array 'labs'
 
 
 ---------- D O N E ----------
-[       OK ] TEST_LAB_N_PLANE.BasicTestLab (0 ms)
+[       OK ] TEST_LAB_N_PLANE.BasicTestLab (1 ms)
 [ RUN      ] TEST_LAB_N_PLANE.BasicTestPlane
 
 [  1]  X X X X
@@ -388,12 +388,12 @@ reserved 7D([6][3]
 ============ test cancel() =======================
 
 cancelled 4D([3][3]
-  FAIL: this seat was not occupied, but canceled!
+   cancel() correctly refused to cancel unoccupied seat.
 
 [  1]  A X X X
 [  2]  X X X X
 [  3]  X X X X
-[  4]  X X C D
+[  4]  X X C X
 [  5]  X X X X
 [  6]  X X X X
 [  7]  X X X D
@@ -403,7 +403,7 @@ cancelled 4C([3][2]
 [  1]  A X X X
 [  2]  X X X X
 [  3]  X X X X
-[  4]  X X X D
+[  4]  X X X X
 [  5]  X X X X
 [  6]  X X X X
 [  7]  X X X D
@@ -412,12 +412,11 @@ Deallocating two-d array 'plane'
 
 
 ---------- D O N E ----------
-[       OK ] TEST_LAB_N_PLANE.BasicTestPlane (1 ms)
+[       OK ] TEST_LAB_N_PLANE.BasicTestPlane (0 ms)
 [----------] 2 tests from TEST_LAB_N_PLANE (1 ms total)
 
 [----------] Global test environment tear-down
-[==========] 3 tests from 2 test cases ran. (2 ms total)
+[==========] 3 tests from 2 test cases ran. (1 ms total)
 [  PASSED  ] 3 tests.
-build git:(master) ✗  😊 $> 
-
+build git:(master)  😊 $> 
 */

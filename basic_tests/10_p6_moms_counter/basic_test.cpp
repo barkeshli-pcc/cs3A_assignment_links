@@ -84,6 +84,9 @@ build git:(master) ✗  😊 $> ./bin/basic_test
 ----------running basic_test.cpp---------
 
 
+----------running basic_test.cpp---------
+
+
 [==========] Running 1 test from 1 test case.
 [----------] Global test environment set-up.
 [----------] 1 test from TEST_BASIC_TEST
@@ -93,27 +96,27 @@ count after add 10:    11
 count after add 100:   111
 count after add 1000:  1111
 count: 1111
-an error occured: 
+no error yet
 error state: false
 
 adding another 1000: 2111
-an error occured: 
+no error yet
 adding another 1000: 3111
-an error occured: 
+no error yet
 adding another 1000: 4111
-an error occured: 
+no error yet
 adding another 1000: 5111
-an error occured: 
+no error yet
 adding another 1000: 6111
-an error occured: 
+no error yet
 adding another 1000: 7111
-an error occured: 
+no error yet
 adding another 1000: 8111
-an error occured: 
+no error yet
 adding another 1000: 9111
-an error occured: 
+no error yet
 adding another 1000: -9999
-an error occured: 
+no error yet
 
 error state: true
 adding another 1000: -9999
@@ -130,4 +133,6 @@ error state: false
 [==========] 1 test from 1 test case ran. (0 ms total)
 [  PASSED  ] 1 test.
 build git:(master) ✗  😊 $> 
+
+
 */

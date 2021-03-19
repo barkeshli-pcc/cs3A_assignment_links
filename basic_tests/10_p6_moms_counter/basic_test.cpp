@@ -20,7 +20,7 @@ bool basic_test_mcounter(bool debug = false){
   cout << "count after add 100:   " << m.add_100() << endl;
   cout << "count after add 1000:  " << m.add_1000() << endl;
   cout <<"count: "<< m.count() << endl;
-  if (m.is_error()){
+  if (m.error()){
     cout << "an error occured: " << endl;
   }
   else{
@@ -32,7 +32,7 @@ bool basic_test_mcounter(bool debug = false){
   for (int i = 0; i < 20 && !m.error(); i++)
   {
     cout << "adding another 1000: " << m.add_1000() << endl;
-    if (m.is_error()){
+    if (m.error()){
       cout << "an error occured: " << endl;
     }
     else{
@@ -84,9 +84,6 @@ build git:(master) ✗  😊 $> ./bin/basic_test
 ----------running basic_test.cpp---------
 
 
-----------running basic_test.cpp---------
-
-
 [==========] Running 1 test from 1 test case.
 [----------] Global test environment set-up.
 [----------] 1 test from TEST_BASIC_TEST
@@ -116,7 +113,7 @@ no error yet
 adding another 1000: 9111
 no error yet
 adding another 1000: -9999
-no error yet
+an error occured: 
 
 error state: true
 adding another 1000: -9999
@@ -133,6 +130,4 @@ error state: false
 [==========] 1 test from 1 test case ran. (0 ms total)
 [  PASSED  ] 1 test.
 build git:(master) ✗  😊 $> 
-
-
 */

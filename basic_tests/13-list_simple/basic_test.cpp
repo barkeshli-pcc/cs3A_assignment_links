@@ -8,6 +8,9 @@
 using namespace std;
 
 #include "../../includes/list_simple/list_simple.h"
+#include "../../includes/linked_list_functions/linked_list_functions.h"
+#include "../../includes/node/node.h"
+
 //------------------------------------------------------------------------------------------
 //Files we are testing:
 bool basic_test(bool debug = false){
@@ -66,7 +69,17 @@ int main(int argc, char **argv) {
 
 /*
 
-➜  build git:(master) ✗ ./bin/basic_test
+13_03_simple_list_class git:(master)  😊 $> tree includes
+includes
+├── linked_list_functions
+│   └── linked_list_functions.h
+├── list_simple
+│   └── list_simple.h
+└── node
+    └── node.h
+
+3 directories, 3 files
+13_03_simple_list_class git:(master)  😊 $> ./build/bin/basic_test
 
 
 ----------running testA.cpp---------
@@ -106,8 +119,6 @@ list.empty(): false
 [----------] Global test environment tear-down
 [==========] 1 test from 1 test case ran. (1 ms total)
 [  PASSED  ] 1 test.
-➜  build git:(master) ✗ 
-
 */
 
 

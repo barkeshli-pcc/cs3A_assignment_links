@@ -13,6 +13,8 @@ using namespace std;
 
 //------------------------------------------------------------------------------------------
 //Files we are testing:
+#include "../../includes/node/node.h"
+#include "../../includes/linked_list_functions/linked_list_functions.h"
 #include "../../includes/list_sorted/list_sorted.h"
 
 
@@ -75,3 +77,58 @@ int main(int argc, char **argv) {
   std::cout<<"\n\n----------running testA.cpp---------\n\n"<<std::endl;
   return RUN_ALL_TESTS();
 }
+
+/*
+
+build git:(master) ✗  😊 $> tree ../includes 
+../includes
+├── linked_list_functions
+│   └── linked_list_functions.h
+├── list_sorted
+│   └── list_sorted.h
+└── node
+    └── node.h
+
+3 directories, 3 files
+build git:(master) ✗  😊 $> ./bin/basic_test
+
+
+----------running testA.cpp---------
+
+
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from BASIC_TEST
+[ RUN      ] BASIC_TEST.BasicTest
+list.empty(): true
+[1]-> [10]-> [100]-> |||
+
+[1]-> [2]-> [10]-> [20]-> [100]-> [200]-> |||
+
+[1]-> [2]-> [3]-> [10]-> [20]-> [30]-> [100]-> [200]-> [300]-> |||
+
+[1]-> [2]-> [3]-> [4]-> [10]-> [20]-> [30]-> [40]-> [100]-> [200]-> [300]-> [400]-> |||
+
+[1]-> [2]-> [3]-> [4]-> [5]-> [10]-> [20]-> [30]-> [40]-> [50]-> [100]-> [200]-> [300]-> [400]-> [500]-> |||
+
+found 4: 4
+previous to 4: 3
+deleted the prev: [1]-> [2]-> [4]-> [5]-> [10]-> [20]-> [30]-> [40]-> [50]-> [100]-> [200]-> [300]-> [400]-> [500]-> |||
+
+
+iterating all the nodes: 
+1 2 4 5 10 20 30 40 50 100 200 300 400 500 
+list.empty(): false
+
+
+---------- D O N E ---------------
+
+
+[       OK ] BASIC_TEST.BasicTest (0 ms)
+[----------] 1 test from BASIC_TEST (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+build git:(master) ✗  😊 $> 
+*/

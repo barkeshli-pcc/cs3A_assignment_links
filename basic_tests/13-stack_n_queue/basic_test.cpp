@@ -42,10 +42,10 @@ bool basic_test(bool debug = false)
   }
   cout << "front of queue: " << q.front() << endl;
   cout << "rear of queue: " << q.back() << endl;
-  cout << "pop queue: " << s.pop() << endl;
+  cout << "pop queue: " << q.pop() << endl;
   cout << q << endl;
   cout << "size of the queue: " << q.size() << endl;
-  cout << "is queue empty? " << boolalpha << s.empty() << endl;
+  cout << "is queue empty? " << boolalpha << q.empty() << endl;
   Queue<int>::Iterator q_it = q.begin();
   cout << "queue top to bottom: " << endl;
   for (; q_it != q.end(); q_it++)
@@ -79,7 +79,21 @@ int main(int argc, char **argv) {
 
 /*
 
-➜  build git:(master) ✗ ./bin/basic_test
+
+build git:(master) ✗  😊 $> tree ../includes
+../includes
+├── linked_list_functions
+│   └── linked_list_functions.h
+├── node
+│   ├── bogus.txt
+│   └── node.h
+├── queue
+│   ├── MyQueue.h
+└── stack
+    └── MyStack.h
+
+4 directories, 5 files
+build git:(master) ✗  😊 $> ./bin/basic_test
 
 
 ----------running testA.cpp---------
@@ -127,13 +141,12 @@ Queue:Head->[0]-> [1]-> [2]-> [3]-> [4]-> |||
 
 front of queue: 0
 rear of queue: 4
-pop queue: 3
-Queue:Head->[0]-> [1]-> [2]-> [3]-> [4]-> |||
+pop queue: 0
+Queue:Head->[1]-> [2]-> [3]-> [4]-> |||
 
-size of the queue: 5
+size of the queue: 4
 is queue empty? false
 queue top to bottom: 
-<0> 
 <1> 
 <2> 
 <3> 
@@ -143,11 +156,12 @@ queue top to bottom:
 --------- D O N E ----------------
 
 
-[       OK ] ITERATED_LIST.TestInsertHead (3 ms)
-[----------] 1 test from ITERATED_LIST (3 ms total)
+[       OK ] ITERATED_LIST.TestInsertHead (0 ms)
+[----------] 1 test from ITERATED_LIST (0 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test case ran. (3 ms total)
+[==========] 1 test from 1 test case ran. (0 ms total)
 [  PASSED  ] 1 test.
-➜  build git:(master) ✗ 
+build git:(master) ✗  😊 $> 
+
 */

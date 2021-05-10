@@ -44,7 +44,8 @@
 
 ## SFML:
 - [start_SFML](https://classroom.github.com/a/aSSkyzPk)<br />
-- [bouncing bubbles]
+- [bouncing bubbles](https://classroom.github.com/a/LxZMA8mY)<br />
+- [bouncing shapes](https://classroom.github.com/a/go1Mz8Lr)
 ## chapter 15:
 
 - [15-predator_prey](https://classroom.github.com/a/nOSmDF_n), [`basic_test.cpp`]<br />

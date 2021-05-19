@@ -50,8 +50,7 @@
 
 - [15-predator_prey](https://classroom.github.com/a/nOSmDF_n), [`basic_test.cpp`]<br />
 - [15-predator_prey_SFML](https://classroom.github.com/a/18y4-6aW), [`basic_test.cpp`]<br />
-- [15-rpn](https://classroom.github.com/a/2p4R9N1_), [`basic_test.cpp`]<br />
-- [15-rpn_shunting_yard](https://classroom.github.com/a/RivqFj8e), [`basic_test.cpp`]<br />
+- [15-rpn_shunting_yard](https://classroom.github.com/a/RivqFj8e), [`basic_test.cpp`](basic_tests/15_rpn_shunting_yard/basic_test.cpp)<br />
 
 
 

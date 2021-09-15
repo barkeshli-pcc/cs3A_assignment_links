@@ -31,10 +31,22 @@ bool test_basic_add_entry_int(bool debug = false){
   print_array(arr, size, capacity);
   cout << endl
        << endl;
+  arr = insert_entry(arr, 99, 4, size, capacity);
+  cout << "inserted 99 at position 4: ";
+  print_array(arr, size, capacity);
+  cout << endl
+       << endl;
+  arr = erase_entry(arr, 4, size, capacity);
+  cout << "removed item at position 4 (the 99): ";
+  print_array(arr, size, capacity);
+  cout << endl
+       << endl;
 
   for (int i = size - 1; i >= 0; i--)
   {
     int item;
+    ;
+
     arr = remove_last_entry(arr, item, size, capacity);
     cout << "removed: [" << item << "] ";
     print_array(arr, size, capacity);
@@ -159,6 +171,12 @@ search_entry returned: 4
 removed [4]: (14/24) [    0     1     2     3     5     6     7     8     9    10    11    12    13    14 ]
 
 
+inserted 99 at position 4: (15/24) [    0     1     2     3    99     5     6     7     8     9    10    11    12    13    14 ]
+
+
+removed item at position 4 (the 99): (14/24) [    0     1     2     3     5     6     7     8     9    10    11    12    13    14 ]
+
+
 removed: [14] (13/24) [    0     1     2     3     5     6     7     8     9    10    11    12    13 ]
 removed: [13] (12/24) [    0     1     2     3     5     6     7     8     9    10    11    12 ]
 removed: [12] (11/24) [    0     1     2     3     5     6     7     8     9    10    11 ]
@@ -171,10 +189,10 @@ removed: [6] ( 5/12) [    0     1     2     3     5 ]
 removed: [5] ( 4/12) [    0     1     2     3 ]
 removed: [3] ( 3/ 6) [    0     1     2 ]
 removed: [2] ( 2/ 6) [    0     1 ]
-removed: [1] ( 1/ 3) [    0 ]
-removed: [0] ( 0/ 3) []
+removed: [1] ( 1/ 6) [    0 ]
+removed: [0] ( 0/ 6) []
 ----- end of function --------
-[       OK ] TEST_BASIC.TestBasicInt (3 ms)
+[       OK ] TEST_BASIC.TestBasicInt (0 ms)
 [ RUN      ] TEST_BASIC.TestBasicString
 MINIMUM_CAPACITY: 3
 adding [0] ( 1/ 3) [vector ]
@@ -193,14 +211,13 @@ removed: [Queue] ( 5/12) [vector   BST  Pair Multimap Stack ]
 removed: [Stack] ( 4/12) [vector   BST  Pair Multimap ]
 removed: [Multimap] ( 3/ 6) [vector   BST  Pair ]
 removed: [Pair] ( 2/ 6) [vector   BST ]
-removed: [BST] ( 1/ 3) [vector ]
-removed: [vector] ( 0/ 3) []
+removed: [BST] ( 1/ 6) [vector ]
+removed: [vector] ( 0/ 6) []
 ----- end of function --------
 [       OK ] TEST_BASIC.TestBasicString (1 ms)
-[----------] 2 tests from TEST_BASIC (4 ms total)
+[----------] 2 tests from TEST_BASIC (1 ms total)
 
 [----------] Global test environment tear-down
-[==========] 2 tests from 1 test case ran. (4 ms total)
+[==========] 2 tests from 1 test case ran. (2 ms total)
 [  PASSED  ] 2 tests.
-build git:(master)  😊 $> 
-*/
+build git:(master) ✗  😊 $> 

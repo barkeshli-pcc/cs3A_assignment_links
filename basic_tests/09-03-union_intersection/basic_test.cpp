@@ -7,7 +7,11 @@
 #include <list>
 
 #include "../../includes/set/set.h"
-
+/*
+array_print();
+array_union();
+intersection();
+*/
 using namespace std;
 
 
@@ -51,6 +55,14 @@ int main(int argc, char **argv) {
 
 
 /*
+
+includes
+├── set
+    ├── set.cpp
+    └── set.h
+
+
+
 ---------- running basic_test ---------
 
 

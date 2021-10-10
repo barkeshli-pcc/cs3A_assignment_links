@@ -63,8 +63,13 @@ int main(int argc, char **argv) {
 
 
 /*
-
-➜  build git:(master) ✗ ./bin/basic_test
+includes
+├── add_entry
+│   └── add_entry.h
+├── array_functions
+│   └── array_functions.h
+└── vector
+    └── vector_class.h
 
 
 ----------running basic_test.cpp---------

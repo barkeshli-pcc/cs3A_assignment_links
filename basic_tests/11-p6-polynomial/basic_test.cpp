@@ -6,7 +6,7 @@
 #include <vector>
 #include <list>
 #include "../../includes/poly/poly.h"
-
+#include "../../includes/array_functions/array_functions.h"
 using namespace std;
 bool stub(bool debug = false){
   return true;
@@ -70,7 +70,16 @@ int main(int argc, char **argv) {
 
 /*
 
-➜  build git:(begin_submodule) ✗ ./bin/basic_test
+includes
+├── array_functions
+│   └── array_functions.h
+└── poly
+    ├── poly.cpp
+    ├── poly.h
+    ├── term.cpp
+    └── term.h
+
+
 
 
 ----------running basic_test.cpp---------

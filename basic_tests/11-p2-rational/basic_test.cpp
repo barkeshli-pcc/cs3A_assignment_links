@@ -5,7 +5,7 @@
 #include <set>
 #include <vector>
 #include <list>
-
+using namespace std;
 #include "../../includes/rational/rational.h"
 
 bool basic_test_rational(bool debug = false){
@@ -52,7 +52,11 @@ int main(int argc, char **argv) {
 
 /*
 
-➜  build git:(master) ✗ ./bin/basic_test
+includes
+└── rational
+    ├── rational.cpp
+    └── rational.h
+
 
 
 ----------running basic_test.cpp---------

@@ -8,7 +8,8 @@
 
 ## labs:
 
-- [`lab-00 writeup`](https://github.com/barkeshli-pcc/lab-00-writeup), [basic_test.cpp](basic_tests/lab-00/basic_test.cpp)<br/>
+- [`lab-00`]<br/>
+  - [basic_test.cpp](basic_tests/lab-00/basic_test.cpp)<br/>
   - [`lab-00 assignment link](https://classroom.github.com/a/qidO1KYV)<br/>
 - [`lab-01 array library testing suite`](https://classroom.github.com/a/p02xacUI), [basic_test.cpp](basic_tests/lab-01/basic_test.cpp)<br/>
 - [`lab-02`](https://classroom.github.com/a/c8S8DcIV), [basic_test.cpp]<br/>

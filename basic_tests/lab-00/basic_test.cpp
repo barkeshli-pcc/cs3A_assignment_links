@@ -48,3 +48,57 @@ int main(int argc, char **argv) {
   return RUN_ALL_TESTS();
 }
 
+/*
+00_lab_0 git:(master)  😊 $> tree includes
+includes
+├── array_functions
+│   ├── array_functions.cpp
+│   └── array_functions.h
+└── stub
+    ├── stub.cpp
+    └── stub.h
+
+2 directories, 4 files
+
+bin git:(master)  😊 $> ./basic_test
+
+
+----------running basic_test.cpp---------
+
+
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from BASIC_TEST
+[ RUN      ] BASIC_TEST.BasicTest
+
+
+after init:    -1   -1   -1   -1   -1   [5]
+
+   -1   -1   -1   -1   -1   50   [6]
+
+   -1   -1   -1   -1   -1   50   60   [7]
+
+   -1   -1   -1   -1   -1   50   60   70   [8]
+
+   -1   -1   -1   -1   -1   50   60   70   80   [9]
+
+   -1   -1   -1   -1   -1   50   60   70   80   90   [10]
+
+found 70 at: 70
+changing 70 to 700: 
+   -1   -1   -1   -1   -1   50   60  700   80   90   [10]
+
+
+
+[       OK ] BASIC_TEST.BasicTest (0 ms)
+[----------] 1 test from BASIC_TEST (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+bin git:(master)  😊 $> 
+
+
+
+
+*/

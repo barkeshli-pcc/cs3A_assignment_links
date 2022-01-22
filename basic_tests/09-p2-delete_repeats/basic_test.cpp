@@ -20,23 +20,23 @@ bool test_delete_repeat(){
   char a[20] = "aababcabcdabcdef";
   int size = strlen(a);
   cout << "\n\noriginal list: ";
-  print_list(a, size);
+  print_array(a, size);
   cout << endl;
 
   delete_repeats(a, size);
   cout << "\n\nunique values: ";
-  print_list(a, size);
+  print_array(a, size);
   cout << endl;
 
   int b[30] = {0,1,1,2,1,2,3,1,2,3,4,1,2,3,4,5,1,2,3,4,5};
   size = 21;
   cout << "\n\noriginal list: ";
-  print_list(b, size);
+  print_array(b, size);
   cout << endl;
 
   delete_repeats(b, size);
   cout << "\n\nunique values: ";
-  print_list(b, size);
+  print_array(b, size);
   cout << endl;
 
 

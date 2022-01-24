@@ -58,6 +58,31 @@ bool pointer_array_functions_basic_test(bool debug = true)
   else{
     cout << key << " was not found" << endl;
   }
+  //-- --- -- --- -- --- -- --- -- --- -- --- -- --- -- --- -- --- -- --- 
+  cout << "\n\n -- search() -----" << endl;
+  //-- --- -- --- -- --- -- --- -- --- -- --- -- --- -- --- -- --- -- --- 
+
+  int found_index;
+
+  key = 30;
+  found_index = search(a, size, key);
+  if (found_index>=0){
+    found = a + found_index;
+    cout << key << " was found: " << *found << endl;
+  }
+  else{
+    cout << key << " was not found" << endl;
+  }
+
+  key = 35;
+  found_index = search(a, size, key);
+  if (found_index>=0){
+    found = a + found_index;
+    cout << key << " was found: " << *found << endl;
+  }
+  else{
+    cout << key << " was not found" << endl;
+  }
 
   //-- --- -- --- -- --- -- --- -- --- -- --- -- --- -- --- -- --- -- --- 
   cout << "\n\n -- copy function()  (@@)-----" << endl;
@@ -210,6 +235,11 @@ includes
 35 was not found
 
 
+ -- search() -----
+30 was found: 30
+35 was not found
+
+
  -- copy function()  (@@)-----
  void copy_array(dest, src, size):  ( 7) [   0   10   20   30   40   50   60 ]
  T* copy_array(src, siae):       ( 7/ 7) [   0   10   20   30   40   50   60 ]
@@ -249,8 +279,10 @@ includes
 [----------] 1 test from POINTER_ARRAY_FUNCS (1 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test suite ran. (1 ms total)
+[==========] 1 test from 1 test suite ran. (2 ms total)
 [  PASSED  ] 1 test.
-09_00_array_functions git:(master) ✗  😊 $> 
+09_00_array_functions git:(master)  😊 $> 
+
+
 </pre>
 */

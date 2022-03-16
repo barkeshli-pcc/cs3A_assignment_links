@@ -38,7 +38,7 @@
 
 ## chapter 13:
 
-- [`13-linked_list_functions`](https://classroom.github.com/a/lZgDGjdk), [`basic_test.cpp`]<br />
+- [`13-linked_list_functions`], [`basic_test.cpp`]<br />
 - [`13-simple_list`](https://classroom.github.com/a/AeOHoXgo), [`basic_test.cpp`](basic_tests/13-list_simple/basic_test.cpp)<br />
 - [`13-stack_n_queue`](https://classroom.github.com/a/5W8VE184), [`basic_test.cpp`](basic_tests/13-stack_n_queue/basic_test.cpp)<br />
 - [`13-sorted_list`](https://classroom.github.com/a/K_EvFVye), [`basic_test.cpp`](basic_tests/13-list_sorted/basic_test.cpp)<br />

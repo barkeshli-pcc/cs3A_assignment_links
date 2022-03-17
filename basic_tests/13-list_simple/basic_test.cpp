@@ -33,7 +33,7 @@ bool basic_test(bool debug = false){
   cout << "deleted the prev: " << list << endl;
   cout << endl;
   cout << "iterating all the nodes: " << endl;
-  for (marker = list.begin(); marker != list.end(); marker=marker->next)
+  for (marker = list.begin(); marker != list.end(); marker=marker->_next)
   {
     cout << *marker << " ";
   }

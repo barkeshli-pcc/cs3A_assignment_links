@@ -38,6 +38,8 @@
 
 ## chapter 13:
 
+- [`13.000 EXTRA: fun_with_linked_lists`](https://classroom.github.com/a/rZU1Iw45), [NO basic_test.cpp]<br />
+
 - [`13-linked_list_functions`], [`basic_test.cpp`]<br />
 - [`13-simple_list`](https://classroom.github.com/a/AeOHoXgo), [`basic_test.cpp`](basic_tests/13-list_simple/basic_test.cpp)<br />
 - [`13-stack_n_queue`](https://classroom.github.com/a/5W8VE184), [`basic_test.cpp`](basic_tests/13-stack_n_queue/basic_test.cpp)<br />

@@ -53,7 +53,7 @@
 - [bouncing shapes](https://classroom.github.com/a/go1Mz8Lr)
 ## chapter 15:
 
-- [15_00_parent_child_extra](https://classroom.github.com/a/kQFDAtBV), [`no basic_test`], [output](`outputs/predator_prey.gif`), [fancy]("outputs/fancy_predator.gif")
+- [`15_00_parent_child_extra`](https://classroom.github.com/a/kQFDAtBV), [no basic_test], [`output`](outputs/predator_prey.gif), [`fancy`](outputs/fancy_predator.gif)
 - [15-predator_prey](https://classroom.github.com/a/nOSmDF_n), [`basic_test.cpp`](basic_tests/15-p9-predator-prey/basic_test.cpp), [output gif](basic_tests/15-p9-predator-prey/Predator_prey.gif)<br />
 - [15-predator_prey_SFML](https://classroom.github.com/a/18y4-6aW), [`basic_test.cpp`]<br />
 - [15-rpn_shunting_yard](https://classroom.github.com/a/RivqFj8e), [`basic_test.cpp`](basic_tests/15_rpn_shunting_yard/basic_test.cpp)<br />

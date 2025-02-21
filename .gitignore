@@ -77,3 +77,4 @@ CMakeFiles/
 bin/
 cmake_install.cmake
 googletest/
+.history

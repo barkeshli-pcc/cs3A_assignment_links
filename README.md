@@ -16,6 +16,8 @@
 - [`lab-03`](https://classroom.github.com/a/Z0BSqLU_), [basic_test.cpp]<br/>
 - [`lab-04`](https://classroom.github.com/a/h0VMUsCY), [basic_test.cpp]<br/>
 - [`lab-05`](https://classroom.github.com/a/glS7JhNr), [basic_test.cpp]<br/>
+## review:
+- [`7_2__7_7_add_numbers_any_base`](https://classroom.github.com/a/TmwJyjFg), [basic_test.cpp]<br/>
 
 ## chapter 9:
 

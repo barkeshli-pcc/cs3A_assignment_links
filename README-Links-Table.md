@@ -6,11 +6,18 @@
 
 # <p align="center">CS 3A Assignment links:</p>
 
+## 00_Lab_0
+
+| GitHub Assignment | Basic Test | Writeup |
+|-------------------|------------|---------|
+| [lab-00 assignment](https://classroom.github.com/a/qidO1KYV) | [basic_test.cpp](basic_tests/lab-00/basic_test.cpp) | [00-lab-0](https://github.com/barkeshli-pcc/lab-00-writeup) |
+
+
 ## Labs
 
 | GitHub Assignment | Basic Test | Writeup |
 |-------------------|------------|---------|
-| [lab-00 assignment](https://classroom.github.com/a/qidO1KYV) | [basic_test.cpp](basic_tests/lab-00/basic_test.cpp) | [00-lab-0](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-0.html) |
+| [lab-00 assignment] | [basic_test.cpp]| [00-lab-0](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-0.html) |
 | [lab-01 array library testing suite](https://classroom.github.com/a/p02xacUI) | [basic_test.cpp](basic_tests/lab-01/basic_test.cpp) | [00-lab-1](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-1.html) |
 | [lab-02](https://classroom.github.com/a/c8S8DcIV) | - | [00-lab-2](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-2.html) |
 | [lab-03](https://classroom.github.com/a/Z0BSqLU_) | - | [00-lab-3-class-declarations](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-3-class-declarations.html) |

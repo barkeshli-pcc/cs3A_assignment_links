@@ -1,0 +1,157 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 10_p6_moms_counter</title>
+</head>
+<body>
+<h2 style="text-align: center;"><strong>Mom's Counter</strong></h2>
+<p><a title="READ ME (Chapter 10, 11)" href="$CANVAS_OBJECT_REFERENCE$/assignments/gc9baabedc65f6aa37e060beacf65cccb" data-api-endpoint="https://canvas.pasadena.edu/api/v1/courses/1112354/assignments/8766721" data-api-returntype="Assignment">READ ME (Chapter 10, 11)</a></p>
+<h3><strong>MCounter:</strong></h3>
+<p>Here are the public member functions of the MCounter class:</p>
+<div style="background: #ffffff; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;"><span style="color: #008800;">class</span> <span style="color: #bb0066;">MCounter</span>
+{
+<span style="color: #997700;">public:</span>
+    MCounter();
+    <span style="color: #333399;">int</span> <span style="color: #0066bb;">add_1</span>();                <span style="color: #888888;">//increment functions</span>
+    <span style="color: #333399;">int</span> <span style="color: #0066bb;">add_10</span>();
+    <span style="color: #333399;">int</span> <span style="color: #0066bb;">add_100</span>();
+    <span style="color: #333399;">int</span> <span style="color: #0066bb;">add_1000</span>();
+    <span style="color: #333399;">int</span> <span style="color: #0066bb;">reset</span>();                <span style="color: #888888;">//reset error  state, _count</span>
+    <span style="color: #333399;">int</span> count() <span style="color: #008800;">const</span>;          <span style="color: #888888;">//returns _count</span>
+    <span style="color: #333399;">bool</span> error() <span style="color: #008800;">const</span>;         <span style="color: #888888;">//returns _error</span>
+<span style="color: #333399;"> &nbsp;  bool</span> is_error() <span style="color: #008800;">const</span>;      <span style="color: #888888;">//true  if an error has occurred</span>
+
+<span style="color: #997700;">private:</span>
+    <span style="color: #333399;">int</span> <span style="color: #0066bb;">add</span>(<span style="color: #333399;">int</span> n);             <span style="color: #888888;">//add n to _count</span>
+    <span style="color: #333399;">int</span> _count;
+    <span style="color: #333399;">bool</span> _error;
+};
+</pre>
+</div>
+<h3><strong>Testing:</strong></h3>
+<p>Write a function called test_MCounter() and call it from main()</p>
+<p>In <strong>test_MCounter</strong>:</p>
+<p>Display to the user, the following menu and allow the user to make a choice:</p>
+<pre><span class="operator">[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it</pre>
+<p>As the user presses A, S, D, F increment the count by appropriate values.&nbsp;</p>
+<p>at the bottom of the loop, before you read the next command, display the count by calling a function called display_count and pass it the MCounter object. The display function checks to see if the object is in an error state. If it is, it will display ERROR otherwise, it will show the current count.</p>
+<p>Once the object goes into the error state, no valid count exists until the user calls reset()</p>
+<p>Please see Class design guidelines for a list of do's and don'ts.</p>
+<p>&nbsp;</p>
+<p>Here is sample output:</p>
+<p>&nbsp;</p>
+<pre><span class="operator">-------
+|</span><span class="int"> 0000</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it f<span class="operator">
+-------
+|</span><span class="int"> 0001</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it f<span class="operator">
+-------
+|</span><span class="int"> 0002</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it f<span class="operator">
+-------
+|</span><span class="int"> 0003</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it d<span class="operator">
+-------
+|</span><span class="int"> 0013</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it d<span class="operator">
+-------
+|</span><span class="int"> 0023</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it s<span class="operator">
+-------
+|</span><span class="int"> 0123</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it s<span class="operator">
+-------
+|</span><span class="int"> 0223</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it a<span class="operator">
+-------
+|</span><span class="int"> 1223</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it a<span class="operator">
+-------
+|</span><span class="int"> 2223</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it a<span class="operator">
+-------
+|</span><span class="int"> 3223</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it a<span class="operator">
+-------
+|</span><span class="int"> 4223</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it a<span class="operator">
+-------
+|</span><span class="int"> 5223</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it a<span class="operator">
+-------
+|</span><span class="int"> 6223</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it a<span class="operator">
+-------
+|</span><span class="int"> 7223</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it a<span class="operator">
+-------
+|</span><span class="int"> 8223</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it a<span class="operator">
+-------
+|</span><span class="int"> 9223</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it a<span class="operator">
+-------
+|</span>ERROR<span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it f<span class="operator">
+-------
+|</span>ERROR<span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it d<span class="operator">
+-------
+|</span>ERROR<span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it a<span class="operator">
+-------
+|</span>ERROR<span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it r<span class="operator">
+-------
+|</span><span class="int"> 0000</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it s<span class="operator">
+-------
+|</span><span class="int"> 0100</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it s<span class="operator">
+-------
+|</span><span class="int"> 0200</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it f<span class="operator">
+-------
+|</span><span class="int"> 0201</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it f<span class="operator">
+-------
+|</span><span class="int"> 0202</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it f<span class="operator">
+-------
+|</span><span class="int"> 0203</span><span class="operator">|
+-------
+[</span>A<span class="operator">]</span><span class="int"> 1000</span><span class="operator">  [</span>S<span class="operator">]</span><span class="int"> 100</span><span class="operator">   [</span>D<span class="operator">]</span><span class="int"> 10</span><span class="operator">   [</span>F<span class="operator">]</span><span class="int"> 1</span><span class="operator">    [</span>R<span class="operator">]</span>eset<span class="operator">:</span>   e<span class="operator">[</span>X<span class="operator">]</span>it x<span class="operator">
+
+
+======================</span>
+Press<span class="operator"> &lt;</span>RETURN<span class="operator">&gt;</span> to close<span class="keyword"> this</span> window<span class="operator">...</span></pre>
+</body>
+</html>

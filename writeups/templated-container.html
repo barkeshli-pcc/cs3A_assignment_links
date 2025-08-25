@@ -1,0 +1,47 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Templated Container</title>
+</head>
+<body>
+<p style="text-align: center;"><img src="https://www.dropbox.com/s/9axc6m80sk86nds/Screenshot%202015-11-07%2021.32.37.png?dl=1" alt="" loading="lazy"></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 18pt;"><strong>Templated Container:</strong></span></p>
+<p><strong><span style="background-color: #ffff00;">Note</span>: <span style="text-decoration: underline;">Please DO NOT SKIP STEPS. You will not be saving time.&nbsp;</span></strong></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt;"><strong>Step 1: Linked List Class:</strong></span></p>
+<p>Build a List class that manages the head of a linked list and provides functions to insert and delete nodes on the linked list. Developing this class is relatively fast once we have the linked list functions.</p>
+<p>Aside from a default constructor that sets head to NULL, you will have a constructor that takes an array of ITEM_TYPE elements and inserts them into the linked list.&nbsp;</p>
+<p>Nearly all the functions on the List class will make calls to the linked list functions already written and tested.</p>
+<p>Search function will return a node pointer.</p>
+<p>The insert before and after, and the Delete function will take a node pointer that indicates where the item has to be inserted or deleted. The Delete function returns the ITEM_TYPE from the node that is being deleted.</p>
+<p>The copy constructor and the assignment operator call the CopyList function and the destructor calls the ClearList function.</p>
+<p>Test this class by writing a function in the main.cpp that will call all the functions and test all the various scenarios that could occur: Empty list, the start of the list, end of the list, middle of the list.</p>
+<p><span style="font-size: 14pt;"><strong>Step 2: Iterator (a reference object) :</strong></span></p>
+<p>The one vulnerability of&nbsp;our List class is the fact that when asked, it will give up the address of any node. The Search function does this. And in fact, the user needs the address of a given node to be able to remove the node or insert items before or after the node. Any program that has the address to a node, can simply deallocate the node, resulting the List to 'break'.</p>
+<p>One solution to this problem is to abstract the node pointer into a class called Iterator. An Iterator can point to any node, can be dereferenced, incremented and behave as any pointer would do, but it does not give up the address of the node that it points to.&nbsp;</p>
+<p>Aside from a default constructor, we will write a constructor that takes a node pointer as an argument.</p>
+<p>We will write ++, *, ==, [ ], and we can even write a += operator that allows the Iterator to be moved so many nodes ahead. (Thank you Alex!)</p>
+<p>Inside the Iterator class, place this line:&nbsp;<span>friend</span><span> </span><span>class</span><span> </span><span>List</span><span>; This makes the List class a friend of the Iterator class and hence will make Iterator's private member variables accessible from List. Think about it, we don't really want the Iterator to have an accessor or mutator function for the pointer that it is guarding, do we!</span></p>
+<p><strong>Modifications to the List class:</strong></p>
+<p>For all this to work, the List must be very much aware of the the Iterator.</p>
+<p><span style="text-decoration: underline;">Begin( ) and End( ) functions:</span></p>
+<p>For starters, we need a Begin( ) and an End( ) function that will construct an Iterator pointing to the start (where the head is) and the end of the list. This is one of the ways a program point an Iterator to a list in the first place. Technically, the End( ) returns an Iterator to the node after the very last node. This has many advantages for the calling programs as it will allow them to use a simple loop to iterate over all the nodes in the list. What changes need to be made to implement this "node after the very last node" idea?&nbsp;</p>
+<p><span style="text-decoration: underline;">Node* to Iterator Migration:</span></p>
+<p>Move all the functions that take a node pointer as arguments or return node pointers into the private section of the class. Then for each function, write a public version that takes or returns an iterator. Then from these functions, simply call the private versions of the function and pass them the pointer within the Iterator. We can access the pointer within the Iterator from List functions because the List is a friend of the Iterator class.</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt;"><strong>Step 3: Templating the Node, List, and the Iterator classes:</strong></span></p>
+<p>Once a class is templated, the name of the class on its own is incomplete. So,&nbsp;</p>
+<p>Node or Node* are&nbsp;not complete types. Every place where the name of a templated class is mentioned, it needs to be followed by &lt;ITEM_TYPE&gt; or whatever other template variable name you are using. &nbsp;</p>
+<p><strong>Things to watch out for:</strong></p>
+<p><span style="text-decoration: underline;">All In One File:</span></p>
+<p>As you know by now, the class declaration (header stuff) and the class implementation (the cpp stuff) has to be in the same file to a templated class to compile. Failure to do so will result in some undecipherable error messages from your compiler! So, Copy the contents of the class' cpp file and paste it to the class' .h file right after the closing brace (and the semicolon) of the class declaration but still inside the header guards. You will do this with all the templated classes.&nbsp;</p>
+<p><span style="text-decoration: underline;">Friend Functions:</span></p>
+<p>Remember that friend functions within templated classes (the insertion operator for example) require a different template variable.</p>
+<p><img src="https://www.dropbox.com/s/xhnqzt7ialandey/Screenshot%202015-11-09%2008.21.44.png?dl=1" alt="Operators need different template arguments" width="777" height="56" loading="lazy"></p>
+<p><span style="text-decoration: underline;">Friend Classes:</span></p>
+<p>Making templated List class a friend of a templated Iterator class:&nbsp;</p>
+<pre><span><img src="https://www.dropbox.com/s/5b344w3fs28d5n5/Screenshot%202015-11-09%2008.24.23.png?dl=1" alt="How to make list a friend of Iterator" width="678" height="200" loading="lazy"></span><br>&nbsp;</pre>
+<p>&nbsp;</p>
+</body>
+</html>

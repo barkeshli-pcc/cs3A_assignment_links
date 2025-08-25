@@ -1,0 +1,55 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Verification Functions</title>
+<meta name="identifier" content="gb873d8489a7ee8c642ad408a69f1f52c"/>
+<meta name="editing_roles" content="teachers"/>
+<meta name="workflow_state" content="active"/>
+</head>
+<body>
+<h2>Verification Functions</h2>
+<p>There are times when it is desirable to have a function that will tell us if several parts constitute] a valid whole. This is most easily seen in date, time, fraction, and other types of composite data.</p>
+<p>This document details how we design verification functions.</p>
+<p><strong>What makes data invalid?</strong></p>
+<p>We look for what makes data invalid, not what makes it valid:</p>
+<p>Consider date data: m, d, and y.</p>
+<p>Date is invalid if m is less than zero or if m is larger than 12.</p>
+<p>Date is invalid if d is less than zero or if date is more than the number of days in that month.</p>
+<p>Date is invalid if y is less than zero of if y is unreasonably large!</p>
+<p>We would NEVER think of putting all these conditions in a single if statement.</p>
+<p>It is far easier to have multiple if statements:</p>
+<p>&nbsp;</p>
+<div id="preview">
+<div>
+<pre><span>/**</span>
+<span> * @brief date_is_valid: reutrn true if m/d/y is a valid date</span>
+<span> * @param m</span>
+<span> * @param d</span>
+<span> * @param y</span>
+<span> * @return bool valid code</span>
+<span> */</span>
+<span>bool</span> <span>date_is_valid</span>(<span>int</span> m, <span>int</span> d, <span>int</span> y){
+    <span>if</span> (m<span>&lt;</span><span>0</span>) <span>return</span> <span>false</span>;
+    <span>if</span> (m<span>&gt;</span><span>12</span>) <span>return</span> <span>false</span>;
+    <span>if</span> (d<span>&lt;</span><span>0</span>) <span>return</span> <span>false</span>;
+    <span>if</span> (d<span>&gt;</span>days_in_month(m, y)) <span>return</span> <span>false</span>;
+    <span>if</span> (y<span>&lt;</span><span>0</span>) <span>return</span> <span>false</span>;
+    <span>if</span> (y<span>&gt;</span><span>3000</span>) <span>return</span> <span>false</span>;
+    
+    <span>return</span> <span>true</span>;
+            
+}
+</pre>
+</div>
+</div>
+<div id="footer">
+<p>Only after checking every condition that would make the data invalid, do we return true.</p>
+<p>Notice how easy it will be to modify this function. To add other limitations on the validity of the data.</p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div id="preview">
+<div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 13_09_sorted_list</title>
+</head>
+<body>
+<h2 style="text-align: center;"><strong>Sorted List</strong></h2>
+<h3><strong>Overview:</strong></h3>
+<p>This is yet another class that gives a special type of access to the underlying linked list structure. This time, we make sure the list is sorted and remains sorted. This means, no more inserting before, or after a marker. and no more inserting at the head of the list. There will be one insert function that will insert the items in a sorted manner into the list.</p>
+<h3><strong>How to start:</strong></h3>
+<p>Make a copy of your Iterated list and get rid of all the unnecessary functions.</p>
+<p>The insert functions needs to be re-written, but thankfully, we already have everything we need in the lower level functions.</p>
+<p><span style="color: #ff0000;"><strong>NOTE:</strong> </span>Define all your Iterator functions INLINE: Inside the Iterator class itself.</p>
+<p><strong>The list_sorted class:</strong></p>
+<p><span style="font-family: inherit; font-size: 1rem;">template</span><span style="font-family: inherit; font-size: 1rem;"> </span><span style="font-family: inherit; font-size: 1rem;">&lt;</span><span style="font-family: inherit; font-size: 1rem;">class</span><span style="font-family: inherit; font-size: 1rem;"> </span><span style="font-family: inherit; font-size: 1rem;">T</span><span style="font-family: inherit; font-size: 1rem;">&gt;</span></p>
+<div id="preview">
+<div>
+<pre><span>class</span> <span>List</span>
+{
+<span>public:</span>
+    <span>class</span> <span>Iterator</span>{
+    <span>public:</span>
+        <span>friend</span> <span>class</span> <span>List</span>;                          <span>//give access to list to</span>
+                                                    <span>//          access _ptr</span>
+        Iterator(){_ptr <span>=</span> <span>NULL</span>;}                    <span>//default ctor</span>
+        Iterator(node<span>&lt;</span>T<span>&gt;*</span> p);
+                                                    <span>//Point Iterator to where p</span>
+                                                    <span>//  is pointing to</span>
+        T <span>&amp;</span><span>operator</span><span>*</span>();                             <span>//dereference operator</span>
+
+        T <span>*</span><span>operator</span><span>-&gt;</span>();                            <span>//member access operator</span>
+        <span>bool</span> <span>is_null</span>();                             <span>//true if _ptr is NULL</span>
+        <span>friend</span> <span>bool</span> <span>operator</span><span>!=</span>(<span>const</span> Iterator <span>&amp;</span>left,
+                               <span>const</span> Iterator <span>&amp;</span>right); <span>//true if left != right</span>
+
+        <span>friend</span> <span>bool</span> <span>operator</span><span>==</span>(<span>const</span> Iterator <span>&amp;</span>left,
+                               <span>const</span> Iterator <span>&amp;</span>right); <span>//true if left == right</span>
+
+        Iterator <span>&amp;</span><span>operator</span><span>++</span>();                         <span>//member operator:</span>
+                                                        <span>//  ++it; or</span>
+                                                        <span>//  ++it = new_value</span>
+
+        <span>friend</span> Iterator <span>operator</span><span>++</span>(Iterator <span>&amp;</span>it,
+                                   <span>int</span> unused);          <span>//friend operator: it++</span>
+
+    <span>private:</span>
+        node<span>&lt;</span>T<span>&gt;*</span> _ptr;                          <span>//pointer being encapsulated</span>
+    };
+
+    List(<span>bool</span> order<span>=</span><span>true</span>, <span>bool</span> unique<span>=</span><span>false</span>);           <span>//CTOR: default args</span>
+                                                        <span>//BIG 3:</span>
+    <span>~</span>List();
+    List(<span>const</span> List<span>&lt;</span>T<span>&gt;</span> <span>&amp;</span>copyThis);
+    List<span>&amp;</span> <span>operator</span> <span>=</span>(<span>const</span> List<span>&amp;</span> RHS);
+
+    Iterator <span>insert</span>(<span>const</span> T<span>&amp;</span> i);                        <span>//Insert i</span>
+    Iterator <span>insert_and_add</span>(<span>const</span> T<span>&amp;</span> i);                <span>//Insert i</span>
+
+    T <span>Delete</span>(List<span>&lt;</span>T<span>&gt;::</span>Iterator iMarker);                <span>//delete node at marker</span>
+    <span>void</span> Print() <span>const</span>;
+    Iterator search(<span>const</span> T <span>&amp;</span>key) <span>const</span>;                <span>//return Iterator to</span>
+                                                        <span>//          node [key]</span>
+    Iterator <span>prev</span>(Iterator iMarker);                    <span>//previous node: marker</span>
+
+    <span>const</span> T<span>&amp;</span> <span>operator</span>[](<span>int</span> index) <span>const</span>;               <span>//const version of the</span>
+                                                        <span>//       operator [ ]</span>
+    T<span>&amp;</span> <span>operator</span>[](<span>int</span> index);                           <span>//return item at index</span>
+    Iterator begin() <span>const</span>;                             <span>//Iterator to head node</span>
+    Iterator end() <span>const</span>;                               <span>//Iterator to NULL</span>
+    Iterator last_node() <span>const</span>;                          <span>//Iterator to last node</span>
+    <span>bool</span> empty() <span>const</span> { <span>return</span> _head_ptr <span>==</span> nullptr; }
+    <span>template</span> <span>&lt;</span><span>class</span> <span>U</span><span>&gt;</span>                                  <span>//Note template arg U</span>
+    <span>friend</span> ostream<span>&amp;</span> <span>operator</span> <span>&lt;&lt;</span>(ostream<span>&amp;</span> outs, <span>const</span> List<span>&lt;</span>U<span>&gt;&amp;</span> l);
+    <span>int</span> size() <span>const</span> { <span>return</span> _size; }
+
+<span>private:</span>
+    node<span>&lt;</span>T<span>&gt;*</span> _head_ptr;
+    <span>bool</span> _order;
+    <span>bool</span> _unique;
+    <span>int</span> _size;
+};</pre>
+</div>
+</div>
+<h3><strong>Note:</strong></h3>
+<p>A few extras: this class has an _order and a _unique member variable which are initialized via the class constructor. These will have grave effects on the Insert function.</p>
+<h3><strong>Insert:</strong></h3>
+<p>There are two things to consider:</p>
+<ol>
+<li>_order: will the list be sorted in ascending (default) or the descending order?</li>
+<li>Is the list _unique? If not a unique list, duplicates are allowed. If this is a unique test, we will ADD the new item to the existing one. Obviously, this does not make sence for integer lists. Adding 4 to the existing 4 in the list (and getting an 8) is not reasonable, but with with lists of some other entities, this makes life easier. We'll explore some more flexible ways of dealing with duplicates at a later time</li>
+<li>Use InsertSorted, or InsertSorted_and_add linked list functions.</li>
+</ol>
+<p>&nbsp;</p>
+<h3><strong>_where_this_goes linkedlist function, a review:</strong></h3>
+<p>_where_this_goes give you the node BEFRORE an item should be inserted in a sorted list depending on whether the list is sorted in ascending or descending order. This function will return a NULL if the item will be inserted at the head of the list.</p>
+<p>&nbsp;</p>
+<h3><strong>_insert_sorted linkedlist function, a review:</strong></h3>
+<p>_insert_sorted will call _where_this_goes and inserts the item either at the head of the list or after the marker returned by the _where_this_goes function.</p>
+<h3><strong>_insert_sorted_and_add linkedlist function, a review:</strong></h3>
+<p>This function does the same task as _insert_sorted, except if the marker from _where_this_goes points to a node with the same _item as the item being inserted, the item will be added to the existing _item</p>
+<p>&nbsp;</p>
+<h3><strong>Testing:</strong></h3>
+<h4><strong>An Interactive Test Application</strong></h4>
+<p>You will create an interactive application that will create a SORTED list with five random numbers, show it, and present the following menu to the user:</p>
+<pre><span class="operator">{</span><span class="int">73</span><span class="operator">}-&gt;[</span><span class="int">67</span><span class="operator">]-&gt;[</span><span class="int">2</span><span class="operator">]-&gt;[</span><span class="int">16</span><span class="operator">]-&gt;[</span><span class="int">92</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd </pre>
+<p>The user will be able to add a random number, choose to add any number, delete the node at the current position, search for an item that may be in the list, or navigate the current position to the next or previous node, or to go to the home position, or the end of the list.</p>
+<h3><strong>Sample Run:</strong></h3>
+<p>Look for&nbsp;</p>
+<pre><span class="comment">/*
+ * [C]omments like this: (these are added after the program was run)
+ */</span></pre>
+<p>for explanations on activities in the sample run:</p>
+<p>&nbsp;</p>
+<pre><span class="operator">
+=======================================
+
+{</span><span class="int">98</span><span class="operator">}-&gt;[</span><span class="int">74</span><span class="operator">]-&gt;[</span><span class="int">60</span><span class="operator">]-&gt;[</span><span class="int">44</span><span class="operator">]-&gt;[</span><span class="int">20</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>I<span class="operator">]</span>nsert<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd r<span class="comment">
+
+/*
+ * [R]andom inserts a random number to the sorted list and places the cursor on it
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">98</span><span class="operator">]-&gt;{</span><span class="int">94</span><span class="operator">}-&gt;[</span><span class="int">74</span><span class="operator">]-&gt;[</span><span class="int">60</span><span class="operator">]-&gt;[</span><span class="int">44</span><span class="operator">]-&gt;[</span><span class="int">20</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>I<span class="operator">]</span>nsert<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd r<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">98</span><span class="operator">]-&gt;[</span><span class="int">94</span><span class="operator">]-&gt;[</span><span class="int">74</span><span class="operator">]-&gt;[</span><span class="int">60</span><span class="operator">]-&gt;{</span><span class="int">52</span><span class="operator">}-&gt;[</span><span class="int">44</span><span class="operator">]-&gt;[</span><span class="int">20</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>I<span class="operator">]</span>nsert<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd r<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">98</span><span class="operator">]-&gt;[</span><span class="int">94</span><span class="operator">]-&gt;[</span><span class="int">74</span><span class="operator">]-&gt;[</span><span class="int">60</span><span class="operator">]-&gt;[</span><span class="int">52</span><span class="operator">]-&gt;[</span><span class="int">44</span><span class="operator">]-&gt;[</span><span class="int">20</span><span class="operator">]-&gt;{</span><span class="int">18</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>I<span class="operator">]</span>nsert<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd r<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">98</span><span class="operator">]-&gt;[</span><span class="int">94</span><span class="operator">]-&gt;[</span><span class="int">74</span><span class="operator">]-&gt;[</span><span class="int">60</span><span class="operator">]-&gt;[</span><span class="int">52</span><span class="operator">]-&gt;[</span><span class="int">44</span><span class="operator">]-&gt;[</span><span class="int">20</span><span class="operator">]-&gt;[</span><span class="int">18</span><span class="operator">]-&gt;{</span><span class="int">13</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>I<span class="operator">]</span>nsert<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd r<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">98</span><span class="operator">]-&gt;[</span><span class="int">94</span><span class="operator">]-&gt;{</span><span class="int">85</span><span class="operator">}-&gt;[</span><span class="int">74</span><span class="operator">]-&gt;[</span><span class="int">60</span><span class="operator">]-&gt;[</span><span class="int">52</span><span class="operator">]-&gt;[</span><span class="int">44</span><span class="operator">]-&gt;[</span><span class="int">20</span><span class="operator">]-&gt;[</span><span class="int">18</span><span class="operator">]-&gt;[</span><span class="int">13</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>I<span class="operator">]</span>nsert<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd i<span class="int"> 45</span><span class="comment">
+
+/*
+ * [I]nsert inserts any number to the sorted list and places the cursor on it
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+: [</span><span class="int">98</span><span class="operator">]-&gt;[</span><span class="int">94</span><span class="operator">]-&gt;[</span><span class="int">85</span><span class="operator">]-&gt;[</span><span class="int">74</span><span class="operator">]-&gt;[</span><span class="int">60</span><span class="operator">]-&gt;[</span><span class="int">52</span><span class="operator">]-&gt;{</span><span class="int">45</span><span class="operator">}-&gt;[</span><span class="int">44</span><span class="operator">]-&gt;[</span><span class="int">20</span><span class="operator">]-&gt;[</span><span class="int">18</span><span class="operator">]-&gt;[</span><span class="int">13</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>I<span class="operator">]</span>nsert<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd i<span class="int"> 100</span><span class="comment">
+
+/*
+ * [I]nsert numbers for edge cases: The head and tail of the list
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+: {</span><span class="int">100</span><span class="operator">}-&gt;[</span><span class="int">98</span><span class="operator">]-&gt;[</span><span class="int">94</span><span class="operator">]-&gt;[</span><span class="int">85</span><span class="operator">]-&gt;[</span><span class="int">74</span><span class="operator">]-&gt;[</span><span class="int">60</span><span class="operator">]-&gt;[</span><span class="int">52</span><span class="operator">]-&gt;[</span><span class="int">45</span><span class="operator">]-&gt;[</span><span class="int">44</span><span class="operator">]-&gt;[</span><span class="int">20</span><span class="operator">]-&gt;[</span><span class="int">18</span><span class="operator">]-&gt;[</span><span class="int">13</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>I<span class="operator">]</span>nsert<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd i3<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+: [</span><span class="int">100</span><span class="operator">]-&gt;[</span><span class="int">98</span><span class="operator">]-&gt;[</span><span class="int">94</span><span class="operator">]-&gt;[</span><span class="int">85</span><span class="operator">]-&gt;[</span><span class="int">74</span><span class="operator">]-&gt;[</span><span class="int">60</span><span class="operator">]-&gt;[</span><span class="int">52</span><span class="operator">]-&gt;[</span><span class="int">45</span><span class="operator">]-&gt;[</span><span class="int">44</span><span class="operator">]-&gt;[</span><span class="int">20</span><span class="operator">]-&gt;[</span><span class="int">18</span><span class="operator">]-&gt;[</span><span class="int">13</span><span class="operator">]-&gt;{</span><span class="int">3</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>I<span class="operator">]</span>nsert<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd s45<span class="comment">
+
+/*
+ * [S]earch, as always, places the cursor on the key found in the list or 
+ *						leaves the cursor unchanged if key was not found.
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+: [</span><span class="int">100</span><span class="operator">]-&gt;[</span><span class="int">98</span><span class="operator">]-&gt;[</span><span class="int">94</span><span class="operator">]-&gt;[</span><span class="int">85</span><span class="operator">]-&gt;[</span><span class="int">74</span><span class="operator">]-&gt;[</span><span class="int">60</span><span class="operator">]-&gt;[</span><span class="int">52</span><span class="operator">]-&gt;{</span><span class="int">45</span><span class="operator">}-&gt;[</span><span class="int">44</span><span class="operator">]-&gt;[</span><span class="int">20</span><span class="operator">]-&gt;[</span><span class="int">18</span><span class="operator">]-&gt;[</span><span class="int">13</span><span class="operator">]-&gt;[</span><span class="int">3</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>I<span class="operator">]</span>nsert<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd x<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+----------</span> END<span class="operator"> ----------------
+
+
+
+=======================================</span>
+Press<span class="operator"> &lt;</span>RETURN<span class="operator">&gt;</span> to close<span class="keyword"> this</span> window<span class="operator">...</span>
+ </pre>
+<p><strong>NOTE:</strong></p>
+<p>Please test your class with both ascending and descending order.</p>
+<p>You cannot really test your class for the _unique argument yet, but that can wait.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

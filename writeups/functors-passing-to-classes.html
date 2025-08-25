@@ -1,0 +1,51 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Functors: Passing to classes</title>
+</head>
+<body>
+<p><span style="font-size: 18pt;"><strong>Functors as template arguments to classes</strong></span></p>
+<p><span style="font-size: 14pt; color: #0000ff;"><strong>In this project: </strong></span></p>
+<ul>
+<li><span style="font-size: 12pt;">Passing functors to classes,</span></li>
+<li><span style="font-size: 12pt;">Default template arguments,</span></li>
+<li><span style="font-size: 12pt;">static&nbsp;constants</span></li>
+</ul>
+<p><span style="font-size: 14pt;"><strong>Passing Functors to Functions: <span style="font-size: 10pt;">(<a id="" class="" title="Simple Functors: Passing to Functions" href="$CANVAS_OBJECT_REFERENCE$/assignments/g29dfcbc12f4c985a7f8e026245ff52e6" target="">Review</a>)</span></strong></span></p>
+<p>We have already seen how a functor can be passed to a function. The function will have a template argument for the functor class and the function will have an argument for the functor itself.</p>
+<p>The function calls the functor like a normal function:</p>
+<p>&nbsp;</p>
+<p><img src="https://www.dropbox.com/s/fgvlxovng8ig441/Screenshot%202015-11-07%2021.01.32.png?dl=1" alt="void SortArray( )" width="522" height="325" loading="lazy"></p>
+<p>Once the function is ready to accept a functor as an argument, you can call this function like this:</p>
+<p>Here, Bigger&lt;int&gt;( ) is the functor that gets passed into the Sort function and replaces cmp:</p>
+<p><img src="https://www.dropbox.com/s/0vsi2ea9x8tm6bw/Screenshot%202015-11-07%2021.14.50.png?dl=1" alt="void TestIntSort( )" width="492" height="317" loading="lazy"></p>
+<p>You can use this same&nbsp;method to call a function from inside a class member function. A function inside a class can call the Sort function and pass it either the Bigger or the Smaller functor. But this means that the class will always call this function in this same way. The user of the class cannot choose which functor is called unless we pass a template argument into the class. The next section discusses how to do this:</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt;"><strong>Passing Functors to Classes:</strong></span></p>
+<p>&nbsp;</p>
+<p>Let's say we have an Array class (FunctorArray) that fills an array of some type with values, is able to sort the items in the array and is also able to print them.</p>
+<p>But when we instantiate an&nbsp;object of this class, we want to be able to determine the sort order of the object's Sort function.</p>
+<p>So, we instantiate an object of FunctorArray with types int and Bigger&lt;int&gt;() as template arguments:</p>
+<p><img src="https://www.dropbox.com/s/i3f1dayolbinnaw/Screenshot%202015-11-08%2012.36.14.png?dl=1" alt="void TestFunctorArray( )" width="670" height="318" loading="lazy"></p>
+<p>Now, the FunctorArray will use the Bigger functor to compare values in the array and thus results in a ascending ordered list:</p>
+<p>Line 65 instantiates a FunctorArray using the Smaller functor resulting in an ascending list:</p>
+<p><img src="https://www.dropbox.com/s/5o9vg0gw4wz7o1i/Screenshot%202015-11-08%2012.37.04.png?dl=1" alt="output screenshot" width="288" height="147" loading="lazy"></p>
+<p>The first row of each group is the random list that the default constructor for the array created (which we print first) and the second row of each group is the array after we ran the SortArray function of the object.</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt;"><strong>Preparing a class to accept Functors as arguments:</strong></span></p>
+<p>Include a template argument named COMPARE and add a member variable named cmp of type COMPARE. This is how the class becomes aware of the user's intention to use one or the other Functor. In a general case, you may have many different functors that can be sent into the array.</p>
+<p>Now, the class "owns" an object of the Functor class with which the user instantiated the object:</p>
+<p><img src="https://www.dropbox.com/s/2mzkgcfx9r4d3us/Screenshot%202015-11-08%2012.47.25.png?dl=1" alt="class FunctorArray{ };" width="588" height="278" loading="lazy"></p>
+<p style="padding-left: 60px;"><span style="font-size: 10pt;"><span style="color: #993300;"><strong>Note:</strong></span> If no COMPARE is provided when the user instantiates the object, Bigger will be chosen by default. Here, Bigger is called a <strong>template default argument</strong>. this technique is very commonly used to make instantiating objects easier.</span></p>
+<p style="padding-left: 60px;"><span style="font-size: 10pt;"><span style="color: #993300;"><strong>Note:</strong></span>&nbsp;In order to use MAX to declare the array, MAX will have to be a <strong>"static const"</strong></span></p>
+<p style="padding-left: 60px;"><span style="font-size: 10pt;"><span style="color: #993300;"><strong><span style="text-decoration: underline;">Note</span>:</strong></span>&nbsp;Notice the <strong>space</strong> between the closing angular brackets for Bigger&lt;T&gt; and the closing angular brackets for the template. "Bigger&lt;T&gt; &gt;". We leave this space so that two closing angular brackets are not mistaken for an extraction operator "&gt;&gt;"</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;Having access to a COMPARE object, the class can simply call cmp like a normal function:</p>
+<p><img src="https://www.dropbox.com/s/pw3vxlxgxwp67f3/Screenshot%202015-11-08%2012.54.33.png?dl=1" alt="void FunctorArray::SortArray( );" width="551" height="320" loading="lazy"></p>
+<p>If the user instantiated this object with the Bigger functor, then cmp will refer to a Bigger object, if the user used Smaller to instantiate the object, then cmp is the Smaller object.</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt; color: #0000ff;">What's Next:</span></p>
+<p>You will be using this method of passing Functors into classes to tell a Map object how to deal with duplicate entries. <a id="" class="" title="Map Class" href="https://canvas.pasadena.edu/courses/979014/assignments/6835111" target="">&gt;&gt;</a></p>
+<p>&nbsp;</p>
+</body>
+</html>

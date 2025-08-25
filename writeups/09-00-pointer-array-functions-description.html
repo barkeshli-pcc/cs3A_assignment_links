@@ -1,0 +1,70 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 09_00 Pointer Array Functions Description</title>
+</head>
+<body>
+<h2 style="text-align: center;"><strong>Pointer Array Functions</strong></h2>
+<ul>
+<li>The following functions will be used in several projects in this term.</li>
+<li>Writ these functions and test them well.</li>
+<li>Please read the&nbsp;<a title="9.03 Pointer Projects Guidelines" href="$CANVAS_OBJECT_REFERENCE$/assignments/g87a6ddc69a2bf08e4d018639b47d31da" data-course-type="assignments" data-published="true">Pointer Projects Guidelines</a> before you begin.&nbsp;</li>
+<li>Do not use array notation. You will only use brackets when you declare an array</li>
+</ul>
+<pre style="margin: 0; line-height: 125%;"><span style="color: #008800;">const</span> <span style="color: #333399;">int</span> MINIMUM_CAPACITY <span style="color: #333333;">=</span> <span style="color: #0000dd;">3</span>;
+
+<span style="color: #008800;">template</span><span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+T<span style="color: #333333;">*</span> allocate(<span style="color: #333399;">int</span> capacity<span style="color: #333333;">=</span> MINIMUM_CAPACITY);            <span style="color: #888888;">//allocate 'capacity' </span>
+                                                        <span style="color: #888888;">//      elements. </span>
+                                                        <span style="color: #888888;">//  return array</span>
+
+<span style="color: #008800;">template</span><span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+T<span style="color: #333333;">*</span> reallocate(T<span style="color: #333333;">*</span> a, <span style="color: #333399;">int</span> size, <span style="color: #333399;">int</span> capacity);            <span style="color: #888888;">//take array, resize it </span>
+                                                        <span style="color: #888888;">//  return new array. </span>
+                                                        <span style="color: #888888;">//  delete old array</span>
+
+<span style="color: #008800;">template</span><span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+<span style="color: #333399;">void</span> print_array(T<span style="color: #333333;">*</span> a, <span style="color: #333399;">int</span> size, 
+            <span style="color: #333399;">int</span> capacity <span style="color: #333333;">=</span> <span style="color: #0000dd;">0</span>, ostream<span style="color: #333333;">&amp;</span> outs <span style="color: #333333;">=</span> cout);    <span style="color: #888888;">//prints </span>
+                                                        <span style="color: #888888;">//  (size/capacity)</span>
+                                                        <span style="color: #888888;">//  for debugging</span>
+
+<span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+<span style="color: #333399;">void</span> print(T<span style="color: #333333;">*</span> a, <span style="color: #333399;">unsigned</span> <span style="color: #333399;">int</span> how_many, 
+                                ostream<span style="color: #333333;">&amp;</span> outs <span style="color: #333333;">=</span> cout);  <span style="color: #888888;">//print array</span>
+
+<span style="color: #008800;">template</span><span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+T<span style="color: #333333;">*</span> search_entry(T<span style="color: #333333;">*</span> a, <span style="color: #333399;">int</span> size, <span style="color: #008800;">const</span> T<span style="color: #333333;">&amp;</span> find_me);      <span style="color: #888888;">//search for 'find me'</span>
+
+<span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+<span style="color: #333399;">int</span> search(T<span style="color: #333333;">*</span> a, <span style="color: #333399;">int</span> size, <span style="color: #008800;">const</span> T<span style="color: #333333;">&amp;</span> find_me);           <span style="color: #888888;">//search for 'find_me' </span>
+
+<span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+<span style="color: #333399;">void</span> shift_left(T<span style="color: #333333;">*</span> a, <span style="color: #333399;">int</span><span style="color: #333333;">&amp;</span> size, <span style="color: #333399;">int</span> shift_here);       <span style="color: #888888;">//shift left @ pos:</span>
+                                                        <span style="color: #888888;">//    erases @ pos</span>
+<span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+<span style="color: #333399;">void</span> shift_left(T<span style="color: #333333;">*</span> a, <span style="color: #333399;">int</span><span style="color: #333333;">&amp;</span> size, T<span style="color: #333333;">*</span> shift_here);        <span style="color: #888888;">//shift left @ pos: </span>
+                                                        <span style="color: #888888;">//    erases @ pos</span>
+
+<span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+<span style="color: #333399;">void</span> shift_right(T <span style="color: #333333;">*</span>a, <span style="color: #333399;">int</span> <span style="color: #333333;">&amp;</span>size, <span style="color: #333399;">int</span> shift_here);      <span style="color: #888888;">//shift right: </span>
+                                                        <span style="color: #888888;">//      make a hole</span>
+
+<span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+<span style="color: #333399;">void</span> shift_right(T <span style="color: #333333;">*</span>a, <span style="color: #333399;">int</span> <span style="color: #333333;">&amp;</span>size, T<span style="color: #333333;">*</span> shift_here);       <span style="color: #888888;">//shift right: </span>
+                                                        <span style="color: #888888;">//   make a hole</span>
+
+<span style="color: #008800;">template</span><span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+<span style="color: #333399;">void</span> copy_array(T <span style="color: #333333;">*</span>dest, <span style="color: #008800;">const</span> T<span style="color: #333333;">*</span> src, 
+                                <span style="color: #333399;">int</span> many_to_copy);      <span style="color: #888888;">//copy from src to dest</span>
+
+<span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+T<span style="color: #333333;">*</span> copy_array(<span style="color: #008800;">const</span> T <span style="color: #333333;">*</span>src, <span style="color: #333399;">int</span> size);                  <span style="color: #888888;">//return a </span>
+                                                        <span style="color: #888888;">//  copy of src</span>
+
+<span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+string array_string(<span style="color: #008800;">const</span> T <span style="color: #333333;">*</span>a, <span style="color: #333399;">int</span> size);              <span style="color: #888888;">//return array </span>
+                                                        <span style="color: #888888;">//  as a string</span>
+</pre>
+</body>
+</html>

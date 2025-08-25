@@ -1,0 +1,137 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 9.00 All you need to know about pointers: (for now)</title>
+</head>
+<body>
+<h2>POINTERS:</h2>
+<ul>
+<li>One of the most powerful tools in program design</li>
+<li><strong>If you don't respect them, they will kill you in your sleep</strong></li>
+</ul>
+<p>Pointers are variables who hold the address of other variables.</p>
+<pre><span class="type">
+int</span><span class="operator">*</span> p<span class="operator">;</span><span class="comment">              //declare an integer pointer. <br>                     //    p can hold the address of an int</span><span class="type">
+<br><img src="https://www.dropbox.com/s/qgewom9kv29jx0b/Screenshot%202017-08-31%2022.51.00.png?dl=1" width="286" height="217" loading="lazy"><br>int</span> x<span class="operator">;</span><span class="type">
+int</span> y<span class="operator">;</span><span class="type">
+int</span> a<span class="operator">[</span><span class="int">10</span><span class="operator">];</span>
+
+p<span class="operator"> = &amp;</span>x<span class="comment">             //p holds the address of x, p "points" to x
+<img src="https://www.dropbox.com/s/19h1947v69ti3p0/Screenshot%202017-08-31%2022.52.37.png?dl=1" loading="lazy"></span><span class="operator">
+<br><br>*</span>p<span class="operator"> =</span><span class="int"> 42</span><span class="comment">           //p is being dereferenced. <br>                  //      assign value 42 to the place p is pointing to
+<img src="https://www.dropbox.com/s/cdr0cxv73oi7si3/Screenshot%202017-08-31%2022.53.25.png?dl=1" loading="lazy"></span>
+<br><br>p<span class="operator"> = &amp;</span>y<span class="comment">             //p holds the address of y, p "points" to y
+<img src="https://www.dropbox.com/s/u185xdjmamuatih/Screenshot%202017-08-31%2022.54.25.png?dl=1" loading="lazy"></span><span class="operator">
+<br><br>*</span>p<span class="operator"> =</span><span class="int"> 9</span><span class="comment">           //p is being dereferenced. <br>                 //    assign value 9 to the place p is pointing to
+<img src="https://www.dropbox.com/s/knsgcq6qtkw95uc/Screenshot%202017-08-31%2022.55.05.png?dl=1" loading="lazy"></span>
+<br><br>p<span class="operator"> =</span> a<span class="operator">;<br><img src="https://www.dropbox.com/s/qcs2looog6xcw5z/Screenshot%202017-08-31%2023.00.42.png?dl=1" loading="lazy">
+<br><br>*</span>p<span class="operator"> =</span><span class="int"> 72</span><span class="operator">;</span>
+<img src="https://www.dropbox.com/s/xltgkdt343ucsh5/Screenshot%202017-08-31%2023.01.17.png?dl=1" width="857" height="128" loading="lazy">
+<br><br>p<span class="operator">++;</span><span class="comment">              //advance p to the next integer (next element in the array)
+<img src="https://www.dropbox.com/s/iikw8shp3iow0kd/Screenshot%202017-08-31%2023.02.21.png?dl=1" loading="lazy"><br></span><span class="operator"><br><br>*</span>p<span class="operator"> =</span><span class="int"> 0</span><span class="operator">;                //Place 0 in the cell p is pointing to.<br><img src="https://www.dropbox.com/s/xpw3chikv6cskfj/Screenshot%202017-08-31%2023.02.59.png?dl=1" loading="lazy"><br><img src="https://screenshot.net/oxvlofl" loading="lazy"></span></pre>
+<pre><span class="operator">(*</span>p<span class="operator">)++</span><span class="comment">                 //increment the contents of where p is pointing to<br><img src="https://www.dropbox.com/s/9b4imbna1nsg3x2/Screenshot%202017-08-31%2023.10.59.png?dl=1" loading="lazy"><br>
+<br><br></span><span class="operator">*(</span>p<span class="operator">+</span><span class="int">1</span><span class="operator">) =</span><span class="int"> 77</span><span class="comment">           //place 77 in the cell ONE cell away from p <br>                      //     [I don't want to see you do this!]<br></span><span class="operator"><img src="https://www.dropbox.com/s/lzxscrk7hgiwi52/Screenshot%202017-08-31%2023.11.44.png?dl=1" loading="lazy"><br><br><br></span></pre>
+<pre>Pointer arithmetics:<br>p<span class="operator"> +=</span><span class="int"> 2</span><span class="operator">;</span><span class="operator"> or</span> p<span class="operator"> =</span> p<span class="operator"> +</span><span class="int"> 2</span><span class="operator">;<br><img src="https://www.dropbox.com/s/piv4hniixhdkri2/Screenshot%202017-08-31%2023.21.20.png?dl=1" loading="lazy"><br><br>Pointer assignment, equality<br>p = p2    //point p2 to where p is pointing to<br>p == p2   //returns true if p and p2 are equal(!!): pointing to the same location<br><img src="https://www.dropbox.com/s/igpp4xzoo9x5ics/Screenshot%202017-09-02%2010.20.29.png?dl=1" width="887" height="225" loading="lazy"><br><br></span></pre>
+<h2><strong>Static v. Dynamic Variables:</strong></h2>
+<h4>A <strong>static</strong> variable is created (allocated) during compile time. Up to this point, you have always used static variables:</h4>
+<pre><span class="comment">//all these variables are allocated before the program begins to run. The system 
+//   knows what they are, how big they are, where they are BEFORE the program is run
+</span><span class="type">int</span> i<span class="operator">;</span><span class="type">
+double</span> d<span class="operator">;</span><span class="type">
+int</span> a<span class="operator">[</span><span class="int">10</span><span class="operator">];</span><span class="type">
+int</span><span class="operator">*</span> int_ptr<span class="operator">;</span></pre>
+<p>You will also notice (well, it's pretty obvoius) <span style="text-decoration: underline;">they all have names</span>.&nbsp;</p>
+<p>Take another look at the pointer variable:</p>
+<pre>int_ptr</pre>
+<p>&nbsp;this is a static variable. It's allocated at compile time. As far as allocation is concerned, there is no difference between a pointer and an int or bool.</p>
+<h4>A <strong>dynamic</strong> variable is not allocated until the program is already running. The programmer will allocate and deallocate (if he knows what's good for him) space as he needs them.</h4>
+<p>You allocate dynamic variables using the keyword new and deallocate them using the keyword delete (or delete[] if the variable you are deallocating is an array)</p>
+<pre><span class="type">int</span><span class="operator">*</span> int_ptr<span class="operator">;</span><span class="comment">           //a static pointer variable. It has a name: int_ptr.
+                        //    NEVER dereference or 
+                        //    even pass as argument an uninitialized pointer variable.
+</span>
+int_ptr<span class="operator"> =</span><span class="keyword"> new</span><span class="type"> int</span><span class="operator">;</span><span class="comment">      //an integer variable (with no name) was allocated on the heap.
+</span><span class="operator">
+*</span>int_ptr<span class="operator"> =</span><span class="int"> 12</span><span class="operator">;</span><span class="comment">          //the only way to access this int is through int_ptr.
+</span>cout<span class="operator">&lt;*</span>int_ptr<span class="operator">;</span><span class="comment">          //you can use *int_ptr (dereferenced pointer) just like an int.
+</span>swap<span class="operator">(*</span>int_ptr<span class="operator">,</span> b<span class="operator">);<br><br></span><span class="comment">int_ptr++;              //DON'T DO THAT! the next int is not yours to point to!!<br>*int_ptr = 51;
+
+                        //if you are going to point int_ptr somewhere else, make sure
+                        //      you are not losing track of the address of your int, 
+                        //      or it will get lost forever.
+</span><span class="type">int</span><span class="operator">*</span> hold_this<span class="operator"> =</span> int_ptr<span class="operator">;</span><span class="keyword">
+
+delete</span> int_ptr<span class="operator">;</span><span class="comment">         //once you are done using this no-name int, delete it
+                        //      or you will have a "leak" (Mother of all bugs.)
+
+                        //at this point, you have lost access to that int you created.
+                        //      in fact, that int no longer exists.
+                        //dereferencing a pointer to a non-existent variable will have 
+                        //      catastrophic results.</span></pre>
+<h4><strong>Dynamic allocation of arrays:</strong></h4>
+<pre><span class="type">
+int</span> size<span class="operator">;</span>
+cout<span class="operator">&lt;&lt;</span><span class="string">"how big of an array would you like? "</span><span class="operator">;</span>
+cin<span class="operator">&gt;&gt;</span>size<span class="operator">;</span>
+<br>
+int_ptr<span class="operator"> =</span><span class="keyword"> new</span><span class="type"> int</span><span class="operator">[</span>size<span class="operator">];</span><span class="comment">    //allocate an array of any size. The address of the array
+                            //      will be stored in int_ptr.
+                            //      the array itself does not have a name and the only
+                            //      way to access it is through int_ptr;
+
+                            
+<br><br></span><span class="flow">for</span><span class="operator"> (</span><span class="type">int</span> i<span class="operator">=</span><span class="int">0</span><span class="operator">;</span> i<span class="operator">&lt;</span>size<span class="operator">;</span> i<span class="operator">++){//initializing the array.
+    *</span>int_ptr<span class="operator"> =</span><span class="int"> 0</span><span class="operator">;</span>
+    int_ptr<span class="operator">++;</span><span class="comment">              //you just moved the pointer that pointed to the 
+                            //      start of  your array. 
+                            //      How are you going to find it again?
+                            //      yes, you can use pointer arithmetics to find your
+                            //      way back, but i would not recommend it.
+                            //      translation: DO NOT DO THIS!
+</span><span class="operator">}</span><span class="comment">
+                            
+<br><br><br><br>                            //here, you have int_pointer holding on to the start 
+                            //      of the array and walker, walks down the length
+                            //      of the array and initializes the cells one by one.
+                            //      a much better solution: Less chance of making a 
+                            //      mistake.<br></span><span class="type">int</span><span class="operator">*</span> walker<span class="operator"> =</span> int_ptr<span class="operator">;</span><span class="flow">
+for</span><span class="operator"> (</span><span class="type">int</span> i<span class="operator"> =</span><span class="int"> 0</span><span class="operator">;</span> i<span class="operator">&lt;</span>size<span class="operator">;</span> i<span class="operator">++){
+    *</span>walker<span class="operator"> =</span><span class="int"> 0</span><span class="operator">;</span>
+    walker<span class="operator"> ++;</span><span class="comment">              //walker is now pointing to the next element of the array
+</span><span class="operator">}</span><span class="comment">
+<br><br>
+//you can use this walker to initialize, add up, print, search the array:
+</span><span class="flow">for</span><span class="operator"> (</span><span class="type">int</span> i<span class="operator">=</span><span class="int"> 0</span><span class="operator">;</span> i<span class="operator">&lt;</span>size<span class="operator">;</span> i<span class="operator">++){</span><span class="comment">
+    //do something with *walker: 
+    //  examin it, add it, change it...;
+</span>    
+    walker<span class="operator">++;</span><span class="comment">               //look at the next element of the array
+</span><span class="operator">}</span><span class="comment">
+
+<br><br>//This is how we access arrays. And ONLY this way, unless you are instructed otherwise.
+
+//The best thing you can do when you are learning pointers is to let go of your 
+//      "array thinking" Think in pointers:
+<br></span><span class="flow">while</span><span class="operator"> (*</span>walker<span class="operator"> !=</span> LAST_ELEMENT<span class="operator">){...}</span><span class="flow">
+
+for</span><span class="operator"> (</span><span class="type">int</span> i<span class="operator">=</span><span class="int"> 0</span><span class="operator">;</span> i<span class="operator">&lt;</span>size<span class="operator">;</span> i<span class="operator">++,</span> walker<span class="operator">++){...}
+
+... *</span>walker<span class="operator">++ =</span><span class="int"> 0</span><span class="operator">;</span><span class="comment">                  //set *walker to zero, (set the cell walker is 
+                                    //      pointing to, to zero.
+                                    //      then (postfix) increment walker
+</span><span class="flow">
+if</span><span class="operator"> (</span>walker<span class="operator"> ==</span> last_position<span class="operator">){...}</span><span class="comment">   //two pointers are equal if they are both 
+                                    //      pointing to the same location<br><br>delete[] int_ptr;                   //deallocate the array. <br>                                    //       note the [ ] after delete</span></pre>
+<p>&nbsp;</p>
+<h4>
+<strong>DANGER</strong>: &nbsp;All this talk of pointers and dynamic arrays leads some impressionabe youth to think that</h4>
+<ul>
+<li>a. pointers are inherently dynamic</li>
+<li>b. anything a pointer points to is dynamic</li>
+<li>c. pointer "means" dynamic</li>
+</ul>
+<p>FALSE, FALSE, FALSE!</p>
+<p>It's only dynamic if it was created (allocated) using the 'new' keyword&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

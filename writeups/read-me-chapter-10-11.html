@@ -1,0 +1,41 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: READ ME (Chapter 10, 11)</title>
+</head>
+<body>
+<h2 style="text-align: center;">Design guidelines for classes.</h2>
+<p>&nbsp;</p>
+<p>Notes:</p>
+<ul>
+<li>Please review the <a id="" class=" instructure_file_link" title="PosInt 2.zip" href="$IMS-CC-FILEBASE$/PosInt%202.zip?canvas_download=1&amp;canvas_qs_wrap=1" target="" data-api-endpoint="https://canvas.pasadena.edu/api/v1/courses/1124045/files/72368843" data-api-returntype="File">PosInt</a>&nbsp;project very carefully.</li>
+<li>With every class you write for this course (or any course you take with me):
+<ul>
+<li>Include all the constructors that are necessary. Don't be frugal with constructors. They make your classes easier to work with if they are designed well.</li>
+<li>Include all the relevant operators. At the very least insertion and extraction operators where applicable.</li>
+<li>All object arguments are passed by reference.</li>
+<li>the const keyword is used everywhere they are applicable for function and operator parameters AND the functions themselves. (functions that do not change the sate of the class must be marked with the const keyword.)</li>
+<li>(Almost) all member variables are private.</li>
+<li><strong>We do not use protected variables and functions.</strong></li>
+<li>We NEVER print or input data from inside a class, except from an input and output functions</li>
+<li>The class will not provide user interface (switch case, get user choices, and run functions) These belong in in the main function or in a class designed for user interface.</li>
+<li>
+<strong>Error handling:</strong>
+<ul>
+<li>A private member variable _error and four functions is_error(), error(), reset() and error_description() manage the error handing in all objects:&nbsp;</li>
+<li>int or bool private member variable _error: This variable will be set when the class enters an error state.
+<ul>
+<li>In every constructor, mutator, and input function, you will call the is_error() function to check for errors and will set the _error variable to the appropriate value: _error = is_error();</li>
+</ul>
+</li>
+<li>is_error() will check for errors in the object and return an int (or bool) corresponding to the error state it discovers: 0 for no error.</li>
+<li>error_description will return a string describing the error that has occur</li>
+<li>reset() will reset the object and the error state back to zero</li>
+<li>In main (or any calling function), you may (should) call the object's error( ) function and if it returns a non-zero value, you will call the error_description( ) function of the class and report the error to the user. You do not show the class' erroneous value when there is an error. &nbsp;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</body>
+</html>

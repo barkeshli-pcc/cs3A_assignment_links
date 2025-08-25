@@ -1,0 +1,96 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 9.01 All You Need To Know About Pointers (Episode II)</title>
+</head>
+<body>
+<h2><strong>Pointers and Functions:</strong></h2>
+<p>Rules about passing pointers into functions is no different from passing any other type of variable.</p>
+<h3><strong>Passing a pointer by value:</strong></h3>
+<p><strong>Pointers can be used to alter variables they point to:</strong></p>
+<p>When a pointer is sent to a function by value, the function can access the memory addressed by the pointer and make changes to it:</p>
+<pre><span class="type">void</span> swap<span class="operator">(</span><span class="type">int</span><span class="operator">*</span> a_ptr<span class="operator">,</span><span class="type"> int</span><span class="operator">*</span> b_ptr<span class="operator">){</span><span class="type">
+    int</span> temp<span class="operator"> = *</span>a_ptr<span class="operator">;
+    *</span>a_ptr<span class="operator"> =</span> b_ptr<span class="operator">;</span><span class="comment">             //memroy addressed by the pointers
+</span><span class="operator">    *</span>b_ptr<span class="operator"> =</span> temp<span class="operator">;</span><span class="comment">              //can be accessed and altered
+</span><span class="operator">}</span></pre>
+<p>It is true that a_ptr and b_ptr in this example are passed by value, but since they contain addresses of actual variables in the caller function, they can be used to access and alter the actual variables.</p>
+<p><strong>Function cannot change the address the pointer is pointing to:</strong></p>
+<p>And since a pass by value pointer is only the copy of the address of the variable, if the address in the copy changes, that does not change the value of the pointer used in the call.&nbsp;</p>
+<p>Consider the StrLen function for example:</p>
+<pre><span class="type">int</span><span class="keyword"> main</span><span class="operator">(</span><span class="type">int</span> argc<span class="operator">,</span><span class="type"> char</span><span class="operator"> *</span>argv<span class="operator">[])
+{</span>
+    cout<span class="operator"> &lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string"> "======================="</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="type">
+
+    char</span><span class="operator">*</span> str<span class="operator"> =</span><span class="keyword"> new</span><span class="type"> char</span><span class="operator">[</span><span class="int">50</span><span class="operator">];</span>
+    strcpy<span class="operator">(</span>str<span class="operator">,</span><span class="string"> "some string in the calling function."</span><span class="operator">);</span><span class="type">
+
+    int</span> len<span class="operator"> =</span> StrLen<span class="operator">(</span>str<span class="operator">);</span>
+    cout<span class="operator">&lt;&lt;</span><span class="string">"length of string: "</span><span class="operator">&lt;&lt;</span>len<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+
+    cout<span class="operator">&lt;&lt;</span><span class="string">"Let's see if str still points to the beginning of the string: "</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    cout<span class="operator">&lt;&lt;</span><span class="string">"here is str: ["</span><span class="operator">&lt;&lt;</span>str<span class="operator">&lt;&lt;</span><span class="string">"]"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+
+    cout<span class="operator"> &lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string"> "======================="</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="flow">
+    return</span><span class="int"> 0</span><span class="operator">;
+}</span><span class="type">
+
+int</span> StrLen<span class="operator">(</span><span class="type">char</span><span class="operator">*</span> s<span class="operator">){</span><span class="type">
+    int</span> len<span class="operator"> =</span><span class="int"> 0</span><span class="operator">;</span><span class="flow">
+    for</span><span class="operator"> (;*</span>s<span class="operator">!=</span>NULL<span class="operator">;</span>s<span class="operator">++){</span><span class="comment">    //s is changing. But since s is being passed
+</span>        len<span class="operator">++;</span><span class="comment">              //by value, it's only the copy that is changing
+</span><span class="operator">    }</span><span class="flow">
+    return</span> len<span class="operator">;
+}</span></pre>
+<p>Here is the output of this little program:</p>
+<pre><span class="operator">=======================</span>
+length of string<span class="operator">:</span><span class="int"> 36</span>
+
+Let<span class="char">'s see if str still points to the beginning of the string: 
+here is str: [some string in the calling function.]
+
+
+=======================</span></pre>
+<p>The fact that we can print str after calling StrLen shows us that the function has not changed the address stored in str in main. Even though the function is clearly changes the argument s inside the for loop.</p>
+<p>&nbsp;</p>
+<h3><strong>Passing pointer By Reference:</strong></h3>
+<p>&nbsp;In some circumstances, we need the function to be able to change where the pointer argument is pointing to. Here is a bad example of that:</p>
+<pre><span class="type">int</span><span class="keyword"> main</span><span class="operator">(</span><span class="type">int</span> argc<span class="operator">,</span><span class="type"> char</span><span class="operator"> *</span>argv<span class="operator">[])
+{</span>
+    cout<span class="operator"> &lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string"> "======================="</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="type">
+
+    char</span><span class="operator">*</span> str<span class="operator">;</span><span class="comment">      //uninitialized pointer
+</span>    Allocate<span class="operator">(</span>str<span class="operator">,</span><span class="int"> 30</span><span class="operator">);
+    ....</span>
+
+
+    cout<span class="operator"> &lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string"> "======================="</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="flow">
+    return</span><span class="int"> 0</span><span class="operator">;
+}</span><span class="type">
+void</span> Allocate<span class="operator">(</span><span class="type">char</span><span class="operator">* &amp;</span>s<span class="operator">,</span><span class="type"> int</span> size<span class="operator">){</span>
+    s<span class="operator"> =</span><span class="keyword"> new</span><span class="type"> char</span><span class="operator">[</span>size<span class="operator">];
+}</span></pre>
+<p>Think about the reason why this is not such a great example.</p>
+<p>Here, the str pointer goes into the function uninitialized, but comes back pointing to a block of 30 characters.</p>
+<p>&nbsp;</p>
+<h3><strong>Return pointers from functions:</strong></h3>
+<p>This allocate function would be much more elegant if it were&nbsp;done the right way:</p>
+<pre><span class="type">int</span><span class="keyword"> main</span><span class="operator">(</span><span class="type">int</span> argc<span class="operator">,</span><span class="type"> char</span><span class="operator"> *</span>argv<span class="operator">[])
+{</span>
+    cout<span class="operator"> &lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string"> "======================="</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="type">
+
+    char</span><span class="operator">*</span> str<span class="operator">;</span><span class="comment">      //uninitialized pointer
+</span>    str<span class="operator"> =</span> Allocate<span class="operator">(</span><span class="int">30</span><span class="operator">);
+    ....</span>
+
+
+    cout<span class="operator"> &lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string"> "======================="</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="flow">
+    return</span><span class="int"> 0</span><span class="operator">;
+}</span><span class="type">
+char</span><span class="operator">*</span> Allocate<span class="operator">(</span><span class="type">int</span> size<span class="operator">){</span><span class="type">
+    char</span><span class="operator">*</span> s<span class="operator"> =</span><span class="keyword"> new</span><span class="type"> char</span><span class="operator">[</span>size<span class="operator">];</span><span class="flow">
+    return</span> s<span class="operator">;
+}</span>&nbsp;</pre>
+<p class="p1">Many of you have dreamt of being able to return arrays from functions. Now you can do just that. May all your wishes come true.</p>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 13_03_simple_list_class</title>
+</head>
+<body>
+<h2 style="text-align: center;"><strong>Simple List Class</strong></h2>
+<p>Having implemented our <a title="13_00_linked_list_functions: " href="$CANVAS_OBJECT_REFERENCE$/assignments/gb7847711048849629dc0e802d436d26a">linked&nbsp;List functions</a>, we are now ready to design and implement a simple Linked List class:</p>
+<h3><strong>List Class:</strong></h3>
+
+<div style="background: #ffffff; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;"><span style="color: #008800; ">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800; ">class</span> <span style="color: #bb0066; ">ITEM_TYPE</span><span style="color: #333333;">&gt;</span>
+<span style="color: #008800; ">class</span> <span style="color: #bb0066; ">List</span>
+{
+<span style="color: #997700; ">public:</span>
+    List();
+
+    <span style="color: #333333;">~</span>List();
+    List(<span style="color: #008800; ">const</span> List<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;</span> <span style="color: #333333;">&amp;</span>copyThis);
+    List<span style="color: #333333;">&amp;</span> <span style="color: #008800; ">operator</span> <span style="color: #333333;">=</span>(<span style="color: #008800; ">const</span> List<span style="color: #333333;">&amp;</span> RHS);
+
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> insert_head(ITEM_TYPE i);           <span style="color: #888888;">//inset i at the head of list</span>
+
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> insert_after(ITEM_TYPE i,           <span style="color: #888888;">//insert i after iMarker</span>
+                                 node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> iMarker);
+
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> insert_before(ITEM_TYPE i,          <span style="color: #888888;">//insert i before iMarker</span>
+                                  node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> iMarker);
+
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> insert_sorted(ITEM_TYPE i);         <span style="color: #888888;">//insert i. Assume sorted list</span>
+
+
+
+    ITEM_TYPE <span style="color: #0066bb; ">Delete</span>(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> iMarker);         <span style="color: #888888;">//delete node pointed to by iMarker</span>
+
+
+    <span style="color: #333399; ">void</span> Print() <span style="color: #008800; ">const</span>;                                 <span style="color: #888888;">//print the list</span>
+
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> search(<span style="color: #008800; ">const</span> ITEM_TYPE <span style="color: #333333;">&amp;</span>key);      <span style="color: #888888;">//return pointer to node containing</span>
+                                                        <span style="color: #888888;">//  key. NULL if not there</span>
+
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> prev(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> iMarker);    <span style="color: #888888;">//get the previous node to iMarker</span>
+
+
+    ITEM_TYPE<span style="color: #333333;">&amp;</span> <span style="color: #008800; ">operator</span>[](<span style="color: #333399; ">int</span> index);                   <span style="color: #888888;">//return the item at index</span>
+
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> begin() <span style="color: #008800; ">const</span>;                     <span style="color: #888888;">//return the head of the list</span>
+
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> end() <span style="color: #008800; ">const</span>;                       
+                                                        
+    <span style="color: #333399; ">bool</span> empty() <span style="color: #008800; ">const</span> { <span style="color: #008800; ">return</span> head <span style="color: #333333;">==</span> nullptr; }      
+    
+    <span style="color: #333399; ">int</span> size() <span style="color: #008800; ">const</span>{ <span style="color: #008800; ">return</span> _size; }
+    <span style="color: #008800; ">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800; ">class</span> <span style="color: #bb0066; ">U</span><span style="color: #333333;">&gt;</span>
+    <span style="color: #008800; ">friend</span> ostream<span style="color: #333333;">&amp;</span> <span style="color: #008800; ">operator</span> <span style="color: #333333;">&lt;&lt;</span>(ostream<span style="color: #333333;">&amp;</span> outs,          <span style="color: #888888;">//insertion operator for list</span>
+                                <span style="color: #008800; ">const</span> List<span style="color: #333333;">&lt;</span>U<span style="color: #333333;">&gt;&amp;</span> l);
+<span style="color: #997700; ">private:</span>
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> head;
+    <span style="color: #333399; ">int</span> _size;
+};
+</pre>
+</div>
+<pre><span class="keyword"><br><br></span></pre>
+<h3><strong>Testing:</strong></h3>
+<h4><strong>An Interactive Test Application</strong></h4>
+<p>You will create an interactive application that will create a list with five random numbers, show it, and present the following menu to the user:</p>
+<pre><span class="operator">{</span><span class="int">6</span><span class="operator">}-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [S]earch [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd </pre>
+<p>The user will be able to add a random number after the current position (marked by braces), insert a number before or after the current position, delete the node at the current position, search for an item that may be in the list, or navigate the current position to the next or previous node, or to go to the home position, or the end of the list.</p>
+<p><span style="color: #ff0000;"><strong>Note:</strong> </span>The cursor position is maintained in the test function and <span style="background-color: #ffff00;">NOT</span> in the List class. The posiiton of the cursor is shown by a pair of braces '{ }' and it will be adjusted appropriately as operations are executed. Deleting a node will cause the cursor position to be set to the beginning of the list. (Why is that?)</p>
+<h3>
+<span style="color: #ff0000;"><strong>Note:</strong></span> Can you see the problem with this class? How vulnerable is this class to outside intrusion? How serious is this problem?</h3>
+<h3><strong>Sample Run:</strong></h3>
+<p>Look for&nbsp;</p>
+<pre><span class="comment">/*
+ * [C]omments like this: (these are added after the program was run)
+ */</span></pre>
+<p>for explanations on activities in the sample run:</p>
+<p>&nbsp;</p>
+<pre><span class="operator">=======================================</span><span class="comment">
+/*
+ * Initial list and menu. Cursor is at the head:
+ */</span><span class="operator">
+{</span><span class="int">6</span><span class="operator">}-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd n<span class="comment">
+
+/*
+ * [N]ext: once you get to the end of the list, the cursor will stay there.
+ * 		It will not fall off
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;{</span><span class="int">54</span><span class="operator">}-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd n<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;{</span><span class="int">6</span><span class="operator">}-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd n<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;{</span><span class="int">35</span><span class="operator">}-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd n<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;{</span><span class="int">17</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd n<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;{</span><span class="int">17</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd n<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;{</span><span class="int">17</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd n<span class="operator">]</span>n<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;{</span><span class="int">17</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd<span class="operator"> 
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+??
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;{</span><span class="int">17</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd<span class="operator"> 
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;{</span><span class="int">17</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd n<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;{</span><span class="int">17</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd p<span class="comment">
+
+/*
+ * [P]revious: once you get to the begining of the list, 
+ * 		the cursor will stay there.
+ *      It will not fall off
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;{</span><span class="int">35</span><span class="operator">}-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd p<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;{</span><span class="int">6</span><span class="operator">}-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd p<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;{</span><span class="int">54</span><span class="operator">}-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd p<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">6</span><span class="operator">}-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd p<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">6</span><span class="operator">}-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd p<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">6</span><span class="operator">}-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd p<span class="comment">
+
+/*
+ * [R]andom: inserts a random item after the current position.
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">6</span><span class="operator">}-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd r<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;{</span><span class="int">90</span><span class="operator">}-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd r<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">90</span><span class="operator">]-&gt;{</span><span class="int">80</span><span class="operator">}-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd r<span class="comment">
+
+/*
+ * [A]fter: inserts an item after the current position
+ */</span><span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">90</span><span class="operator">]-&gt;[</span><span class="int">80</span><span class="operator">]-&gt;{</span><span class="int">71</span><span class="operator">}-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd a<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+:</span><span class="int"> 77</span><span class="operator">
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">90</span><span class="operator">]-&gt;[</span><span class="int">80</span><span class="operator">]-&gt;[</span><span class="int">71</span><span class="operator">]-&gt;{</span><span class="int">77</span><span class="operator">}-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd n<span class="comment">
+
+/*
+ * [B]efore: inserts an item before the current position
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">90</span><span class="operator">]-&gt;[</span><span class="int">80</span><span class="operator">]-&gt;[</span><span class="int">71</span><span class="operator">]-&gt;[</span><span class="int">77</span><span class="operator">]-&gt;{</span><span class="int">54</span><span class="operator">}-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd b<span class="comment">
+
+/*
+ * [D]elete: deletes the item at the current position and resets position of cursor</span><span class="comment">
+ *		NOTE: deleting on an empty list does not cause a crash.
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+:</span><span class="int"> 55</span><span class="operator">
+[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">90</span><span class="operator">]-&gt;[</span><span class="int">80</span><span class="operator">]-&gt;[</span><span class="int">71</span><span class="operator">]-&gt;[</span><span class="int">77</span><span class="operator">]-&gt;{</span><span class="int">55</span><span class="operator">}-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">6</span><span class="operator">}-&gt;[</span><span class="int">90</span><span class="operator">]-&gt;[</span><span class="int">80</span><span class="operator">]-&gt;[</span><span class="int">71</span><span class="operator">]-&gt;[</span><span class="int">77</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">90</span><span class="operator">}-&gt;[</span><span class="int">80</span><span class="operator">]-&gt;[</span><span class="int">71</span><span class="operator">]-&gt;[</span><span class="int">77</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">80</span><span class="operator">}-&gt;[</span><span class="int">71</span><span class="operator">]-&gt;[</span><span class="int">77</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">71</span><span class="operator">}-&gt;[</span><span class="int">77</span><span class="operator">]-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">77</span><span class="operator">}-&gt;[</span><span class="int">54</span><span class="operator">]-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">54</span><span class="operator">}-&gt;[</span><span class="int">6</span><span class="operator">]-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">6</span><span class="operator">}-&gt;[</span><span class="int">35</span><span class="operator">]-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">35</span><span class="operator">}-&gt;[</span><span class="int">17</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">17</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="comment">
+
+/*
+ * [D]elete: on an empty list does not cause a crash
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="comment">
+
+/*
+ * [R]andom: on an empty list will add a random number at the head of the list
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd r<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">99</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="comment">
+
+/*
+ * [A]fter: on an empty list will add a number at the head of the list
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd a<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+:</span><span class="int"> 44</span><span class="operator">
+{</span><span class="int">44</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd d<span class="comment">
+
+/*
+ * [B]efore: on an empty list will add a number at the head of the list
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd b<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+:</span><span class="int"> 33</span><span class="operator">
+{</span><span class="int">33</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd r<span class="operator">  
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">33</span><span class="operator">]-&gt;{</span><span class="int">99</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd r<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">33</span><span class="operator">]-&gt;[</span><span class="int">99</span><span class="operator">]-&gt;{</span><span class="int">13</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd r<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">33</span><span class="operator">]-&gt;[</span><span class="int">99</span><span class="operator">]-&gt;[</span><span class="int">13</span><span class="operator">]-&gt;{</span><span class="int">16</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd r<span class="comment">
+
+/*
+ * [H]ome and [E]nd take the current position to the begining 
+ *		and the end of the list
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">33</span><span class="operator">]-&gt;[</span><span class="int">99</span><span class="operator">]-&gt;[</span><span class="int">13</span><span class="operator">]-&gt;[</span><span class="int">16</span><span class="operator">]-&gt;{</span><span class="int">40</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd h<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+{</span><span class="int">33</span><span class="operator">}-&gt;[</span><span class="int">99</span><span class="operator">]-&gt;[</span><span class="int">13</span><span class="operator">]-&gt;[</span><span class="int">16</span><span class="operator">]-&gt;[</span><span class="int">40</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd e<span class="comment">
+
+/*
+ * e[x]it: will exit the proogram
+ */</span><span class="operator">
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+[</span><span class="int">33</span><span class="operator">]-&gt;[</span><span class="int">99</span><span class="operator">]-&gt;[</span><span class="int">13</span><span class="operator">]-&gt;[</span><span class="int">16</span><span class="operator">]-&gt;{</span><span class="int">40</span><span class="operator">}-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator">  [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd x<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+----------</span> END<span class="operator"> ----------------</span></pre>
+<p>Please Note:&nbsp;</p>
+<p>The above test did not have the search function in the menu. So, here it is:&nbsp;</p>
+<pre><span class="comment">/*
+ * [S]earch will move the cursor to the position of the key if it is found. No change 
+ *         in cursor position if key is not found in the list.
+ */</span><span class="operator">
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd s<span class="int"> 99</span><span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+: [</span><span class="int">33</span><span class="operator">]-&gt;{</span><span class="int">99</span><span class="operator">}-&gt;[</span><span class="int">13</span><span class="operator">]-&gt;[</span><span class="int">16</span><span class="operator">]-&gt;[</span><span class="int">40</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd s16<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+: [</span><span class="int">33</span><span class="operator">]-&gt;[</span><span class="int">99</span><span class="operator">]-&gt;[</span><span class="int">13</span><span class="operator">]-&gt;{</span><span class="int">16</span><span class="operator">}-&gt;[</span><span class="int">40</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd s33<span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+: {</span><span class="int">33</span><span class="operator">}-&gt;[</span><span class="int">99</span><span class="operator">]-&gt;[</span><span class="int">13</span><span class="operator">]-&gt;[</span><span class="int">16</span><span class="operator">]-&gt;[</span><span class="int">40</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator">  [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator">  [</span>N<span class="operator">]</span> Next<span class="operator">  [</span>H<span class="operator">]</span>ome<span class="operator">  [</span>E<span class="operator">]</span>nd s<span class="operator">-</span><span class="int">42</span><span class="operator">
+
+..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..   ..
+: {</span><span class="int">33</span><span class="operator">}-&gt;[</span><span class="int">99</span><span class="operator">]-&gt;[</span><span class="int">13</span><span class="operator">]-&gt;[</span><span class="int">16</span><span class="operator">]-&gt;[</span><span class="int">40</span><span class="operator">]-&gt;|||
+[</span>R<span class="operator">]</span>andom<span class="operator"> [</span>A<span class="operator">]</span>fter<span class="operator"> [</span>B<span class="operator">]</span>efore<span class="operator"> [</span>D<span class="operator">]</span>elete<span class="operator"> [</span>S<span class="operator">]</span>earch<span class="operator"> [</span>P<span class="operator">]</span> Previous<span class="operator"> [</span>N<span class="operator">]</span> Next<span class="operator"> [</span>H<span class="operator">]</span>ome<span class="operator"> [</span>E<span class="operator">]</span>nd </pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

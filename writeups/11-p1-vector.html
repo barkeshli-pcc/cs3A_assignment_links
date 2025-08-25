@@ -1,0 +1,63 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 11_p1_vector</title>
+</head>
+<body>
+<h2 style="text-align: center;"><strong>11.P1 Vector Class</strong></h2>
+<p><a title="READ ME (Chapter 10, 11)" href="$CANVAS_OBJECT_REFERENCE$/assignments/gc9baabedc65f6aa37e060beacf65cccb" data-api-endpoint="https://canvas.pasadena.edu/api/v1/courses/1142591/assignments/9956268" data-api-returntype="Assignment">READ ME (Chapter 10, 11)</a></p>
+<p>This is just the "<a title="09.P6 A Add Entry" href="$CANVAS_OBJECT_REFERENCE$/assignments/g3eb9a6f5640ed8c6240d330dddb1ca8c" data-api-endpoint="https://canvas.pasadena.edu/api/v1/courses/1142591/assignments/9956117" data-api-returntype="Assignment">add_entry</a>" project in a class.</p>
+<p>Use templates if it's been covered in your class, or use a typedef. Do not make this a vector of doubles as the book says.Your Vector class will use the add_entry functions written in previous projects to implement a dynamic list class.</p>
+<p>Your class must have default constructors, operators, big three, etc.</p>
+<p>Your class will have a _capacity and a _size member variable which will hold the space allocated and the space used respectively.</p>
+<p>Define appropriate operators including +, +=, &lt;&lt;, &gt;&gt;, etc.</p>
+<p>&nbsp;</p>
+<div style="background: #ffffff; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;"><span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+<span style="color: #008800;">class</span> <span style="color: #bb0066;">Vector</span>{
+<span style="color: #997700;">public:</span>
+
+    Vector(<span style="color: #333399;">int</span> capacity <span style="color: #333333;">=</span> <span style="color: #0000dd;">100</span>);
+    Vector(T <span style="color: #333333;">*</span>arr, <span style="color: #333399;">int</span> size);
+    <span style="color: #888888;">// big three:</span>
+    ...
+    <span style="color: #888888;">//member access functions:</span>
+    T<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> [](<span style="color: #333399;">int</span> index);
+    <span style="color: #008800;">const</span> T<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> [](<span style="color: #333399;">int</span> index) <span style="color: #008800;">const</span>;
+
+    T<span style="color: #333333;">&amp;</span> at(<span style="color: #333399;">int</span> index);              <span style="color: #888888;">//return reference to item at position index</span>
+    <span style="color: #008800;">const</span> T<span style="color: #333333;">&amp;</span> at(<span style="color: #333399;">int</span> index) <span style="color: #008800;">const</span>;  <span style="color: #888888;">//return a const item at position index</span>
+
+    T<span style="color: #333333;">&amp;</span> front();                         <span style="color: #888888;">//return item at position 0.</span>
+    T<span style="color: #333333;">&amp;</span> back();                          <span style="color: #888888;">//return item at the last position</span>
+
+
+    <span style="color: #888888;">//Push and Pop functions:</span>
+    Vector<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">+=</span>(<span style="color: #008800;">const</span> T<span style="color: #333333;">&amp;</span> item); <span style="color: #888888;">//push_back</span>
+    <span style="color: #333399;">void</span> <span style="color: #0066bb;">push_back</span>(<span style="color: #008800;">const</span> T<span style="color: #333333;">&amp;</span> item);      <span style="color: #888888;">//append to the end</span>
+    T <span style="color: #0066bb;">pop_back</span>();                       <span style="color: #888888;">//remove last item and return it</span>
+
+
+    <span style="color: #888888;">//Insert and Erase:</span>
+    <span style="color: #333399;">void</span> <span style="color: #0066bb;">insert</span>(<span style="color: #333399;">int</span> insert_here, <span style="color: #008800;">const</span> T<span style="color: #333333;">&amp;</span> insert_this); <span style="color: #888888;">//insert at pos</span>
+    <span style="color: #333399;">void</span> <span style="color: #0066bb;">erase</span>(<span style="color: #333399;">int</span> erase_this_index);        <span style="color: #888888;">//erase item at position</span>
+    <span style="color: #333399;">int</span> <span style="color: #0066bb;">index_of</span>(<span style="color: #008800;">const</span> T<span style="color: #333333;">&amp;</span> item);             <span style="color: #888888;">//search for item. retur index.</span>
+
+    <span style="color: #888888;">//size and capacity:</span>
+    <span style="color: #333399;">void</span> <span style="color: #0066bb;">set_size</span>(<span style="color: #333399;">int</span> size);              <span style="color: #888888;">//enlarge the vector to this size</span>
+    <span style="color: #333399;">void</span> <span style="color: #0066bb;">set_capacity</span>(<span style="color: #333399;">int</span> capacity);      <span style="color: #888888;">//allocate this space</span>
+    <span style="color: #333399;">int</span> size() <span style="color: #008800;">const</span> {<span style="color: #008800;">return</span> _how_many;}  <span style="color: #888888;">//return _size</span>
+    <span style="color: #333399;">int</span> capacity() <span style="color: #008800;">const</span> {<span style="color: #008800;">return</span> _capacity;} <span style="color: #888888;">//return _capacity</span>
+
+    <span style="color: #333399;">bool</span> empty() <span style="color: #008800;">const</span>;                    <span style="color: #888888;">//return true if vector is empty</span>
+
+    <span style="color: #888888;">//OUTPUT:</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">U</span><span style="color: #333333;">&gt;</span>
+    <span style="color: #008800;">friend</span> ostream<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">&lt;&lt;</span>(ostream<span style="color: #333333;">&amp;</span> outs, <span style="color: #008800;">const</span> Vector<span style="color: #333333;">&lt;</span>U<span style="color: #333333;">&gt;&amp;</span> _a);
+<span style="color: #997700;">private:</span>
+    ...
+};
+</pre>
+</div>
+</body>
+</html>

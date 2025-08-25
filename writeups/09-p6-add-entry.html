@@ -1,0 +1,127 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 09_p6_add_entry</title>
+</head>
+<body>
+<h2><strong>9.6 A Add Entry&nbsp;</strong></h2>
+<p>&nbsp;</p>
+<p><strong style="font-family: sans-serif; font-size: 1rem;">NOTE</strong>: If you have already learned about templates, ignore all the typedef stuff.</p>
+<ul>
+<li>&nbsp;<a title="9.03 Pointer Projects Guidelines" href="$CANVAS_OBJECT_REFERENCE$/assignments/g87a6ddc69a2bf08e4d018639b47d31da" data-api-endpoint="https://canvas.pasadena.edu/api/v1/courses/1124045/assignments/9188050" data-api-returntype="Assignment">Pointer Projects Guidelines&nbsp;</a>.</li>
+</ul>
+<ul>
+<li>Lower level functions&nbsp; in <a class="inline_disabled" href="$CANVAS_OBJECT_REFERENCE$/assignments/g2970a341a809892f5d6a2f87fcda1356" target="_blank" data-api-endpoint="https://canvas.pasadena.edu/api/v1/courses/1124045/assignments/9188017" data-api-returntype="Assignment">Pointer Array Functions Description</a> library do the "heavy lifting" of moving data around,</li>
+<li>I do not want to see a bunch of for loops in your AddEntry, DeleteEntry or in main()</li>
+<li>
+<h4>
+<strong>IMPORTANT</strong>:</h4>
+<ul>
+<li><strong>Rather than adding one to the capacity of the list, double the capacity when you run out of room. This is a much more realistic method. On remove_entry, reallocate half the space when the size reaches 1/4 of the capacity.</strong></li>
+</ul>
+</li>
+<li>
+<h4>
+<strong>IMPORTANT</strong>:</h4>
+<ul>
+<li>Set your capacity to 3. Have a debug boolean flag allow printing of a clear message that more space is being allocated whenever you are about to exceed the capacity. A message should also display when you allocate a smaller space for your list. Your output MUST allow me to see when memory management is taking place.</li>
+</ul>
+</li>
+</ul>
+<p>&nbsp;</p>
+<pre style="margin: 0; line-height: 125%;"><span style="color: #333399;">void</span> <span style="color: #0066bb;">test_string</span>(){
+    <span style="color: #333399;">int</span> capacity <span style="color: #333333;">=</span> <span style="color: #0000dd;">3</span>;
+    <span style="color: #333399;">int</span> size <span style="color: #333333;">=</span> <span style="color: #0000dd;">0</span>;
+    T<span style="color: #333333;">*</span> list <span style="color: #333333;">=</span> allocate(capacity);
+    list <span style="color: #333333;">=</span> add_entry(list, <span style="background-color: #fff0f0;">"Erika"</span>, size, capacity);
+    print_array(list, size);
+
+    list <span style="color: #333333;">=</span> add_entry(list, <span style="background-color: #fff0f0;">"Red"</span>, size, capacity);
+    print_array(list, size);
+
+    list <span style="color: #333333;">=</span> add_entry(list, <span style="background-color: #fff0f0;">"Bo"</span>, size, capacity);
+    print_array(list, size);
+
+    list <span style="color: #333333;">=</span> add_entry(list, <span style="background-color: #fff0f0;">"Pierson"</span>, size, capacity);
+    print_array(list, size);
+
+    list <span style="color: #333333;">=</span> add_entry(list, <span style="background-color: #fff0f0;">"Maher"</span>, size, capacity);
+    print_array(list, size);
+
+    list <span style="color: #333333;">=</span> add_entry(list, <span style="background-color: #fff0f0;">"Mac"</span>, size, capacity);
+    print_array(list, size);
+
+    list <span style="color: #333333;">=</span> add_entry(list, <span style="background-color: #fff0f0;">"Paula"</span>, size, capacity);
+    print_array(list, size);
+
+
+    cout<span style="color: #333333;">&lt;&lt;</span><span style="background-color: #fff0f0;">"Deleting Erika"</span><span style="color: #333333;">&lt;&lt;</span>endl;
+
+    list <span style="color: #333333;">=</span> remove_entry(list, <span style="background-color: #fff0f0;">"Erika"</span>, size, capacity);
+    print_array(list, size);
+
+
+    cout<span style="color: #333333;">&lt;&lt;</span><span style="background-color: #fff0f0;">"Deleting Bo"</span><span style="color: #333333;">&lt;&lt;</span>endl;
+
+    list <span style="color: #333333;">=</span> remove_entry(list, <span style="background-color: #fff0f0;">"Bo"</span>, size, capacity);
+    print_array(list, size);
+
+    cout<span style="color: #333333;">&lt;&lt;</span><span style="background-color: #fff0f0;">"Deleting Maher"</span><span style="color: #333333;">&lt;&lt;</span>endl;
+
+    list <span style="color: #333333;">=</span> remove_entry(list, <span style="background-color: #fff0f0;">"Maher"</span>, size, capacity);
+    print_array(list, size);
+
+    cout<span style="color: #333333;">&lt;&lt;</span><span style="background-color: #fff0f0;">"Deleting Pierson"</span><span style="color: #333333;">&lt;&lt;</span>endl;
+
+    list <span style="color: #333333;">=</span> remove_entry(list, <span style="background-color: #fff0f0;">"Pierson"</span>, size, capacity);
+    print_array(list, size);
+
+    cout<span style="color: #333333;">&lt;&lt;</span><span style="background-color: #fff0f0;">"Deleting Red"</span><span style="color: #333333;">&lt;&lt;</span>endl;
+
+    list <span style="color: #333333;">=</span> remove_entry(list, <span style="background-color: #fff0f0;">"Red"</span>, size, capacity);
+    print_array(list, size);
+
+}
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>typedef: </strong></p>
+<p>Gives the type string another name: T. From this point on, instead of string, you will use T.&nbsp;</p>
+<pre><span class="keyword">typedef</span><span class="type"> int</span> T<span class="operator">;</span></pre>
+<p>Use this typedef so that your code is not quite as dependant on the string type.</p>
+<p>&nbsp;</p>
+<h4><strong>The allocate function: </strong></h4>
+<p>Very simple, but just to keep the confusion level down:</p>
+<p>&nbsp;</p>
+<pre>T<span class="operator">*</span> allocate<span class="operator">(</span><span class="type">int</span> capacity<span class="operator">){</span><span class="keyword">
+    const</span><span class="type"> bool</span> debug<span class="operator"> =</span><span class="bool"> false</span><span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>debug<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"allocate: capacity: "</span><span class="operator">&lt;&lt;</span>capacity<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+    return</span><span class="keyword"> new</span> T<span class="operator">[</span>capacity<span class="operator">];
+}</span></pre>
+<h4>
+<strong>Function Prototypes:&nbsp;</strong>&nbsp;</h4>
+<div style="background: #ffffff; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;"><span style="color: #008800;">template</span><span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+T<span style="color: #333333;">*</span> add_entry(T<span style="color: #333333;">*</span> list, <span style="color: #008800;">const</span> T<span style="color: #333333;">&amp;</span> new_entry,
+                  <span style="color: #333399;">int</span><span style="color: #333333;">&amp;</span> size, <span style="color: #333399;">int</span><span style="color: #333333;">&amp;</span> capacity);
+<span style="color: #008800;">template</span><span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+T<span style="color: #333333;">*</span> remove_entry(T<span style="color: #333333;">*</span> list, <span style="color: #008800;">const</span> T<span style="color: #333333;">&amp;</span> delete_me,
+                     <span style="color: #333399;">int</span><span style="color: #333333;">&amp;</span> size, <span style="color: #333399;">int</span><span style="color: #333333;">&amp;</span> capacity);
+
+<span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+T <span style="color: #333333;">*</span>remove_last_entry(T <span style="color: #333333;">*</span>list, T <span style="color: #333333;">&amp;</span>popped,
+                     <span style="color: #333399;">int</span> <span style="color: #333333;">&amp;</span>size, <span style="color: #333399;">int</span> <span style="color: #333333;">&amp;</span>capacity);
+
+<span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+T <span style="color: #333333;">*</span>insert_entry(T <span style="color: #333333;">*</span>list, <span style="color: #008800;">const</span> T <span style="color: #333333;">&amp;</span>insert_this,
+                <span style="color: #333399;">int</span> insert_here,
+                <span style="color: #333399;">int</span> <span style="color: #333333;">&amp;</span>size,
+                <span style="color: #333399;">int</span> <span style="color: #333333;">&amp;</span>capacity);
+
+<span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">class</span> <span style="color: #bb0066;">T</span><span style="color: #333333;">&gt;</span>
+T <span style="color: #333333;">*</span>erase_entry(T <span style="color: #333333;">*</span>list, <span style="color: #333399;">int</span> index,
+               <span style="color: #333399;">int</span> <span style="color: #333333;">&amp;</span>size, <span style="color: #333399;">int</span> <span style="color: #333333;">&amp;</span>capacity);
+</pre>
+</div>
+</body>
+</html>

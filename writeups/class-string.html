@@ -1,0 +1,170 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: class String</title>
+</head>
+<body>
+<p><span style="font-size: 18pt;"><strong>class String:</strong></span></p>
+<p>Wrap your pointer based cstring classes in a class called String.&nbsp;</p>
+<p>We will try to mimic the behavior of the std::string class. We will need all the common functions of string:</p>
+<p>You already have all (or most of these functions) written. Include the header file that contains the pointer version of your cstring and call the functions from the member function of your String class.</p>
+<p>Don't forget your Big 3!</p>
+<p>Do not call your String header file string.h!!</p>
+<p>&nbsp;</p>
+<h3>Member functions</h3>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/string/">(constructor)</a></dt>
+<dd>Construct string object&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/~string/">(destructor)</a></dt>
+<dd>String destructor&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/operator=/">operator=</a></dt>
+<dd>String assignment&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<h3>
+<strong>Capacity</strong><span>:</span>
+</h3>
+<dl class="links">
+<dt>
+<a href="http://www.cplusplus.com/reference/string/string/size/"></a><a href="http://www.cplusplus.com/reference/string/string/length/">length</a>
+</dt>
+</dl>
+<dl class="links">
+<dd>Return length of string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt>
+<a href="http://www.cplusplus.com/reference/string/string/max_size/"></a><a href="http://www.cplusplus.com/reference/string/string/clear/">clear</a>
+</dt>
+</dl>
+<dl class="links">
+<dd>Clear string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/empty/">empty</a></dt>
+<dd>Test if string is empty&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/shrink_to_fit/"></a></dt>
+</dl>
+<h3>
+<strong>Element access</strong>:</h3>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/operator%5B%5D/">operator[]</a></dt>
+<dd>Get character of string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/at/">at</a></dt>
+<dd>Get character in string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/back/"></a></dt>
+</dl>
+<h3>
+<strong>Modifiers</strong>:</h3>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/operator+=/">operator+=</a></dt>
+<dd>Append to string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/append/">append</a></dt>
+<dd>Append to string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/push_back/">push_back</a></dt>
+<dd>Append character to string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/assign/">assign</a></dt>
+<dd>Assign content to string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/insert/">insert</a></dt>
+<dd>Insert into string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/erase/">erase</a></dt>
+<dd>Erase characters from string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/replace/">replace</a></dt>
+<dd>Replace portion of string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/swap/"></a></dt>
+</dl>
+<h3>
+<strong>String operations</strong>:</h3>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/c_str/">c_str</a></dt>
+<dd>Get C string equivalent&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt>
+<a href="http://www.cplusplus.com/reference/string/string/data/"></a><a href="http://www.cplusplus.com/reference/string/string/copy/">copy</a>
+</dt>
+</dl>
+<dl class="links">
+<dd>Copy sequence of characters from string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/find/">find</a></dt>
+<dd>Find content in string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/rfind/">rfind</a></dt>
+<dd>Find last occurrence of content in string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/find_first_of/">find_first_of</a></dt>
+<dd>Find character in string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt>
+<a href="http://www.cplusplus.com/reference/string/string/find_last_of/"></a><a href="http://www.cplusplus.com/reference/string/string/find_first_not_of/">find_first_not_of</a>
+</dt>
+</dl>
+<dl class="links">
+<dd>Find absence of character in string&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt>
+<a href="http://www.cplusplus.com/reference/string/string/find_last_not_of/"></a><a href="http://www.cplusplus.com/reference/string/string/substr/">substr</a>
+</dt>
+</dl>
+<dl class="links">
+<dd>Generate substring&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<dl class="links">
+<dt><a href="http://www.cplusplus.com/reference/string/string/compare/">compare</a></dt>
+<dd>Compare strings&nbsp;<span class="typ">(public member function )</span>
+</dd>
+</dl>
+<p><span class="typ">&nbsp;</span></p>
+</body>
+</html>

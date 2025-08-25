@@ -1,0 +1,61 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: TokenizeTextFile</title>
+</head>
+<body>
+<h2>Phase I:</h2>
+<p>Write a program to read in a <a class=" instructure_scribd_file instructure_file_link" title="TaleOfTwoCities.txt" href="$IMS-CC-FILEBASE$/TaleOfTwoCities.txt?canvas_download=1&amp;canvas_qs_wrap=1">large text</a> file and place it into a linked list:</p>
+<p>&nbsp;The main program will just take the tokens from the linked list and print out the first 200 words (along with type information) on the standard output...</p>
+<p>&nbsp;</p>
+<p>Here are the classes you will need. Write each class. Test them independently and then you can put everything together in main.</p>
+<p>&nbsp;</p>
+<h3>
+<strong>FTokenize</strong>&nbsp;</h3>
+<p>Write a File Tokenizer class (FTokenize):</p>
+<p>You will be using this class over and over again in this class. So, invest some time and write a robust, well-tested class.</p>
+<p>This class provides an interface to read tokens from a text file.</p>
+<p>FTokenize object is instantiated with a cstring that specifies a text file on disk:</p>
+<p>FToenize ftk("large_text_file.txt"); //initialize the object with the file name</p>
+<p>It provides an interface to read tokens from the file:</p>
+<p><img src="https://www.dropbox.com/s/fjhn1i8a649mk8n/Screenshot%202015-01-04%2020.45.41.png?dl=1" alt="" width="848" height="76" loading="lazy"></p>
+<p>&nbsp;</p>
+<p>Token is a class that holds token strings and their type. It provides a way for us to print the tokens and their type so, we can say: <img src="https://www.dropbox.com/s/xu62woo5fqe6xpm/Screenshot%202015-01-04%2020.46.58.png?dl=1" alt="" loading="lazy">&nbsp;and it will print something like "{ [project] &nbsp;1} where 1 indicates that the string project is a word.</p>
+<p>The FTokenize class provides a way for the programmer to find out if the end of file is reached:</p>
+<p><img src="https://www.dropbox.com/s/kjg092s4d7gd2dm/Screenshot%202015-01-04%2019.29.16.png?dl=1" alt="" loading="lazy"></p>
+<p>The FTokenize object will read blocks of 500 characters any time it needs to. In other words, as application programmer calls ftk.NextToken, the object will use up the current block and once it's done with it, it will load another block from the file. Once the end of the file is reached, the More( ) function will return false. Therefore, the application programmer can call on the NextToken function of the FTokenize repeatedly without worrying about all the complexities of buffering characters from the text file. FTokenize will hide all that detail from the application developer and just delivers the next token when it's needed:</p>
+<pre><span><img src="https://www.dropbox.com/s/66rq24og546l95p/Screenshot%202015-01-04%2020.24.52.png?dl=1" alt="" loading="lazy"></span></pre>
+<p class="p1">&nbsp;</p>
+<p class="p1">&nbsp;</p>
+<p class="p1">To print all the tokens in the file. The words, punctuation, numbers, all of it.</p>
+<h3><strong>STokenize</strong></h3>
+<p>Write a string tokenizer class (STokenize) that will provide an interface to get the next token from a string object.</p>
+<p>The Stokenize object is instantiated by a String:</p>
+<p><img src="https://www.dropbox.com/s/2kl305rfaqv72y3/Screenshot%202015-01-04%2020.26.53.png?dl=1" alt="" loading="lazy"></p>
+<p>then you can do this:</p>
+<p><img src="https://www.dropbox.com/s/8g8qhwc1u1zqb3x/Screenshot%202015-01-04%2020.27.27.png?dl=1" alt="" width="579" height="168" loading="lazy"></p>
+<p>&nbsp;</p>
+<p>You can use this in the&nbsp;<strong>FTokenize</strong>&nbsp;class to tokenize the current &nbsp;block. (read: you WILL!)</p>
+<p>The&nbsp;<strong>STokenize</strong>&nbsp;class will handle the following types of tokens for now:</p>
+<p>WHITE_SPACE, END_OF-LINE, ALPHABETIC, NUMERICAL, PUNCTUATION, UNKNOWN</p>
+<p>Use an enum for these token types.</p>
+<h3><span>&nbsp;</span></h3>
+<p><span style="font-size: large;"><strong>Extraction Operators &gt;&gt;</strong></span></p>
+<p>By overloading the extraction operator for these two classes, we can do awesome things like:</p>
+<p>&nbsp;</p>
+<p><span style="font-size: large;"><strong><img src="https://www.dropbox.com/s/hqp69mblotwbbxf/Screenshot%202015-02-01%2022.19.20.png?dl=1" alt="Extraction Demo" width="529" height="110" loading="lazy"></strong></span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>class Token:</h3>
+<p><img src="https://www.dropbox.com/s/4ltmjf27a65nnvm/Screenshot%202015-02-01%2021.58.37.png?dl=1" alt="Token Class" width="800" height="410" loading="lazy"></p>
+<p>&nbsp;&nbsp;</p>
+<h3>class FTokenize:</h3>
+<p><img src="https://www.dropbox.com/s/od12cq01t3wf1j0/Screenshot%202015-02-01%2022.12.26.png?dl=1" alt="FTokenize" width="797" height="613" loading="lazy">&nbsp;</p>
+<p>&nbsp;</p>
+<h3>class STokenize:</h3>
+<p>&nbsp;<img src="https://www.dropbox.com/s/izsmwbjem2jpxnt/Screenshot%202015-02-01%2022.16.30.png?dl=1" alt="STokenize" width="767" height="639" loading="lazy"></p>
+<p>&nbsp;</p>
+<h3><span style="color: inherit; font-family: inherit; font-size: 1.8em;">&nbsp;</span></h3>
+</body>
+</html>

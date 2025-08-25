@@ -1,0 +1,27 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: RPN</title>
+</head>
+<body>
+<p><strong>RPN:</strong></p>
+<p>Write a function rpn that will take a queue of token pointers and returns a double.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>Token, Number, Operator</strong></p>
+<p>Design a class Token with an integer _type to indicate what type of token it is: 1 for numbers, 2 for operators.</p>
+<p>Design two derived classes: Number and Operator.&nbsp;</p>
+<p>Number will have a double member variable named. _val, Operator will have a character _op to hold the operator.</p>
+<p>The operator will have a function evaluate() that takes two doubles and returns the resulting double value</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>Input Queue:</strong> holds the inputted expression one token at a time:&nbsp;</p>
+<p>Queue&lt;Token*&gt; input_q</p>
+<p>&nbsp;</p>
+<p><strong>RPN Stack</strong>:</p>
+<p>Stack&lt;Token*&gt; rpn_stack will be used in the rpn function</p>
+<p><strong>rpn()</strong></p>
+<p>double rpn(Queue&lt;Token*&gt; input_q);</p>
+<p>takes in an input queue and returns the evaluation of the expression.</p>
+</body>
+</html>

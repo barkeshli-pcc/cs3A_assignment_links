@@ -1,0 +1,36 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: OLD - Linked List Functions</title>
+</head>
+<body>
+<p><strong><span style="font-size: 14pt;">Linked List functions:</span></strong></p>
+<p>You will use a <strong>typedef</strong> to be able to use the name <strong>ITEM_TYPE</strong> instead of int. You are welcome.</p>
+<p><strong><span style="font-size: 12pt;">Node struct:</span></strong></p>
+<p>Given this definition of the node struct</p>
+<p>struct node{</p>
+<p>&nbsp; &nbsp;ITEM_TYPE _item;<br>&nbsp; &nbsp;node* _next;</p>
+<p>&nbsp; &nbsp;node( );<br>&nbsp; &nbsp;node(ITEM_TYPE item);<br>&nbsp; &nbsp;friend ostream&amp; operator &lt;&lt; (ostream&amp; outs, const node&amp; printMe);<br>&nbsp; &nbsp;friend bool operator &lt; (const node&amp; left, const node&amp; right); &nbsp;</p>
+<p>}</p>
+<p><span style="font-size: 12pt;"><strong>Linked List Functions:&nbsp;</strong></span></p>
+<p>I suggest you study&nbsp;the algorithms you are going to use on paper very carefully before you start to write code. (Never write pointer or linked list related code without first drawing boxes and arrows.) Linked list bugs (pointer related bugs in general) tend to be illusive and hard to find and debug. Best strategy is avoidance.</p>
+<p>Selection Sort, Merge (of two sorted lists), UniqueMerge, SplitList, AddLists, Subtract Lists. Although we will write these eventually so you can go ahead and do them now if you'd like. Makes your life easier later.</p>
+<p>&nbsp;</p>
+<ul>
+<li>PrintList: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Prints the items in list. Uses setw( ) to space the items on the output stream</li>
+<li>SearchList &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Takes a value (key) and returns the pointer to the node containing that item. Null if not found</li>
+</ul>
+<ul>
+<li>InsertHead &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Takes a number (insertThis) and inserts it at the head of the list</li>
+<li>PreviousNode: &nbsp; &nbsp; &nbsp;Takes a pointer to an item in the list (previousToThis) and returns a pointer to the node before the designated node. Returns NULL if the node is the first node in the list.</li>
+<li>InsertBefore: &nbsp; &nbsp; &nbsp; &nbsp; Takes aa value (insertThis), and a pointer to a node in the list (beforeThis) and inserts the value before&nbsp;the designated node.</li>
+<li>InsertAfter: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Takes a value (insertThis) and a pointer to a node in the list (afterThis) and inserts the value after the designated node</li>
+<li>Delete: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Takes a pointer to a node in the list (deleteThis) and removes that node from the list. Deletes the node and returns the item contained within.</li>
+<li>WhereThisGoes: &nbsp; Takes a value (item) and returns a pointer to the node after which the&nbsp;item belongs in the list. &nbsp;Assumes the list is sorted. Returns NULL if the item belongs at the head of the list.</li>
+<li>CopyList: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Takes a list (head) and returns a pointer to a linked list that is a copy of this list.</li>
+<li>ClearList: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Takes a list (head) and deletes all the nodes in the list</li>
+<li>At: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Takes a position (n) and returns a pointer to the nth position in the list</li>
+</ul>
+<p>&nbsp;</p>
+</body>
+</html>

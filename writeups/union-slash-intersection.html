@@ -1,0 +1,31 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Union / Intersection</title>
+</head>
+<body>
+<h2><strong>UNION / INTERSECTION</strong></h2>
+<p>consider the two sorted, unique arrays (sets) left and right:</p>
+<p>left: [5,10,15,20,25,30,35,40]</p>
+<p>right: [3,10.13,20,23,28,30,33,35]</p>
+<p>the union of the two sets is a sorted, unique list that contains all the elements from the two arrays left and right:&nbsp;</p>
+<p>union: [3,5,10,13,15,20,23,25,28,30,33,35,40]</p>
+<p>the intersection of the two arrays is a sorted, unique list that contains the common elements of the two arrays:</p>
+<p>intersection: [10,20,30,35]</p>
+<p>&nbsp;</p>
+<p>Here are three possible signatures for these two functions:</p>
+<p>Simple array based solution:</p>
+<pre>void union(int left[], int left_size, int right[], int right_size, int result[], int&amp; result_size)<br><br>void intersection(int left[], int left_size, int right[], int right_size, int result[], int&amp; result_size)</pre>
+<p>&nbsp;</p>
+<p>static array solution: pointer notation:</p>
+<pre>void union(int* left, int left_size, int* right, int right_size, int* result, int&amp; result_size)<br><br>void intersection(int* left, int left_size, int* right, int right_size, int* result, int&amp; result_size)</pre>
+<p>&nbsp;</p>
+<p>static array solution: pointer notation, templated:</p>
+<pre>void union(T* left, int left_size, T* right, int right_size, T* result, int&amp; result_size)<br><br>void intersection(T* left, int left_size, T* right, int right_size, T* result, int&amp; result_size)</pre>
+<p>&nbsp;</p>
+<p>templated with dynamic allocation:</p>
+<pre>T* union(T* p1, int size1, T* p2, int size 2, int&amp; u_size);<br><br>T* intersection(T* p1, int size1, T* p2, int size 2, int&amp; i_size);</pre>
+<p>both of these functions are templated.</p>
+<p>&nbsp;</p>
+</body>
+</html>

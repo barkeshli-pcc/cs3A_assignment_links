@@ -1,0 +1,136 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 13_00_linked_list_functions</title>
+</head>
+<body>
+<h2 style="text-align: center;"><strong>Linked List Functions</strong></h2>
+<p>&nbsp;If you are comfortable with templated classes, then you can design your classes as shown below. If not, then use a typedef for now and you can templated classes before you submit your work.</p>
+<div style="background: #ffffff; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;"><span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+<span style="color: #008800;">struct</span> node
+{
+<span style="color: #997700;">public:</span>
+    node(<span style="color: #008800;">const</span> ITEM_TYPE<span style="color: #333333;">&amp;</span> item <span style="color: #333333;">=</span> ITEM_TYPE(), node<span style="color: #333333;">*</span> next <span style="color: #333333;">=</span> nullptr);
+
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> T<span style="color: #333333;">&gt;</span>
+    <span style="color: #008800;">friend</span> std<span style="color: #333333;">::</span>ostream<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">&lt;&lt;</span>(std<span style="color: #333333;">::</span>ostream<span style="color: #333333;">&amp;</span> outs,
+                                <span style="color: #008800;">const</span> node<span style="color: #333333;">&lt;</span>T<span style="color: #333333;">&gt;</span> <span style="color: #333333;">&amp;</span>printMe);
+    ITEM_TYPE _item;
+    node<span style="color: #333333;">*</span> _next;
+};
+</pre>
+</div>
+<p>Please note that the operators of a templated class require a different template argument than the template argument of the class they are friends with (T, and not ITEM_TYPE). This is only true when the definition of the friend function is outside the class declaration.</p>
+<p>&nbsp;</p>
+<h3><strong>Linked List functions</strong></h3>
+<p>&nbsp;These are "free floating" functions that do the heavy lifting for the List class we will be writing later. Do not make a class until you have these functions in place. The reason for this is that this method gives us the flexibility to design many similar classes effortlessly and quickly.</p>
+<p>I suggest you study&nbsp;the algorithms you are going to use on paper very carefully before you start to write code. (Never write pointer or linked list related code without first drawing boxes and arrows.) Linked list bugs (pointer related bugs in general) tend to be illusive and hard to find and debug. Best strategy is avoidance.</p>
+<div style="background: #ffffff; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;">    <span style="color: #888888;">//Linked List General Functions:</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    <span style="color: #333399;">void</span> _print_list(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> head);
+
+    <span style="color: #888888;">//recursive fun! :)</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    <span style="color: #333399;">void</span> _print_list_backwards(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;</span> <span style="color: #333333;">*</span>head);
+
+    <span style="color: #888888;">//return ptr to key or NULL</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> _search_list(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> head,
+                                ITEM_TYPE key);
+
+
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> _insert_head(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;</span> <span style="color: #333333;">*&amp;</span>head,
+                                ITEM_TYPE insert_this);
+
+    <span style="color: #888888;">//insert after ptr</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> _insert_after(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*&amp;</span> head,
+                                 node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;</span> <span style="color: #333333;">*</span>after_this,
+                                 ITEM_TYPE insert_this);
+
+    <span style="color: #888888;">//insert before ptr</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> _insert_before(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*&amp;</span> head,
+                                  node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> before_this,
+                                  ITEM_TYPE insert_this);
+
+    <span style="color: #888888;">//ptr to previous node</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> _previous_node(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> head,
+                                  node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> prev_to_this);
+
+    <span style="color: #888888;">//delete, return item</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    ITEM_TYPE _delete_node(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*&amp;</span>head,
+                         node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> delete_this);
+
+    <span style="color: #888888;">//duplicate the list...</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> _copy_list(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> head);
+
+    <span style="color: #888888;">//duplicate list and return the last node of the copy</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> T<span style="color: #333333;">&gt;</span>
+    node<span style="color: #333333;">&lt;</span>T<span style="color: #333333;">&gt;</span> <span style="color: #333333;">*</span>_copy_list(node<span style="color: #333333;">&lt;</span>T<span style="color: #333333;">&gt;*</span> <span style="color: #333333;">&amp;</span>dest, node<span style="color: #333333;">&lt;</span>T<span style="color: #333333;">&gt;</span> <span style="color: #333333;">*</span>src);
+
+
+    <span style="color: #888888;">//delete all the nodes</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    <span style="color: #333399;">void</span> _clear_list(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*&amp;</span> head);
+
+    <span style="color: #888888;">//_item at this position</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    ITEM_TYPE<span style="color: #333333;">&amp;</span> _at(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> head, <span style="color: #333399;">int</span> pos);
+
+    <span style="color: #888888;">//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
+    <span style="color: #888888;">//      Sorted List Routines. order: 0: ascending, order: other: descending</span>
+    <span style="color: #888888;">//                              Assume a Sorted List</span>
+    <span style="color: #888888;">//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
+
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> _insert_sorted(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> <span style="color: #333333;">&amp;</span>head,       <span style="color: #888888;">//insert</span>
+                                  ITEM_TYPE item,
+                                  <span style="color: #333399;">bool</span> ascending<span style="color: #333333;">=</span><span style="color: #007020;">true</span>);
+
+    <span style="color: #888888;">//insert or add if a dup</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> _insert_sorted_and_add(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> <span style="color: #333333;">&amp;</span>head,
+                                          ITEM_TYPE item,
+                                          <span style="color: #333399;">bool</span> ascending<span style="color: #333333;">=</span><span style="color: #007020;">true</span>);
+    <span style="color: #888888;">//node after which this item goes order: 0 ascending</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> _where_this_goes(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> head,
+                                   ITEM_TYPE item,
+                                   <span style="color: #333399;">bool</span> ascending<span style="color: #333333;">=</span><span style="color: #007020;">true</span>);
+    <span style="color: #888888;">//Last Node in the list</span>
+    <span style="color: #008800;">template</span> <span style="color: #333333;">&lt;</span><span style="color: #008800;">typename</span> ITEM_TYPE<span style="color: #333333;">&gt;</span>
+    node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> _last_node(node<span style="color: #333333;">&lt;</span>ITEM_TYPE<span style="color: #333333;">&gt;*</span> head);            <span style="color: #888888;">//never use this function.</span>
+</pre>
+</div>
+<div id="footer"></div>
+<pre><span class="comment"><br><br><br><br></span><strong>Testing:</strong></pre>
+<p>Test each and group of functions using test functions defined in main.</p>
+<p>If you have any bugs in these functions, it will be very difficult to debug the higher level classes built on these functions. So, be very cautious!</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

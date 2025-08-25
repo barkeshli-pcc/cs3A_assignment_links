@@ -1,0 +1,205 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>00.1 Deliverables</title>
+<meta name="identifier" content="g5e2dd9913f0041819bdc65fe02d8a51d"/>
+<meta name="editing_roles" content="teachers"/>
+<meta name="workflow_state" content="active"/>
+</head>
+<body>
+<h2 style="text-align: center;">Deliverables</h2>
+<p>You will submit your projects as a git repository to github.com.&nbsp;
+    <br>Lab-00 assignment that you do on the first day of class is your model for how projects are submitted in this course. Review that lab more than once to become familiar with the workflow.
+    <br>You will be given links to assignments that are stored on github.com.&nbsp;
+    <br>You will <em>accept</em> the assignment.
+    <br>You will clone assignment to your local computer
+    <br>You will design and implement your programs on your local computers all the while keeping track of all the changes you are making using git.
+    <br>You will write tests for your projects.&nbsp;
+    <br>You will be given a sample "basic test" to run on your project . This is to familiarize you with the function names the grader expects to find in your project. You never edit my version of basic_test. Your program must run with basic_test that I provide or you unless I explicitly instruct you to edit it.
+    <br>You will write unit tests for your functions and classes in testB. We use gtests for each group of functions. Lab-00 is your best resource to learn the basics of googletesting.
+</p>
+<p>You will complete the work report found in the README.md thoughtfully. Do not give me a novel. I do not want any fluff. Just the essentials. Imagine you are handing off the project to another team. What do they need to know about this project?</p>
+<p>Run your basic_test and your testB in terminal and paste the output in the README.md file after the work report in the designated spots.</p>
+<p>You will push your project to github, occasionally, when you have a stable version.&nbsp; (and one last time to be graded)</p>
+<p>
+    <br>Github will run your test and the basic test on your project. (hopefully)
+    <br>On my side, the grader program will download your projects, will run a suite of tests on your projects and that will be the basis for your score in that project.
+</p>
+<p>&nbsp;</p>
+<p>Your deliverables for the projects in this class consist of three items:</p>
+<ul>
+    <li>All your source code files, fully documented and frequent commits are pushed to github.com</li>
+    <li>Your google test suite</li>
+    <li>Your Work Report in your README.md</li>
+    <li>Your testB and basic_test output in README.md</li>
+</ul>
+<h3><strong>Source Code:</strong></h3>
+<p>Your source code is all the code in your .cpp files and .h files. At the beginning, you only have a single file: main.cpp, but as we get more advanced, you will have more than one source file.</p>
+<p>This is an example of what a fully documented source file looks like:</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+
+
+<pre style="margin: 0; line-height: 125%;"><span style="color: #888888;">/*</span>
+<span style="color: #888888;"> * Author: Sassan Barkeshli</span>
+<span style="color: #888888;"> * Project: Change Calculator.</span>
+<span style="color: #888888;"> * Purpose: Repeatedly ask user for the coin denomination and</span>
+<span style="color: #888888;"> *              number of coins, when done,</span>
+<span style="color: #888888;"> *              print the total value of the coins in Dollars</span>
+<span style="color: #888888;"> * Notes: Inputting the number of coins was not implemented.</span>
+<span style="color: #888888;"> *</span>
+<span style="color: #888888;"> * //NOTE: an example of programming style, formatting, and testing for beginners.</span>
+<span style="color: #888888;"> */</span>
+
+<span style="color: #557799;">#include &lt;iostream&gt;</span>
+<span style="color: #008800; ">using</span> <span style="color: #008800; ">namespace</span> std;
+
+<span style="color: #333399; ">int</span> <span style="color: #0066BB; ">main</span>(<span style="color: #333399; ">int</span> argc, <span style="color: #333399; ">char</span> <span style="color: #333333;">*</span>argv[])
+{
+    cout<span style="color: #333333;">&lt;&lt;</span>endl<span style="color: #333333;">&lt;&lt;</span>endl<span style="color: #333333;">&lt;&lt;</span>endl; <span style="color: #888888;">//push output down a few lines</span>
+
+    <span style="color: #888888;">//NOTE: NEVER go beyond column 79.</span>
+    <span style="color: #888888;">//NOTE: put vertical space between logical blocks of your code.</span>
+    <span style="color: #888888;">//NOTE: always use constants for numbers.</span>
+    <span style="color: #888888;">//      You hardly ever use a number in your program.</span>
+    <span style="color: #008800; ">const</span> <span style="color: #333399; ">int</span> DOLLAR <span style="color: #333333;">=</span> <span style="color: #0000DD; ">100</span>;
+    <span style="color: #008800; ">const</span> <span style="color: #333399; ">int</span> HALF <span style="color: #333333;">=</span> <span style="color: #0000DD; ">50</span>;
+    <span style="color: #008800; ">const</span> <span style="color: #333399; ">int</span> QUARTER <span style="color: #333333;">=</span> <span style="color: #0000DD; ">25</span>;
+    <span style="color: #008800; ">const</span> <span style="color: #333399; ">int</span> DIME <span style="color: #333333;">=</span> <span style="color: #0000DD; ">10</span>;
+    <span style="color: #008800; ">const</span> <span style="color: #333399; ">int</span> NICKEL <span style="color: #333333;">=</span> <span style="color: #0000DD; ">5</span>;
+    <span style="color: #008800; ">const</span> <span style="color: #333399; ">int</span> PENNY <span style="color: #333333;">=</span> <span style="color: #0000DD; ">1</span>;
+
+    <span style="color: #333399; ">int</span> total <span style="color: #333333;">=</span> <span style="color: #0000DD; ">0</span>;              <span style="color: #888888;">//initialize your variables</span>
+    <span style="color: #333399; ">char</span> coin <span style="color: #333333;">=</span> <span style="color: #0044DD;">' '</span>;            <span style="color: #888888;">//user's coin denomination:</span>
+                                <span style="color: #888888;">//$, h, q, d, n, p</span>
+    <span style="color: #333399; ">bool</span> done <span style="color: #333333;">=</span> <span style="color: #007020;">false</span>;          <span style="color: #888888;">//true when done.</span>
+    cout<span style="color: #333333;">&lt;&lt;</span><span style="background-color: #fff0f0;">"This program will calculate the total value of coins."</span><span style="color: #333333;">&lt;&lt;</span>endl;
+
+    <span style="color: #888888;">//NOTE: Break long lines into two:</span>
+    cout<span style="color: #333333;">&lt;&lt;</span><span style="background-color: #fff0f0;">"[$] Dollar [H]alf [Q]uarter [D]ime "</span><span style="color: #333333;">&lt;&lt;</span>
+                     <span style="background-color: #fff0f0;">"[N]ickle [P]enny   [?]Menu   e[X]it"</span><span style="color: #333333;">&lt;&lt;</span>endl;;
+
+    <span style="color: #888888;">//main input/processing loop:</span>
+    <span style="color: #008800; ">do</span>{
+        cout<span style="color: #333333;">&lt;&lt;</span><span style="background-color: #fff0f0;">": "</span>;
+        cin<span style="color: #333333;">&gt;&gt;</span>coin;
+
+        <span style="color: #888888;">//NOTE: watch your indentation.</span>
+        <span style="color: #888888;">//decide which coin has been entered:</span>
+        <span style="color: #008800; ">switch</span>(toupper(coin)){
+        <span style="color: #008800; ">case</span> <span style="color: #0044DD;">'$'</span>:
+            total <span style="color: #333333;">+=</span> DOLLAR;     <span style="color: #888888;">//NOTE: constants make your code readable</span>
+            <span style="color: #008800; ">break</span>;
+        <span style="color: #008800; ">case</span> <span style="color: #0044DD;">'H'</span>:
+            total <span style="color: #333333;">+=</span> HALF;
+            <span style="color: #008800; ">break</span>;
+        <span style="color: #008800; ">case</span> <span style="color: #0044DD;">'Q'</span>:
+            total <span style="color: #333333;">+=</span> QUARTER;
+            <span style="color: #008800; ">break</span>;
+        <span style="color: #008800; ">case</span> <span style="color: #0044DD;">'D'</span>:
+            total <span style="color: #333333;">+=</span> DIME;
+            <span style="color: #008800; ">break</span>;
+        <span style="color: #008800; ">case</span> <span style="color: #0044DD;">'N'</span>:
+            total <span style="color: #333333;">+=</span> NICKEL;
+            <span style="color: #008800; ">break</span>;
+        <span style="color: #008800; ">case</span> <span style="color: #0044DD;">'P'</span>:
+            total <span style="color: #333333;">+=</span> PENNY;
+            <span style="color: #008800; ">break</span>;
+        <span style="color: #008800; ">case</span> <span style="color: #0044DD;">'X'</span>:
+            done <span style="color: #333333;">=</span> <span style="color: #007020;">true</span>;
+            <span style="color: #008800; ">break</span>;
+        <span style="color: #008800; ">case</span> <span style="color: #0044DD;">'?'</span>:
+            <span style="color: #888888;">//NOTE: always have a help in your interactive programs.</span>
+            cout<span style="color: #333333;">&lt;&lt;</span><span style="background-color: #fff0f0;">"[$] Dollar [H]alf [Q]uarter [D]ime "</span><span style="color: #333333;">&lt;&lt;</span>
+                             <span style="background-color: #fff0f0;">"[N]ickle [P]enny   [?]Menu   e[X]it"</span><span style="color: #333333;">&lt;&lt;</span>endl;;
+            <span style="color: #008800; ">break</span>;
+        <span style="color: #997700; ">default:</span>
+            <span style="color: #888888;">//NOTE: always have a default case in your switch.</span>
+            cout<span style="color: #333333;">&lt;&lt;</span><span style="background-color: #fff0f0;">"["</span><span style="color: #333333;">&lt;&lt;</span>coin<span style="color: #333333;">&lt;&lt;</span><span style="background-color: #fff0f0;">"] is not a valid choice. "</span><span style="color: #333333;">&lt;&lt;</span>
+                                             <span style="background-color: #fff0f0;">"Press [?] for help"</span><span style="color: #333333;">&lt;&lt;</span>endl;
+
+        }
+
+    }<span style="color: #008800; ">while</span> (<span style="color: #333333;">!</span>done);
+
+    <span style="color: #333399; ">double</span> dollar_value <span style="color: #333333;">=</span> <span style="color: #0000DD; ">0</span>;
+    cout<span style="color: #333333;">&lt;&lt;</span><span style="background-color: #fff0f0;">"------------ RESULTS --------------------"</span><span style="color: #333333;">&lt;&lt;</span>endl;
+    <span style="color: #888888;">//convert total to double for double division:</span>
+    dollar_value <span style="color: #333333;">=</span> <span style="color: #008800; ">static_cast</span><span style="color: #333333;">&lt;</span><span style="color: #333399; ">double</span><span style="color: #333333;">&gt;</span>(total)<span style="color: #333333;">/</span><span style="color: #0000DD; ">100</span>;
+
+    <span style="color: #888888;">//NOTE: always use magic formula to format uyour doubles:</span>
+    cout.setf(ios<span style="color: #333333;">::</span>fixed);
+    cout.setf(ios<span style="color: #333333;">::</span>showpoint);
+    cout.precision(<span style="color: #0000DD; ">2</span>);
+
+
+    cout<span style="color: #333333;">&lt;&lt;</span><span style="background-color: #fff0f0;">"Total Dollar value of your coins is: "</span><span style="color: #333333;">&lt;&lt;</span>dollar_value<span style="color: #333333;">&lt;&lt;</span>endl;
+
+    cout <span style="color: #333333;">&lt;&lt;</span>endl<span style="color: #333333;">&lt;&lt;</span>endl<span style="color: #333333;">&lt;&lt;</span>endl
+         <span style="color: #333333;">&lt;&lt;</span> <span style="background-color: #fff0f0;">"----------------- END ---------------"</span>
+         <span style="color: #333333;">&lt;&lt;</span>endl<span style="color: #333333;">&lt;&lt;</span>endl<span style="color: #333333;">&lt;&lt;</span>endl<span style="color: #333333;">&lt;&lt;</span>endl;
+    <span style="color: #008800; ">return</span> <span style="color: #0000DD; ">0</span>;
+}
+</pre>
+
+
+
+
+
+<h3><strong>Work Report:</strong></h3>
+<p>To every project you will submit for this class, you will add a work report with the following format to your README.md. Please do not be vague about what does not work in your project. It is very important that I know that you know what's missing from your project.
+    <br>
+    <br>
+</p>
+<pre><span>#ifndef Z_WORK_REPORT_H</span>
+<span>#define Z_WORK_REPORT_H</span>
+<span>/*</span>
+<span>    Features:</span>
+<span>        -Not Implemented: Did not implement inputting of number of coins.</span>
+<span>              Could not figure out how to ask for coin denomination AND</span>
+<span>              number of coins in the same loop.</span>
+<span>        -Implemented: inputting of coin denominations and calculating the total in</span>
+<span>               Dollars has been implemented and tested.</span>
+<span>        -Partly implemented: None</span>
+
+<span>    Bugs     : features that are implemented are bug-free.</span>
+
+<span>    Reflections:</span>
+<span>        I started too late and was not able to spend as much time as I needed.</span>
+<span>        inputting of numbers (and their validation) was too hard for me.</span>
+
+
+<span>*/</span>
+<span>#endif </span><span>// Z_WORK_REPORT_H</span></pre>
+<p>&nbsp;</p>
+<p>Work Report Template:</p>
+<p>Here is the template you will be using for your work report:</p>
+<pre><span>#ifndef Z_WORK_REPORT_TEMPLATE_H</span>
+<span>#define Z_WORK_REPORT_TEMPLATE_H</span>
+<span>/*</span>
+<span>    Features:</span>
+<span>        -Not Implemented:</span>
+
+<span>        -Implemented:</span>
+
+<span>        -Partly implemented:</span>
+
+<span>    Bugs     :</span>
+
+<span>    Reflections:</span>
+
+
+
+<span>*/</span>
+
+<span>#endif </span><span>// Z_WORK_REPORT_TEMPLATE_H</span></pre>
+<p>&nbsp;</p>
+<h3><strong>&nbsp;Please Note:</strong></h3>
+<p>
+    <span>Inadequate, or missing test or documentation will result in deduction of anywhere between 10% to 100% of the grade. Watch your indentation. A poorly indented project could be impossible to read. Poor indentation may result in loss of precious points. Make sure you are submitting the right files. "sorry I forgot my header files == sorry you get a zero for the assignment.&nbsp;</span>
+</p>
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 09_p3_p5_lab_and_plane</title>
+</head>
+<body>
+<h2 style="text-align: center;"><strong>9.3 / 9.5 Lab and Plane</strong></h2>
+<h3 style="text-align: center;"><strong>using dynamic two dimensional arrays&nbsp;</strong></h3>
+<p><strong><a title="Pointer Projects Guidelines" href="$CANVAS_OBJECT_REFERENCE$/assignments/g87a6ddc69a2bf08e4d018639b47d31da" data-api-endpoint="https://canvas.pasadena.edu/api/v1/courses/1112354/assignments/8766673" data-api-returntype="Assignment">Pointer Projects Guidelines</a></strong></p>
+<p>Dynamic Two Dimensional Array (with variable column count per row)</p>
+<ul>
+<li>Build lower level functions such as Allocate, Initialize, Get, Read and write...</li>
+<li>Build two applications for Plane reservation and lab log in and out based on these low level functions.
+<ul>
+<li>For lab, you need a LogIn and a Logout function and for Plane, a Reserve and a Cancel function. These functions return true if the operation was successful and false otherwise.</li>
+<li>For plane, store 0 or 1 to indicate availability and for Lab, store student id to indicate the student is logged into a particular station.</li>
+</ul>
+</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><strong>Dynamic Two Dimensional Array Functions:</strong></h3>
+<pre><span class="type">int</span> array_size<span class="operator">(</span><span class="type">int</span><span class="operator">*</span> sizes<span class="operator">);</span><span class="type">
+void</span> print_array<span class="operator">(</span><span class="type">int</span><span class="operator">*</span> a<span class="operator">);</span><span class="type">
+bool</span> index_is_valid<span class="operator">(</span><span class="type">int</span><span class="operator">*</span> sizes<span class="operator">,</span><span class="type"> int</span> row<span class="operator">,</span><span class="type"> int</span> col<span class="operator">);</span>
+
+
+<span class="comment">
+//To call: int** p = allocate_twod&lt;int&gt;(sizes_array)  <br>
+</span><span class="keyword">template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span>
+T<span class="operator">**</span> allocate_twod<span class="operator">(</span><span class="type">int</span><span class="operator">*</span> sizes<span class="operator">);</span><span class="keyword"> 
+
+template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span>
+T** deallocate_twod<span class="operator">(</span>T<span class="operator">**</span> twod<span class="operator">,</span><span class="type"> int</span> size<span class="operator">);</span><span class="keyword">
+
+template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span>
+T read_twod<span class="operator">(</span>T<span class="operator">**</span> twod<span class="operator">,</span><span class="type"> int</span> row<span class="operator">,</span><span class="type"> int</span> col<span class="operator">);</span><span class="keyword">
+
+template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span><span class="type">
+void</span> write_twod<span class="operator">(</span>T<span class="operator">**</span> twod<span class="operator">,</span><span class="type"> int</span> row<span class="operator">,</span><span class="type"> int</span> col<span class="operator">,</span><span class="keyword"> const</span> T<span class="operator">&amp;</span> item<span class="operator">);</span><span class="keyword">
+
+template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span>
+T<span class="operator">&amp;</span> get_twod<span class="operator">(</span>T<span class="operator">**</span> twod<span class="operator">,</span><span class="type"> int</span> row<span class="operator">,</span><span class="type"> int</span> col<span class="operator">);</span><span class="keyword">
+
+template</span><span class="operator">&lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span><span class="type">
+void</span> init_twod<span class="operator">(</span>T<span class="operator">**</span> twod<span class="operator">,</span><span class="type"> int</span><span class="operator">*</span> sizes<span class="operator">,</span> T init_item<span class="operator"> =</span> T<span class="operator">());</span><span class="keyword">
+
+template</span><span class="operator">&lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span><span class="type">
+bool</span> search_twod<span class="operator">(</span>T<span class="operator">**</span> twod<span class="operator">,</span><span class="type"> int</span><span class="operator">*</span> sizes<span class="operator">,</span><span class="keyword"> const</span> T<span class="operator">&amp;</span> key<span class="operator">,</span><span class="type"> int</span><span class="operator">&amp;</span> row<span class="operator">,</span><span class="type"> int</span><span class="operator">&amp;</span> col<span class="operator">);</span><span class="keyword">
+<br>//return a pointer to the item if found, nullptr if not found: <br>//                                                 (Ms. Barskhian)<br>template<span class="operator">&lt;</span>class T<span class="operator">&gt;</span><span class="type"> <br>T*</span> search_twod<span class="operator">(</span>T<span class="operator">**</span> twod<span class="operator">,</span><span class="type"> int</span><span class="operator">*</span> sizes<span class="operator">,</span> const T<span class="operator">&amp;</span> key<span class="operator">);</span> <br>
+template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span>
+ostream<span class="operator">&amp;</span> print_twod<span class="operator">(</span>T<span class="operator">**</span> twod<span class="operator">,</span><span class="type"> int</span><span class="operator">*</span> sizes<span class="operator">,</span> ostream<span class="operator">&amp;</span> outs<span class="operator"> =</span> cout<span class="operator">);</span>
+</pre>
+<h3><strong>Lab Functions: </strong></h3>
+<p>based on the dynamic two dimensional array functions</p>
+<pre><span class="type">int</span><span class="operator"> **</span>init_lab<span class="operator">(</span><span class="type">int</span><span class="operator">*</span> stations<span class="operator">);</span><span class="type">
+bool</span> login<span class="operator">(</span><span class="type">int</span><span class="operator">**</span> labs<span class="operator">,</span><span class="type"> int</span> lab<span class="operator">,</span><span class="type"> int</span> station<span class="operator">,</span><span class="type"> int</span> id<span class="operator">);</span><span class="type">
+bool</span> logout<span class="operator">(</span><span class="type">int</span><span class="operator">**</span> labs<span class="operator">,</span><span class="type"> int</span><span class="operator">*</span> sizes<span class="operator">,</span><span class="type"> int</span> id<span class="operator">);</span></pre>
+<h3><strong>Plane Functions:</strong></h3>
+<ul>
+<li>Use a dynamic two dimensional array of <strong>bools</strong> for the plane application</li>
+</ul>
+<pre><span>bool</span> <span>**</span><span>init_plane</span>();
+<span>bool</span> <span>reserve</span>(<span>bool</span> <span>**</span>plane, <span>int</span> row, <span>int</span> seat);
+<span>bool</span> <span>cancel</span>(<span>bool</span><span>**</span> plane, <span>int</span> row, <span>int</span> seat);
+<span>void</span> <span>print_plane</span>(<span>bool</span> <span>**</span>plane);</pre>
+<h3><strong>Sample Test Function (fragment)</strong></h3>
+<pre><span class="type">void</span> test_lab<span class="operator">(){</span><span class="type">
+    int</span> lab_sizes<span class="operator">[] = {</span><span class="int">4</span><span class="operator">,</span><span class="int">3</span><span class="operator">,</span><span class="int">2</span><span class="operator">,-</span><span class="int">1</span><span class="operator">};</span><span class="type">
+    int</span><span class="operator">**</span> labs<span class="operator"> =</span> init_lab<span class="operator">(</span>lab_sizes<span class="operator">);</span>
+    print_twod<span class="operator">(</span>labs<span class="operator">,</span> lab_sizes<span class="operator">);
+    ...</span>
+    cout<span class="operator">&lt;&lt;</span><span class="string">"log[i]n    log[o]ut      e[x]it"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    cout<span class="operator">&lt;&lt;</span><span class="string">":"</span><span class="operator">;</span> cin<span class="operator">&gt;&gt;</span>command<span class="operator">;</span><span class="flow">
+    while</span><span class="operator">(</span>toupper<span class="operator">(</span>command<span class="operator">) !=</span><span class="char"> 'X'</span><span class="operator">){</span><span class="flow">
+        switch</span><span class="operator">(</span>toupper<span class="operator">(</span>command<span class="operator">)){</span><span class="flow">
+        case</span><span class="char"> 'I'</span><span class="operator">:</span>
+            cout<span class="operator">&lt;&lt;</span><span class="string">"---- LOG IN: ------"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+            cout<span class="operator">&lt;&lt;</span><span class="string">"labs: "</span><span class="operator">;</span>
+            print_array<span class="operator">(</span>lab_sizes<span class="operator">);</span>
+            cout<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+
+            cout<span class="operator">&lt;&lt;</span><span class="string">"id: "</span><span class="operator">;</span> cin<span class="operator">&gt;&gt;</span>id<span class="operator">;</span>
+            cout<span class="operator">&lt;&lt;</span><span class="string">"lab: "</span><span class="operator">;</span> cin<span class="operator">&gt;&gt;</span>lab<span class="operator">;</span>
+            cout<span class="operator">&lt;&lt;</span><span class="string">"station: "</span><span class="operator">;</span> cin<span class="operator">&gt;&gt;</span>station<span class="operator">;</span><span class="flow">
+            if</span><span class="operator"> (</span>index_is_valid<span class="operator">(</span>lab_sizes<span class="operator">,</span> lab<span class="operator">,</span> station<span class="operator">)){</span><span class="flow">
+                if</span><span class="operator"> (</span>login<span class="operator">(</span>labs<span class="operator">,</span> lab<span class="operator">,</span> station<span class="operator">,</span>id<span class="operator">)){</span>
+                    cout<span class="operator">&lt;&lt;</span><span class="string">"you are logged in in lab "</span><span class="operator">&lt;&lt;</span>lab<span class="operator">&lt;&lt;</span><span class="string">
+                          ", station: "</span><span class="operator">&lt;&lt;</span>station<span class="operator">&lt;&lt;</span>endl<span class="operator">;
+                }</span><span class="flow">
+                else</span><span class="operator">{</span>
+                    cout<span class="operator">&lt;&lt;</span><span class="string">"lab "</span><span class="operator">&lt;&lt;</span>lab<span class="operator">&lt;&lt;</span><span class="string">", station "</span><span class="operator">&lt;&lt;</span>station<span class="operator">&lt;&lt;</span><span class="string">" is occupied"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;
+                }
+            }</span><span class="comment"> //valid index
+</span><span class="flow">            else</span><span class="operator">{</span>
+                cout<span class="operator">&lt;&lt;</span><span class="string">"["</span><span class="operator">&lt;&lt;</span>lab<span class="operator">&lt;&lt;</span><span class="string">"]["</span><span class="operator">&lt;&lt;</span>station<span class="operator">&lt;&lt;</span><span class="string">"] is invalid. "</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;
+            }</span><span class="flow">
+            break</span><span class="operator">;
+
+            ...
+        }</span><span class="comment"> //switch
+</span>        print_twod<span class="operator">(</span>labs<span class="operator">,</span> lab_sizes<span class="operator">);</span>
+
+        cout<span class="operator">&lt;&lt;</span><span class="string">"log[i]n    log[o]ut      e[x]it"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+        cout<span class="operator">&lt;&lt;</span><span class="string">":"</span><span class="operator">;</span> cin<span class="operator">&gt;&gt;</span>command<span class="operator">;
+    }</span><span class="comment">//while
+</span><span class="operator">}</span>
+</pre>
+<h3><strong>Labs Sample Output:</strong></h3>
+<pre><span class="operator">===========================</span>
+
+after init<span class="int">
+    0    0    0    0
+    0    0    0
+    0    0</span>
+log<span class="operator">[</span>i<span class="operator">]</span>n    log<span class="operator">[</span>o<span class="operator">]</span>ut      e<span class="operator">[</span>x<span class="operator">]</span>it<span class="operator">
+:</span>i<span class="operator">
+----</span> LOG IN<span class="operator">: ------</span>
+labs<span class="operator">:</span><span class="int">     4    3    2</span>
+
+id<span class="operator">:</span><span class="int"> 388</span>
+lab<span class="operator">:</span><span class="int"> 0</span>
+station<span class="operator">:</span><span class="int"> 2</span>
+you are logged in in lab<span class="int"> 0</span><span class="operator">,</span> station<span class="operator">:</span><span class="int"> 2
+    0    0  388    0
+    0    0    0
+    0    0</span>
+log<span class="operator">[</span>i<span class="operator">]</span>n    log<span class="operator">[</span>o<span class="operator">]</span>ut      e<span class="operator">[</span>x<span class="operator">]</span>it<span class="operator">
+:</span>i<span class="operator">
+----</span> LOG IN<span class="operator">: ------</span>
+labs<span class="operator">:</span><span class="int">     4    3    2</span>
+
+id<span class="operator">:</span><span class="int"> 465</span>
+lab<span class="operator">:</span><span class="int"> 1</span>
+station<span class="operator">:</span><span class="int"> 2</span>
+you are logged in in lab<span class="int"> 1</span><span class="operator">,</span> station<span class="operator">:</span><span class="int"> 2
+    0    0  388    0
+    0    0  465
+    0    0</span>
+log<span class="operator">[</span>i<span class="operator">]</span>n    log<span class="operator">[</span>o<span class="operator">]</span>ut      e<span class="operator">[</span>x<span class="operator">]</span>it<span class="operator">
+:</span>i<span class="operator">
+----</span> LOG IN<span class="operator">: ------</span>
+labs<span class="operator">:</span><span class="int">     4    3    2</span>
+
+id<span class="operator">:</span><span class="int"> 666</span>
+lab<span class="operator">:</span><span class="int"> 2</span>
+station<span class="operator">:</span><span class="int"> 3</span><span class="operator">
+[</span><span class="int">2</span><span class="operator">][</span><span class="int">3</span><span class="operator">]</span> is invalid<span class="operator">.</span><span class="int"> 
+    0    0  388    0
+    0    0  465
+    0    0</span>
+log<span class="operator">[</span>i<span class="operator">]</span>n    log<span class="operator">[</span>o<span class="operator">]</span>ut      e<span class="operator">[</span>x<span class="operator">]</span>it<span class="operator">
+:</span>i<span class="operator">
+----</span> LOG IN<span class="operator">: ------</span>
+labs<span class="operator">:</span><span class="int">     4    3    2</span>
+
+id<span class="operator">:</span><span class="int"> 233</span>
+lab<span class="operator">:</span><span class="int"> 2</span>
+station<span class="operator">:</span><span class="int"> 0</span>
+you are logged in in lab<span class="int"> 2</span><span class="operator">,</span> station<span class="operator">:</span><span class="int"> 0
+    0    0  388    0
+    0    0  465
+  233    0</span>
+log<span class="operator">[</span>i<span class="operator">]</span>n    log<span class="operator">[</span>o<span class="operator">]</span>ut      e<span class="operator">[</span>x<span class="operator">]</span>it<span class="operator">
+:</span>o<span class="operator">
+----</span> LOG OUT<span class="operator">: ------</span>
+id<span class="operator">:</span><span class="int"> 555</span>
+you are<span class="operator"> not</span> logged in<span class="operator">.</span> id<span class="operator">:</span><span class="int"> 555
+    0    0  388    0
+    0    0  465
+  233    0</span>
+log<span class="operator">[</span>i<span class="operator">]</span>n    log<span class="operator">[</span>o<span class="operator">]</span>ut      e<span class="operator">[</span>x<span class="operator">]</span>it<span class="operator">
+:</span>o<span class="operator">
+----</span> LOG OUT<span class="operator">: ------</span>
+id<span class="operator">:</span><span class="int"> 388</span>
+you have successfully logged out<span class="int">
+    0    0    0    0
+    0    0  465
+  233    0</span>
+log<span class="operator">[</span>i<span class="operator">]</span>n    log<span class="operator">[</span>o<span class="operator">]</span>ut      e<span class="operator">[</span>x<span class="operator">]</span>it<span class="operator">
+:</span>o<span class="operator">
+----</span> LOG OUT<span class="operator">: ------</span>
+id<span class="operator">:</span><span class="int"> 233</span>
+you have successfully logged out<span class="int">
+    0    0    0    0
+    0    0  465
+    0    0</span>
+log<span class="operator">[</span>i<span class="operator">]</span>n    log<span class="operator">[</span>o<span class="operator">]</span>ut      e<span class="operator">[</span>x<span class="operator">]</span>it<span class="operator">
+:</span>x<span class="operator">
+
+
+
+===========================</span>
+Press<span class="operator"> &lt;</span>RETURN<span class="operator">&gt;</span> to close<span class="keyword"> this</span> window<span class="operator">...</span>
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

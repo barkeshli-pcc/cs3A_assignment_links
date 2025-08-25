@@ -1,0 +1,124 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 11_p2_rational</title>
+</head>
+<body>
+<h2 style="text-align: center;"><strong>Rational Number Class</strong></h2>
+<p><a title="READ ME (Chapter 10, 11)" href="$CANVAS_OBJECT_REFERENCE$/assignments/gc9baabedc65f6aa37e060beacf65cccb" data-api-endpoint="https://canvas.pasadena.edu/api/v1/courses/1124045/assignments/9188090" data-api-returntype="Assignment">READ ME (Chapter 10, 11)</a></p>
+<h3><strong>Rational:</strong></h3>
+<pre><span class="keyword">class</span> Rational<span class="operator">
+{</span><span class="keyword">
+public</span><span class="operator">:</span>
+    Rational<span class="operator">();</span>
+    Rational<span class="operator">(</span><span class="type">int</span> num<span class="operator">,</span><span class="type"> int</span> denom<span class="operator">);</span><span class="type">
+    Rational(int w);        //whole number<br><br>    //mutators / setters<br>    void</span> set<span class="operator">(</span><span class="type">int</span> num<span class="operator">,</span><span class="type"> int</span> denom<span class="operator">);<br></span><span class="type">    void set_num(int n);<br>    void set_denom(int d);<br>  <br>    //accessors / getters
+    int</span> get_num<span class="operator">()</span><span class="keyword"> const</span><span class="operator">;</span><span class="type">
+    int</span> get_denom<span class="operator">()</span><span class="keyword"> const</span><span class="operator">;</span><span class="type">
+<br>    //error handling routines
+    int error() const;      //return error state<br></span>    string error_description<span class="operator">() const;   </span>
+<span class="operator">                            //return a descriptive error message</span><span class="type">
+  
+    void</span> reset<span class="operator">();           //resets number to 0/1 and clears error state<br></span><span class="keyword">
+    //will return object whose error state is set <br>    //   if one of the operands is in error. <br>    friend</span> Rational<span class="keyword"> operator</span><span class="operator"> +(</span><span class="keyword">const</span> Rational<span class="operator"> &amp;</span>num1<span class="operator">,</span><span class="keyword"> const</span> Rational<span class="operator"> &amp;</span>num2<span class="operator">);</span><span class="keyword">
+    friend</span> Rational<span class="keyword"> operator</span><span class="operator"> -(</span><span class="keyword">const</span> Rational<span class="operator"> &amp;</span>num1<span class="operator">,</span><span class="keyword"> const</span> Rational<span class="operator"> &amp;</span>num2<span class="operator">);</span><span class="keyword">
+    friend</span> Rational<span class="keyword"> operator</span><span class="operator"> *(</span><span class="keyword">const</span> Rational<span class="operator"> &amp;</span>num1<span class="operator">,</span><span class="keyword"> const</span> Rational<span class="operator"> &amp;</span>num2<span class="operator">);</span><span class="keyword">
+    friend</span> Rational<span class="keyword"> operator</span><span class="operator"> /(</span><span class="keyword">const</span> Rational<span class="operator"> &amp;</span>num1<span class="operator">,</span><span class="keyword"> const</span> Rational<span class="operator"> &amp;</span>num2<span class="operator">);</span><span class="keyword">
+    <br>    //will print UNDEFINED if num is in error.
+    friend</span> ostream<span class="operator">&amp;</span><span class="keyword"> operator</span><span class="operator"> &lt;&lt;(</span>ostream<span class="operator"> &amp;</span>outs<span class="operator">,</span><span class="keyword"> const</span> Rational<span class="operator"> &amp;</span>num<span class="operator">);</span><span class="keyword">
+    friend</span> istream<span class="operator">&amp;</span><span class="keyword"> operator</span><span class="operator"> &gt;&gt;(</span>istream<span class="operator"> &amp;</span>ins<span class="operator">,</span> Rational<span class="operator"> &amp;</span>num<span class="operator">);</span><span class="keyword">
+
+private</span><span class="operator">:</span>
+<span class="type">    int is_error<span class="operator">()</span><span class="keyword"> const</span><span class="operator">;</span><span class="comment">   //checks for error cond and returns error code </span> &nbsp; &nbsp;<br></span><span class="type">    int</span> _n<span class="operator">;</span><span class="comment">                 //numerator
+</span><span class="type">    int</span> _d<span class="operator">;</span><span class="comment">                 //denominator
+</span><span class="type">    int</span> _error<span class="operator">;</span><span class="comment">             //error code
+</span><span class="operator">};</span></pre>
+<h3><strong>Handling Errors</strong></h3>
+<p>private function is_error() will check for error conditions (in this case _d==0) It simply returns the error state, it does not set _error. _error can be set like this:</p>
+<pre>    _error<span class="operator">=is_</span>error<span class="operator">();</span></pre>
+<p><span style="text-decoration: underline;">Any function that alters the denominator of the rational number will have to call&nbsp;is_error()&nbsp;to see if _error code must be set.</span></p>
+<p>All operators will have to call the CTOR to return their result. Therefore, if one of the operands is in _error, the operator must ensure the result will be as well.</p>
+<p>Do NOT output error messages from inside any of class functions. Except the insertion operator will output "UNDEFINED" if the rational number is in _error.</p>
+<p>The calling function may call rational::error_description() to get a string containing the error message.</p>
+<p>Operators are friends of the class, not members of the class.</p>
+<p>Do not forget the const and pass by reference on arguments (when needed.)</p>
+<p>Do not forget the const keyword on the operator parameters and class functions</p>
+<p>&nbsp;</p>
+<h3><strong>Testing:</strong></h3>
+<p>Write an auxiliary function called display_results() and pass it two rational objects. The function will show the result of all the arithmetic operations on the two rationals.</p>
+<p>Write a function called test_rational(). This is the function that will be called from main()</p>
+<p>In test_rational(), declare two rational objects a and b and assign each a value using a different constructor.</p>
+<p>Call display_results() to show the result of all the arithmetic operations.</p>
+<p>Then display this menu to the user:</p>
+<pre><span class="operator">[</span>A<span class="operator">] [</span>B<span class="operator">]</span>   e<span class="operator">[</span>X<span class="operator">]</span>it </pre>
+<p>When the user presses A or B, ask for a rational and input the new values of a or b.</p>
+<p>Continue this process until X is inputted.</p>
+<p>&nbsp;</p>
+<h3><strong>Sample output:</strong></h3>
+<pre>A<span class="operator">:</span><span class="int"> 4</span><span class="operator">/</span><span class="int">1</span>    B<span class="operator">:</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5
+4</span><span class="operator">/</span><span class="int">1</span><span class="operator"> +</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 21</span><span class="operator">/</span><span class="int">5
+4</span><span class="operator">/</span><span class="int">1</span><span class="operator"> *</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 4</span><span class="operator">/</span><span class="int">5
+4</span><span class="operator">/</span><span class="int">1</span><span class="operator"> -</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 19</span><span class="operator">/</span><span class="int">5
+4</span><span class="operator">/</span><span class="int">1</span><span class="operator"> /</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 20</span><span class="operator">/</span><span class="int">1</span><span class="operator">
+============================================
+
+[</span>A<span class="operator">] [</span>B<span class="operator">]</span>   e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator"> 
+:</span> a
+A<span class="operator">:</span><span class="int"> 3</span><span class="operator">/</span><span class="int">4</span><span class="operator">
+
+============================================</span>
+
+A<span class="operator">:</span><span class="int"> 3</span><span class="operator">/</span><span class="int">4</span>    B<span class="operator">:</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5
+3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> +</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 19</span><span class="operator">/</span><span class="int">20
+3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> *</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 3</span><span class="operator">/</span><span class="int">20
+3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> -</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 11</span><span class="operator">/</span><span class="int">20
+3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> /</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 15</span><span class="operator">/</span><span class="int">4</span><span class="operator">
+============================================
+
+[</span>A<span class="operator">] [</span>B<span class="operator">]</span>   e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator"> 
+:</span> b
+B<span class="operator">:</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator">
+
+============================================</span>
+
+A<span class="operator">:</span><span class="int"> 3</span><span class="operator">/</span><span class="int">4</span>    B<span class="operator">:</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13
+3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> +</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span><span class="int"> 63</span><span class="operator">/</span><span class="int">52
+3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> *</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span><span class="int"> 18</span><span class="operator">/</span><span class="int">52
+3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> -</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span><span class="int"> 15</span><span class="operator">/</span><span class="int">52
+3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> /</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span><span class="int"> 39</span><span class="operator">/</span><span class="int">24</span><span class="operator">
+============================================
+
+[</span>A<span class="operator">] [</span>B<span class="operator">]</span>   e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator"> 
+:</span> a
+A<span class="operator">:</span><span class="int"> 1</span><span class="operator">/</span><span class="int">0</span><span class="operator">
+
+============================================</span>
+
+A<span class="operator">:</span> UNDEFINED    B<span class="operator">:</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span>
+UNDEFINED<span class="operator"> +</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span> UNDEFINED
+UNDEFINED<span class="operator"> *</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span> UNDEFINED
+UNDEFINED<span class="operator"> -</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span> UNDEFINED
+UNDEFINED<span class="operator"> /</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span> UNDEFINED<span class="operator">
+============================================
+
+[</span>A<span class="operator">] [</span>B<span class="operator">]</span>   e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator"> 
+:</span> a
+A<span class="operator">:</span><span class="int"> 2</span><span class="operator">/</span><span class="int">5</span><span class="operator">
+
+============================================</span>
+
+A<span class="operator">:</span><span class="int"> 2</span><span class="operator">/</span><span class="int">5</span>    B<span class="operator">:</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13
+2</span><span class="operator">/</span><span class="int">5</span><span class="operator"> +</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span><span class="int"> 56</span><span class="operator">/</span><span class="int">65
+2</span><span class="operator">/</span><span class="int">5</span><span class="operator"> *</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span><span class="int"> 12</span><span class="operator">/</span><span class="int">65
+2</span><span class="operator">/</span><span class="int">5</span><span class="operator"> -</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> = -</span><span class="int">4</span><span class="operator">/</span><span class="int">65
+2</span><span class="operator">/</span><span class="int">5</span><span class="operator"> /</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span><span class="int"> 26</span><span class="operator">/</span><span class="int">30</span><span class="operator">
+============================================
+
+[</span>A<span class="operator">] [</span>B<span class="operator">]</span>   e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator"> 
+:</span> x
+Press<span class="operator"> &lt;</span>RETURN<span class="operator">&gt;</span> to close<span class="keyword"> this</span> window<span class="operator">...</span></pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

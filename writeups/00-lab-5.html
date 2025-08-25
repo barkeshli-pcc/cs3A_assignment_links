@@ -1,0 +1,35 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 00_lab_5</title>
+</head>
+<body>
+<h2 style="text-align: center;"><strong>Bouncing Bubbles</strong></h2>
+<p>&nbsp;<img style="display: block; margin-left: auto; margin-right: auto;" src="$IMS-CC-FILEBASE$/bouncing_bubbles_15.gif" alt="bouncing_bubbles_15.gif" width="600" height="441" data-api-endpoint="https://canvas.pasadena.edu/api/v1/courses/1112350/files/69044484" data-api-returntype="File" loading="lazy"></p>
+<p>&nbsp;</p>
+<p>You are <a class="instructure_file_link instructure_scribd_file" title="Single Bouncing Ball.zip" href="$IMS-CC-FILEBASE$/Single%20Bouncing%20Ball.zip?canvas_download=1&amp;canvas_qs_wrap=1" data-api-endpoint="https://canvas.pasadena.edu/api/v1/courses/1112350/files/69044485" data-api-returntype="File">given</a> a working project that manages the (simple) movements of of a single circular shape on the screen. A very short summary of the design of this project follows:</p>
+<p>&nbsp;</p>
+<p><strong>animate&nbsp;class:</strong></p>
+<p>The animation class is in charge of handling the application's main loop, event handling, and drawing of the objects.</p>
+<p>The animation class delegates the management of individual elements of the application (the shapes) to the System class.</p>
+<p><strong>System class:</strong></p>
+<p>The system class is currently in charge of creating the circular shape, calculating its position in the next frame, and drawing the object.</p>
+<p><strong>Random class:&nbsp;</strong></p>
+<p>Responsible for seeding the random generator and generating random numbers in a range.&nbsp;</p>
+<p>Applications that use this class should not seed the random generator (srand( ) ).</p>
+<p><strong>The Bouncing Bubbles Application:</strong></p>
+<p>&nbsp;The major difference between the sample application you are given and the application you are to deliver is the number of objects (shapes) managed.</p>
+<p><strong>The New System class:</strong></p>
+<p>The system class will now contain a vector of Particles, rather than a single sf::CircleShape.&nbsp;</p>
+<p>It will no longer calculate the position of the shape(s) or draw them. It will delegate such individual tasks to the shapes (Particles) themselves.</p>
+<p>All System will do when it's time to draw, is to loop through all the Particles in its vector and system[i].Draw(window). Remember to pass the window object to any entity that needs to draw to the screen.</p>
+<p>Similar&nbsp;organization will delegate the movement (calculating the next position) to the Particles themselves.</p>
+<p>System CTOR: Recall that the animate object called on System to instantiate itself. In this design, the Animate will create a vector of Particles (given their initial position, velocity, acceleration, color, size, etc.) and pass this vector to System. Remember to pass a constant reference to this vector to the system and not pass it by value! System, then, will take this vector and copy it to its own internal vector.</p>
+<p><strong>Particle Class:</strong></p>
+<p>The Particle class holds an SFML shape, and its size, position, velocity, acceleration, color, etc.</p>
+<p>It will be in charge of calculating its own position for the next frame and for drawing itself on to the screen.</p>
+<p><span style="color: #0000ff;"><strong>Submit</strong></span>:</p>
+<p>Submit as your output, a gif of 20 seconds or more (less than 60 seconds, please!) of your output.</p>
+<p>&nbsp;</p>
+</body>
+</html>

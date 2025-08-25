@@ -1,0 +1,118 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Map Class</title>
+</head>
+<body>
+<p><span style="font-size: 18pt;"><strong>Map Class:</strong></span></p>
+<p><span style="font-size: 10pt;"><strong>Please review&nbsp;the pages relating to Functors and passing them <a id="" class="" title="Simple Functors: Passing to Functions" href="$CANVAS_OBJECT_REFERENCE$/assignments/g29dfcbc12f4c985a7f8e026245ff52e6" target="">to functions</a> and <a id="" class="" title="Functors: Passing to classes" href="$CANVAS_OBJECT_REFERENCE$/assignments/g186dedc069139cab9679ae633f2deb32" target="">to classes</a>.</strong></span></p>
+<p><strong><span style="font-size: 14pt; color: #0000ff;">In this project:</span> </strong></p>
+<ul>
+<li>Nested classes,</li>
+<li>Functors,</li>
+<li>higher level data structures.</li>
+</ul>
+<p><span style="font-size: 14pt;"><strong>A map</strong></span> is a <strong>unique, sorted</strong> list of <strong>key / value pairs</strong>:</p>
+<p>{["<span>Christopher</span>", "Math"],["John","Physics"],["Mary","CS"],["Max","Math"],["Susan","CS"]}</p>
+<p>We will implement a Map class using the linked list functions we developed earlier. Be warned that we will be using a <strong>Pair</strong> as the _item for our nodes. So, our list is a linked list&nbsp;of (key, value) Pairs. This means the ITEM_TYPE is in fact a Pair object.</p>
+<p><span style="font-size: 18pt;"><strong>How a Map is used?</strong></span></p>
+<p>Before anything else, let's see how a map object can be instantiated.</p>
+<p>We will need a key type, a value type and (optionally,) the name of a functor that indicated user's choice on duplicate policy:</p>
+<p><img src="https://www.dropbox.com/s/iyspa498pzos4ps/Screenshot%202015-11-08%2014.51.29.png?dl=1" alt="Map<...> frequency; //Map object instantiation." width="617" height="42" loading="lazy"></p>
+<p>&nbsp;The third template argument is a templated Functor.&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt;"><strong>typedef is your friend</strong></span></p>
+<p>After a little while, typing up all of that Map&lt;string, int, ...&gt; gets tiresome and prone to errors.</p>
+<p>So, from this point forward, we will use a typedef to name "Frequency" any Map class with &lt;string, int&gt;pairs and Dup_Addem functor that will resolve duplication issues.</p>
+<p><img src="https://www.dropbox.com/s/8ckj7ij8s3kf2ss/Screenshot%202015-11-08%2014.59.01.png?dl=1" alt="typdef Map<...> Frequency; Frequency frequency;" width="788" height="98" loading="lazy">&nbsp;typedefs simplify syntax considerably and contribute to the readability of your code.</p>
+<p>&nbsp;Now,let's insert some items into the Map class. Here is a list of students with number of times they have caused me to consider a change of career:</p>
+<p><img src="https://www.dropbox.com/s/epsir1pli8q7isp/Screenshot%202015-11-08%2015.25.41.png?dl=1" alt="frequency.Insert(&quot;name&quot;, value)" width="847" height="332" loading="lazy"></p>
+<p>When Harlan is added the second time, the Map object will follow the policy set by Dup_Addem functor.</p>
+<p>This is the output from the code above:</p>
+<p><img src="https://www.dropbox.com/s/mh5biazwmvg585d/Screenshot%202015-11-08%2015.13.29.png?dl=1" alt="output screenshot. " width="975" height="53" loading="lazy"></p>
+<p><span style="font-size: 14pt;"><strong>&nbsp;Searching the Map for keys:</strong></span></p>
+<p>As with other lists we have designed, an iterator is used to point to the nodes of the Map:</p>
+<p><img src="https://www.dropbox.com/s/nzq4y2b0quhbk1m/Screenshot%202015-11-12%2014.38.31.png?dl=1" alt="iterator it=frequency.Find(..." loading="lazy"></p>
+<p>The most notable points in this code is the way the Iterator is being declared. You will recall that this is how STL iterators are declared.</p>
+<p>Also, the iterator's -&gt; operator is used to access the value within the Pair object.</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt;"><strong>Requirements:</strong></span></p>
+<p>We will be designing a</p>
+<ul>
+<li>Linked list class named Map&nbsp;whose nodes are templated Pair objects.</li>
+<ul>
+<li>Each node holds a Pair object containing two elements: key and value&nbsp;</li>
+</ul>
+<li>The Map will be a list of sorted, unique items.</li>
+<li>The map function will take a key and a value to <span style="text-decoration: underline;">construct the Pair objects</span> thus relieving the user from this responsibility</li>
+<li>In an attempt to insert duplicate pairs into the Map class, we will run a "DUP_POLICY" functor which is supplied by the entity who instantiated the object.</li>
+<ul>
+<li>This means that the Map class has a DUP_POLICY template argument and a Dup private member object which it uses to deal with duplication attempts</li>
+</ul>
+</ul>
+<p><span style="font-size: 14pt;"><strong>Map Functions:</strong></span></p>
+<p>A map provides the following interface to access the underlying list:</p>
+<ul>
+<li>Constructor</li>
+<li>The Big Three</li>
+<li>Insert &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //Insert an item into the Map</li>
+<li>Erase &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //Erase an item given the key or an Iterator</li>
+<li>Begin &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //An Iterator to the head of the list</li>
+<li>End &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//An Iterator to the end of the list</li>
+<li>Find &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //Return an Iterator to the item given the&nbsp;key</li>
+<li>SwapKeyValues &nbsp; &nbsp;//Returns a List of all the nodes with keys and values swapped.</li>
+<li>operator [ ] &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//return a reference to the value, given the key m["john"]</li>
+<li>friend operator &lt;&lt;</li>
+</ul>
+<p>The notable&nbsp;functions are the insert function and the SwapKeyValue function. Both of these will be discussed shortly.</p>
+<p><span style="font-size: 14pt;"><strong>Map nodes have a Pair as ITEM_TYPE:</strong></span></p>
+<p>If you recall, the node is a templated class whose _item field is of type ITEM_TYPE. Our Map class instantiates node with objects of struct&nbsp;"Pair". In other words, Map's private member variable head is of type.</p>
+<p>But first, let's typedef the Pair&lt;K, V&gt; as PAIR_TYPE:</p>
+<p><img src="https://www.dropbox.com/s/o8fhpybt0cjyb7v/Screenshot%202015-11-08%2015.42.56.png?dl=1" alt="typedef Pair<K, V> PAIR_TYPE" width="369" height="35" loading="lazy"></p>
+<p>and now, we can define head as a PAIR_TYPE pointer:</p>
+<p><img src="https://www.dropbox.com/s/2fe7q43zifursok/Screenshot%202015-11-08%2016.06.29.png?dl=1" alt="PAIR_TYPE* head;" width="413" height="100" loading="lazy"></p>
+<p>If you have studied the section about passing functors to classes, you will know what DUP_POLICY is and what Dup is for.</p>
+<p>Now it's time to take a look at the Pair structure:</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt;"><strong>Pair Structure:</strong></span></p>
+<p>Here is what Pair looks like:</p>
+<p><img src="https://www.dropbox.com/s/egkg1fqo9i5va9h/Screenshot%202015-11-07%2022.32.26.png?dl=1" alt="" loading="lazy"></p>
+<p>These are the usual functions of a common Pair class along with less than, equality and insertion operators. This structure can support key / value pairs of any type.&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt;"><strong>Iterator: a&nbsp;nested&nbsp;class:</strong></span></p>
+<p>We saw above the simple and intuitive way the Map's Iterator was declared (similar to how STL iterators are declared.)</p>
+<p>The Iterator class is nested within the Map class and has the following functions along with the usual Iterator operator overloads: <strong>++, *, -&gt;&nbsp;</strong>and<strong>&nbsp; ==</strong></p>
+<p><img src="https://www.dropbox.com/s/dm5j9ci00obs6ol/Screenshot%202015-11-19%2008.03.14.png?dl=1" alt="Iterator nested class" width="793" height="280" loading="lazy"></p>
+<p>This will have the benefit of not having to create multiple Iterator classes with strange names: MapIterator, SetIterator, ListIterator, etc. Each type of list will have its own Iterator that conforms to the rules and specifications of that list. And, there is no need to declare the list as a friend of the Iterator class since the Iterator is nested within the list (map)</p>
+<p>NOTE: Please note that the Map (the outer) class has no access to the private member variables of the Iterator (inner) class, so, the Map class should be declared as a <strong>friend class</strong> to the Iterator class. &nbsp;</p>
+<p><span>&nbsp;------------------------</span><span>&nbsp;------------------------</span><span>&nbsp;------------------------</span><span>&nbsp;------------------------</span><span>&nbsp;------------------------</span></p>
+<p><span style="font-size: 14pt;"><strong>Referencing the Iterator class in Map class function declarations:</strong></span></p>
+<p><span>Within the map class, you can refer to your nested Iterator class simply as Iterator. But the syntax gets a bit more complicated outside the class.&nbsp;</span></p>
+<p>First, note that, on the outside, there is no such thing as an Iterator. There is Map&lt;template vars&gt;::Iterator. What's more, when referring to the Iterator as a class, we must use the typename keyword:<img src="https://www.dropbox.com/s/e5zangv73yposhx/Screenshot%202015-11-19%2008.11.16.png?dl=1" alt="typename Map<...>::Iterator Map<...>::Find(" width="688" height="57" loading="lazy"></p>
+<p>while, as mentioned, within the class we declare the Find function like so:</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt;"><strong>The Map's SwapKeyValues function:</strong></span></p>
+<p><span>This function creates iterates over all the nodes in the Map and for each node, constructs a Pair whose keys and values are swapped and "sorted" inserts these nodes into a List object. This function returns the List function once all keys and values are swapped.</span></p>
+<p>We use this function to create a List that can be sorted in value order. The resulting list may not be a Map since we could have multiple values that are the same and thus the new list will not have unique keys.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt;"><strong>The Map's Insert Function:</strong></span></p>
+<p>The Map's insert function takes two arguments, a key and a value. It constructs a Pair object and passes it to&nbsp;InsertSortedUnique function along with the head pointer and Dup, the Map class' functor member function.</p>
+<p>If you recall, all our linked list functions are implemented in a LinkedListFunctions.h header file. So, now you will need to write the InsertSortedUnique function and add it to that header file</p>
+<p>&nbsp;</p>
+<p><span></span><span style="font-size: 14pt;"><strong>The InsertSortedUnique Function:</strong><span style="background-color: #ffff00;"></span>&nbsp;</span></p>
+<p>InsertSortedUnique is templated with the usual ITEM_TYPE template argument plus a Dup_P&nbsp;template argument.</p>
+<p>The function&nbsp;takes three arguments: the head pointer, the item AND DUP, a "Duplicate Policy" functor&nbsp;that will determine what will happen when a duplicate entry is about to be inserted into the list: do we ignore it or do we take&nbsp;some other action? This duplicate policy object is a Functor and will be supplied to the InsertSortedUnique, in this case, by the Map's Insert function.</p>
+<p>In this example, the Duplicate Policy is of type DUP and the argument is called Dup:</p>
+<p><img src="https://www.dropbox.com/s/g4cdra3w9cpcqc7/Screenshot%202015-11-08%2015.53.19.png?dl=1" alt="InsertSotredUnique signature" width="773" height="104" loading="lazy"></p>
+<p>InsertSortedUnique&nbsp;calls the Dup functor as it would a function with two arguments: the item&nbsp;in the list and the duplicated item being added.</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt;"><strong>Duplicate Policy Functors:&nbsp;</strong></span></p>
+<p>&nbsp;The Map class uses the Dup_Nothing functor as a default template argument. The parenthesis operator takes two arguments: the left argument is always a Pair within the list and the right is the pair that is being inserted. The left, as it can be seen is being passed by reference and is not a const. So, whatever changes that need to be made to the Pair object in the list, must be done to the left argument. Dup_Nothing makes no changes to the left argument and therefore has no effect on the Pair object in list. So, the duplicate object will be ignored.</p>
+<p>For this project we need at least one more functor called Dup_Addem that causes the values of the two Pairs to be added and stored in left.<img src="https://www.dropbox.com/s/4nwz4hjd7fjtfjl/Screenshot%202015-11-08%2016.15.28.png?dl=1" alt="Dup_Nothing" width="862" height="289" loading="lazy"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

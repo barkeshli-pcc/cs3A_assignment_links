@@ -1,0 +1,20 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Templated Lists</title>
+</head>
+<body>
+<p>Template your List and Iterator classes along with SortedList, Polynomial, Stack and Queue:</p>
+<p>and... don't forget the Binary Search Tree class!</p>
+<p>Your polynomial will look like this:</p>
+<p>class Poly: public List&lt;PolyNode&gt;{}</p>
+<p>&nbsp;</p>
+<p class="p1"><strong>N&nbsp; O&nbsp; T&nbsp; E&nbsp; &nbsp; N&nbsp; O&nbsp; T&nbsp; E&nbsp; &nbsp; N&nbsp; O&nbsp; T&nbsp; E&nbsp; &nbsp; N&nbsp; O&nbsp; T&nbsp; E</strong></p>
+<p class="p1">Here's the rule: the compiler does not look in dependent base classes</p>
+<p class="p1">(like List&lt;T&gt;) when looking up nondependent names</p>
+<p class="p1">(like Begin() or InsertHead()</p>
+<p class="p1">Workaround: use&nbsp;<span>this-&gt;begin()</span></p>
+<p class="p1">Source:&nbsp;<a class="external" href="http://www.parashift.com/c++-faq/nondependent-name-lookup-members.html" target="_blank">http://www.parashift.com/c++-faq/nondependent-name-lookup-members.html<span class="screenreader-only">&nbsp;(Links to an external site.)</span></a></p>
+<p>&nbsp;</p>
+</body>
+</html>

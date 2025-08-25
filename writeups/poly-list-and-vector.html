@@ -1,0 +1,419 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Poly: List and Vector</title>
+</head>
+<body>
+<h2><strong>List and Vector Poly Class</strong></h2>
+<h3><strong>Testing:</strong></h3>
+<p>In order to thoroughly test our Poly class as well as the List and Vector it uses, please use the following main.cpp.</p>
+<p><strong>main():</strong></p>
+<p>calls the test_poly_random() and exits.</p>
+<p><strong>test_poly_random():</strong></p>
+<p>test_poly_random&nbsp;generates two random polynomials and passes them to the display_results() function. The return value of this&nbsp;function is used to report the result of this test.</p>
+<p>test_poly_random does this in a loop for 2000 times (obviously, you can change this number while debugging.) and will report the final result before exiting.</p>
+<p><strong>display_results():</strong></p>
+<p>Will take two polynomials (and an optional boolean) and will pass these arguments to the individual test functions for each of the four arithmetic operations. display_results() will return true if all of the arithmetic test functions return true indicating the operations were verified. returns false otherwise.</p>
+<p>&nbsp;</p>
+<p><strong>test_add(), test_sub(), test_mult(), test_div():</strong></p>
+<p>These are the individual arithmetic test functions. Each of these functions take in two polynomials and perform the arithmetic operation on them. They will then attempt to verify the correctness of the results. They all return a boolean indicating the success of the test.</p>
+<p>&nbsp;</p>
+<h3><strong>Notes:</strong></h3>
+<p><strong>Poly CTOR:</strong></p>
+<p>The Poly constructor takes an array list of coeficients (in reverse order. i.e. the coef of the zero exponent is at array element zero) and an order that indicates the highest order (highest indes on the array.) Note that order is NOT the number of elements in the array but one less.</p>
+<p><strong>bool Poly::zero(): </strong></p>
+<p>Add this function to your Poly class to return true if the all coeficients of all the terms are zero. To simplify matters, we check with this function and if the random poly is zero, we will not test this poly. This function is called from main and so it is required to run this test program.</p>
+<p><strong>int Poly::order(): </strong></p>
+<p>I found that having an _order private member variable in Poly requires careful inspection of every function to make sure the poly's highest order terms are not zero (which is why we needed the fix_order() function.) In the interest of time, I decided to remove this member variable and instead call the order() function. This function is not called from main() so it is not a requirement but a recommendation.&nbsp;</p>
+<p>The order() function will return the real order of the polynomial:</p>
+<p>[0x^5 + 0x^4+8x^3...] will have an order of 3</p>
+<p>&nbsp;</p>
+<h3><strong>The main.cpp:</strong></h3>
+<p>Make sure you include the random.h and random.cpp (provided below)in your project.&nbsp;</p>
+<p>Obviously, you will have to adjust the include paths.</p>
+<p>&nbsp;</p>
+<pre><span class="pre">#include &lt;iostream&gt;
+</span><span class="comment">//#include "poly.h"
+</span><span class="pre">#include "../../../includes/poly_vector/poly.h"
+#include "../../../includes/Random/random.h"
+</span><span class="keyword">
+using namespace</span> std<span class="operator">;</span><span class="comment">
+/*---------------------------------------------------------------------
+ * These four functions perform the arithmetic operation
+ * and attempt to verify the correctness of the results.
+ * they return a boolean to indicate correctness.
+ * if report is true (or ommited), the functions will report the
+ * result of each operation.
+ * Called by display_results()
+ */</span><span class="type">
+    bool</span> test_add<span class="operator">(</span><span class="keyword">const</span> Poly<span class="operator">&amp;</span> p<span class="operator">,</span><span class="keyword"> const</span> Poly<span class="operator">&amp;</span> q<span class="operator">,</span><span class="type"> bool</span> report<span class="operator"> =</span><span class="bool"> true</span><span class="operator">);</span><span class="type">
+    bool</span> test_sub<span class="operator">(</span><span class="keyword">const</span> Poly<span class="operator">&amp;</span> p<span class="operator">,</span><span class="keyword"> const</span> Poly<span class="operator">&amp;</span> q<span class="operator">,</span><span class="type"> bool</span> report<span class="operator"> =</span><span class="bool"> true</span><span class="operator">);</span><span class="type">
+    bool</span> test_mult<span class="operator">(</span><span class="keyword">const</span> Poly<span class="operator">&amp;</span> p<span class="operator">,</span><span class="keyword"> const</span> Poly<span class="operator">&amp;</span> q<span class="operator">,</span><span class="type"> bool</span> report<span class="operator"> =</span><span class="bool"> true</span><span class="operator">);</span><span class="type">
+    bool</span> test_div<span class="operator">(</span><span class="keyword">const</span> Poly<span class="operator">&amp;</span> p<span class="operator">,</span><span class="keyword"> const</span> Poly<span class="operator">&amp;</span> q<span class="operator">,</span><span class="type"> bool</span> report<span class="operator"> =</span><span class="bool"> true</span><span class="operator">);</span><span class="comment">
+
+    // display results performs all arithmetic operations and return a
+    //  boolean verification status
+</span><span class="type">    bool</span> display_results<span class="operator">(</span><span class="keyword">const</span> Poly<span class="operator">&amp;</span> p<span class="operator">,</span><span class="keyword"> const</span> Poly<span class="operator">&amp;</span> q<span class="operator">,</span><span class="type"> bool</span> report<span class="operator"> =</span><span class="bool"> true</span><span class="operator">);</span><span class="comment">
+/*---------------------------------------------------------------------------*/</span><span class="type">
+
+void</span> test_poly<span class="operator">();</span><span class="type">
+
+void</span> test_poly_interactive<span class="operator">();</span><span class="comment">
+
+
+/*------------------------------------------------------------------------------
+ * generates two random polynomials and calls display_results()
+ * it does this a desired number of times (you can change the const inside
+ * the function.)
+ * It will report the result of individual tests, as well as the final result.
+ */</span><span class="type">
+ void</span> test_poly_random<span class="operator">(</span><span class="type">bool</span> report<span class="operator">=</span><span class="bool">true</span><span class="operator">);</span><span class="comment">
+/*-----------------------------------------------------------------------------*/</span><span class="type">
+
+int</span><span class="keyword"> main</span><span class="operator">(</span><span class="type">int</span> argc<span class="operator">,</span><span class="type"> char</span><span class="operator"> *</span>argv<span class="operator">[])
+{</span>
+    cout<span class="operator"> &lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string"> "----------------------"</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="comment">
+
+
+
+    //test_poly_interactive();
+</span>    test_poly_random<span class="operator">();</span><span class="comment">
+    //test_poly();
+</span>    cout<span class="operator"> &lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string"> "----------------------"</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="flow">
+    return</span><span class="int"> 0</span><span class="operator">;
+}</span><span class="type">
+void</span> test_poly_random<span class="operator">(</span><span class="type">bool</span> report<span class="operator">){</span><span class="type">
+    bool</span> verified_all<span class="operator"> =</span><span class="bool"> true</span><span class="operator">;</span><span class="type">
+    bool</span> verified<span class="operator"> =</span><span class="bool"> true</span><span class="operator">;</span>
+    string verification_str<span class="operator">;</span>
+    Random r<span class="operator">;</span>
+    Poly p<span class="operator">;</span>
+    Poly q<span class="operator">;</span><span class="type">
+    double</span> p_array<span class="operator">[</span><span class="int">20</span><span class="operator">];</span><span class="type">
+    double</span> q_array<span class="operator">[</span><span class="int">20</span><span class="operator">];</span><span class="flow">
+    for</span><span class="operator">(</span><span class="type">int</span> iterations<span class="operator"> =</span><span class="int"> 0</span><span class="operator">;</span> iterations<span class="operator"> &lt;</span><span class="int">2000</span><span class="operator">;</span> iterations<span class="operator">++){</span>
+        verified<span class="operator"> =</span><span class="bool"> true</span><span class="operator">;</span><span class="type">
+        int</span> p_order<span class="operator"> =</span> r<span class="operator">.</span>GetNext<span class="operator">(</span><span class="int">0</span><span class="operator">,</span><span class="int">6</span><span class="operator">);</span><span class="type">
+        int</span> q_order<span class="operator"> =</span> r<span class="operator">.</span>GetNext<span class="operator">(</span><span class="int">0</span><span class="operator">,</span><span class="int">6</span><span class="operator">);</span><span class="comment">
+//        double* p_array = new double[p_order];
+//        double* q_array = new double[q_order];
+</span><span class="flow">        for</span><span class="operator"> (</span><span class="type">int</span> i<span class="operator">=</span><span class="int">0</span><span class="operator">;</span> i<span class="operator">&lt;=</span>p_order<span class="operator">;</span> i<span class="operator">++){</span>
+            p_array<span class="operator">[</span>i<span class="operator">] =</span> r<span class="operator">.</span>GetNext<span class="operator">(</span><span class="int">0</span><span class="operator">,</span><span class="int">10</span><span class="operator">);
+        }</span><span class="flow">
+        for</span><span class="operator">(</span><span class="type">int</span> i<span class="operator">=</span><span class="int">0</span><span class="operator">;</span> i<span class="operator">&lt;=</span>q_order<span class="operator">;</span> i<span class="operator">++){</span>
+            q_array<span class="operator">[</span>i<span class="operator">] =</span> r<span class="operator">.</span>GetNext<span class="operator">(</span><span class="int">0</span><span class="operator">,</span><span class="int">10</span><span class="operator">);
+        }</span>
+        p<span class="operator"> =</span> Poly<span class="operator">(</span>p_array<span class="operator">,</span> p_order<span class="operator">);</span>
+        q<span class="operator"> =</span> Poly<span class="operator">(</span>q_array<span class="operator">,</span> q_order<span class="operator">);</span><span class="flow">
+        if</span><span class="operator"> (!</span>p<span class="operator">.</span>zero<span class="operator">() &amp;&amp; !</span>q<span class="operator">.</span>zero<span class="operator">()){</span>
+            cout<span class="operator">&lt;&lt;</span>p<span class="operator">&lt;&lt;</span><span class="string">" &amp; "</span><span class="operator">&lt;&lt;</span>q<span class="operator">&lt;&lt;</span><span class="string">":   "</span><span class="operator">;</span>
+            verified<span class="operator"> =</span> display_results<span class="operator">(</span>p<span class="operator">,</span> q<span class="operator">,</span> report<span class="operator">);</span>
+            verified_all<span class="operator"> =</span> verified_all<span class="operator"> &amp;&amp;</span> verified<span class="operator">;</span>
+            verification_str<span class="operator"> =</span> verified<span class="operator">?</span><span class="string">"VERIFIED"</span><span class="operator">:</span><span class="string">"VERIFICATION FAILED"</span><span class="operator">;</span><span class="flow">
+
+            if</span><span class="operator"> (!</span>report<span class="operator">)</span>
+                cout<span class="operator">&lt;&lt;</span>verification_str<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+
+
+            cout<span class="operator">&lt;&lt;</span><span class="string">"========================================================================"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+            if</span><span class="operator"> (</span>report<span class="operator">){</span>
+                cout<span class="operator">&lt;&lt;</span><span class="string">"----------------- "</span><span class="operator">;</span>
+                cout<span class="operator">&lt;&lt;</span>verification_str<span class="operator">;</span>
+                cout<span class="operator">&lt;&lt;</span><span class="string">" ----------------"</span><span class="operator">;
+            }</span>
+            cout<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+            cout<span class="operator">&lt;&lt;</span><span class="string">"========================================================================"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;
+        }
+
+    }</span>
+    cout<span class="operator">&lt;&lt;</span><span class="string">"******************************************************************************"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    cout<span class="operator">&lt;&lt;</span><span class="string">"******************************************************************************"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    cout<span class="operator">&lt;&lt;</span>setw<span class="operator">(</span><span class="int">40</span><span class="operator">)&lt;&lt;(</span>verified_all<span class="operator">?</span><span class="string">"V E R I F I E D"</span><span class="operator">:</span><span class="string">"VERIFICATION F A I L E D"</span><span class="operator">)&lt;&lt;</span>endl<span class="operator">;</span>
+    cout<span class="operator">&lt;&lt;</span><span class="string">"******************************************************************************"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    cout<span class="operator">&lt;&lt;</span><span class="string">"******************************************************************************"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;
+}</span><span class="type">
+
+bool</span> display_results<span class="operator">(</span><span class="keyword">const</span> Poly<span class="operator">&amp;</span> p<span class="operator">,</span><span class="keyword"> const</span> Poly<span class="operator">&amp;</span> q<span class="operator">,</span><span class="type"> bool</span> report<span class="operator">){</span><span class="type">
+    bool</span> verified<span class="operator"> =</span><span class="bool"> true</span><span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"------- p + q ----------------------"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    verified<span class="operator"> =</span> test_add<span class="operator">(</span>p<span class="operator">,</span> q<span class="operator">,</span> report<span class="operator">) &amp;&amp;</span> verified<span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"------- q + p ----------------------"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    verified<span class="operator"> =</span> test_add<span class="operator">(</span>q<span class="operator">,</span> p<span class="operator">,</span> report<span class="operator">) &amp;&amp;</span> verified<span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"------- p - q ----------------------"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    verified<span class="operator"> =</span> test_sub<span class="operator">(</span>p<span class="operator">,</span> q<span class="operator">,</span> report<span class="operator">) &amp;&amp;</span> verified<span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"------- q - p ----------------------"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    verified<span class="operator"> =</span> test_sub<span class="operator">(</span>q<span class="operator">,</span> p<span class="operator">,</span> report<span class="operator">) &amp;&amp;</span> verified<span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"------- p * q ----------------------"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    verified<span class="operator"> =</span> test_mult<span class="operator">(</span>p<span class="operator">,</span> q<span class="operator">,</span> report<span class="operator">) &amp;&amp;</span> verified<span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"------- q * p ----------------------"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    verified<span class="operator"> =</span> test_mult<span class="operator">(</span>q<span class="operator">,</span> p<span class="operator">,</span> report<span class="operator">) &amp;&amp;</span> verified<span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"------- p / q ----------------------"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    verified<span class="operator"> =</span> test_div<span class="operator">(</span>p<span class="operator">,</span> q<span class="operator">,</span> report<span class="operator">) &amp;&amp;</span> verified<span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"------- q / p ----------------------"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    verified<span class="operator"> =</span> test_div<span class="operator">(</span>q<span class="operator">,</span> p<span class="operator">,</span> report<span class="operator">) &amp;&amp;</span> verified<span class="operator">;</span><span class="flow">
+    return</span> verified<span class="operator">;
+}</span><span class="type">
+bool</span> test_mult<span class="operator">(</span><span class="keyword">const</span> Poly<span class="operator">&amp;</span> p<span class="operator">,</span><span class="keyword"> const</span> Poly<span class="operator">&amp;</span> q<span class="operator">,</span><span class="type"> bool</span> report<span class="operator">){</span>
+    Poly r<span class="operator"> =</span> p<span class="operator"> *</span> q<span class="operator">;</span><span class="flow">
+    if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>p<span class="operator">&lt;&lt;</span><span class="string">" * "</span><span class="operator">&lt;&lt;</span>q<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+    if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"      = "</span><span class="operator">&lt;&lt;</span>r<span class="operator">&lt;&lt;</span><span class="string">"  "</span><span class="operator">;</span><span class="comment">
+    //if r = p*q then r/p +r%p should be equal to q:
+</span><span class="flow">    if</span><span class="operator">(</span>r<span class="operator"> /</span> p<span class="operator"> +</span> r<span class="operator"> %</span> p<span class="operator"> ==</span> q<span class="operator">){</span><span class="flow">
+        if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"VERIFIED"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        return</span><span class="bool"> true</span><span class="operator">;
+    }</span><span class="flow">
+    else</span><span class="operator">{</span><span class="flow">
+        if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"   ***VERIFICATION FAILED"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"   r / p: "</span><span class="operator">&lt;&lt;</span>r<span class="operator"> /</span> p<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"   r % p: "</span><span class="operator">&lt;&lt;</span>r<span class="operator"> /</span> p<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"   r / p + r % p: "</span><span class="operator">&lt;&lt;</span>r<span class="operator"> /</span> p<span class="operator"> +</span> r<span class="operator"> %</span> p<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        return</span><span class="bool"> false</span><span class="operator">;
+    }
+
+}</span><span class="type">
+bool</span> test_div<span class="operator">(</span><span class="keyword">const</span> Poly<span class="operator">&amp;</span> p<span class="operator">,</span><span class="keyword"> const</span> Poly<span class="operator">&amp;</span> q<span class="operator">,</span><span class="type"> bool</span> report<span class="operator">){</span>
+    Poly r<span class="operator"> =</span> p<span class="operator"> /</span> q<span class="operator">;</span><span class="flow">
+    if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>p<span class="operator">&lt;&lt;</span><span class="string">" / "</span><span class="operator">&lt;&lt;</span>q<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+    if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"      = "</span><span class="operator">&lt;&lt;</span>r<span class="operator">;</span><span class="flow">
+    if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"  rem = "</span><span class="operator">&lt;&lt;</span>p<span class="operator"> %</span> q<span class="operator">&lt;&lt;</span><span class="string">"  "</span><span class="operator">;</span><span class="comment">
+    //if r = p / q then r * q + p % q should be equal to p:
+</span><span class="flow">    if</span><span class="operator">(</span>r<span class="operator"> *</span> q<span class="operator"> +</span> p<span class="operator"> %</span> q<span class="operator"> ==</span> p<span class="operator">){</span><span class="flow">
+        if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"VERIFIED"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        return</span><span class="bool"> true</span><span class="operator">;
+    }</span><span class="flow">
+    else</span><span class="operator">{</span><span class="flow">
+        if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"   ***VERIFICATION FAILED"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"   r * q: "</span><span class="operator">&lt;&lt;</span>r<span class="operator"> *</span> q<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"   p % q: "</span><span class="operator">&lt;&lt;</span>p<span class="operator"> %</span> q<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"   r * q + p % q: "</span><span class="operator">&lt;&lt;</span>r<span class="operator"> *</span> q<span class="operator"> +</span> p<span class="operator"> %</span> q<span class="operator">&lt;&lt;</span><span class="string">"=/="</span><span class="operator">&lt;&lt;</span>p<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        return</span><span class="bool"> false</span><span class="operator">;
+    }
+}</span><span class="type">
+
+bool</span> test_add<span class="operator">(</span><span class="keyword">const</span> Poly<span class="operator">&amp;</span> p<span class="operator">,</span><span class="keyword"> const</span> Poly<span class="operator">&amp;</span> q<span class="operator">,</span><span class="type"> bool</span> report<span class="operator">){</span><span class="keyword">
+    const</span><span class="type"> bool</span> debug<span class="operator"> =</span><span class="bool"> false</span><span class="operator">;</span>
+    Poly r<span class="operator"> =</span> p<span class="operator"> +</span> q<span class="operator">;</span><span class="flow">
+    if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"["</span><span class="operator">&lt;&lt;</span>p<span class="operator">&lt;&lt;</span><span class="string">"] + ["</span><span class="operator">&lt;&lt;</span>q<span class="operator">&lt;&lt;</span><span class="string">"]"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+    if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"      = "</span><span class="operator">&lt;&lt;</span>r<span class="operator">&lt;&lt;</span><span class="string">"  "</span><span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>debug<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"----(test_add) VERIFICATION: ------"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>debug<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"checking if "</span><span class="operator">&lt;&lt;</span>r<span class="operator">&lt;&lt;</span><span class="string">" - "</span><span class="operator">&lt;&lt;</span>p<span class="operator">&lt;&lt;</span><span class="string">" (diff) is equal to"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">
+                  &lt;&lt;</span><span class="string">"      "</span><span class="operator">&lt;&lt;</span>q<span class="operator">&lt;&lt;</span><span class="string">"??"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    Poly diff<span class="operator"> =</span> r<span class="operator">-</span>p<span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>debug<span class="operator">){</span>
+        cout<span class="operator">&lt;&lt;</span><span class="string">"------- diff ------------"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+        cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"diff: "</span><span class="operator">&lt;&lt;</span>diff<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+        cout<span class="operator">&lt;&lt;</span><span class="string">"-------------------------"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;
+    }</span><span class="flow">
+    if</span><span class="operator"> (</span>diff<span class="operator"> ==</span> q<span class="operator">){</span><span class="flow">
+        if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"VERIFIED "</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        return</span><span class="bool"> true</span><span class="operator">;
+    }</span><span class="flow">
+    else</span><span class="operator">{</span><span class="flow">
+        if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"   ***VERIFICATION FAILED"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        if</span><span class="operator">(</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"result - p = ["</span><span class="operator">&lt;&lt;</span>diff<span class="operator">&lt;&lt;</span><span class="string">"]"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        return</span><span class="bool"> false</span><span class="operator">;
+    }
+}</span><span class="type">
+bool</span> test_sub<span class="operator">(</span><span class="keyword">const</span> Poly<span class="operator">&amp;</span> p<span class="operator">,</span><span class="keyword"> const</span> Poly<span class="operator">&amp;</span> q<span class="operator">,</span><span class="type"> bool</span> report<span class="operator">){</span><span class="keyword">
+    const</span><span class="type"> bool</span> debug<span class="operator"> =</span><span class="bool"> false</span><span class="operator">;</span>
+    Poly r<span class="operator"> =</span> p<span class="operator"> -</span> q<span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>p<span class="operator">&lt;&lt;</span><span class="string">" - "</span><span class="operator">&lt;&lt;</span>q<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"      = "</span><span class="operator">&lt;&lt;</span>r<span class="operator">&lt;&lt;</span><span class="string">"  "</span><span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>debug<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"----(test_sub) VERIFICATION: ------"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>debug<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"checking if "</span><span class="operator">&lt;&lt;</span>r<span class="operator">&lt;&lt;</span><span class="string">" + "</span><span class="operator">&lt;&lt;</span>q<span class="operator">&lt;&lt;</span><span class="string">" (total) is equal to"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">
+                  &lt;&lt;</span><span class="string">"      "</span><span class="operator">&lt;&lt;</span>p<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    Poly total<span class="operator"> =</span> r<span class="operator"> +</span> q<span class="operator">;</span><span class="flow">
+    if</span><span class="operator"> (</span>debug<span class="operator">){</span>
+        cout<span class="operator">&lt;&lt;</span><span class="string">"p order: "</span><span class="operator">&lt;&lt;</span>p<span class="operator">&lt;&lt;</span><span class="string">", order: "</span><span class="operator">&lt;&lt;</span>p<span class="operator">.</span>order<span class="operator">()&lt;&lt;</span>endl<span class="operator">;</span>
+        cout<span class="operator">&lt;&lt;</span><span class="string">"total order: "</span><span class="operator">&lt;&lt;</span>total<span class="operator">&lt;&lt;</span><span class="string">", order: "</span><span class="operator">&lt;&lt;</span>total<span class="operator">.</span>order<span class="operator">()&lt;&lt;</span>endl<span class="operator">;
+    }</span><span class="flow">
+    if</span><span class="operator"> (</span>total<span class="operator"> ==</span> p<span class="operator">){</span><span class="flow">
+        if</span><span class="operator"> (</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"VERIFIED "</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        return</span><span class="bool"> true</span><span class="operator">;
+    }</span><span class="flow">
+    else</span><span class="operator">{</span><span class="flow">
+        if</span><span class="operator"> (</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"   ***VERIFICATION FAILED"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        if</span><span class="operator"> (</span>report<span class="operator">)</span> cout<span class="operator">&lt;&lt;</span><span class="string">"result + q = "</span><span class="operator">&lt;&lt;</span>total<span class="operator">&lt;&lt;</span><span class="string">" != "</span><span class="operator">&lt;&lt;</span>p<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+        return</span><span class="bool"> false</span><span class="operator">;
+    }
+}</span>
+</pre>
+<p>&nbsp;</p>
+<h3><strong>class Random:</strong></h3>
+<p><strong>random.h</strong></p>
+<pre><span class="pre">#ifndef RANDOM_H
+#define RANDOM_H
+</span><span class="keyword">
+class</span> Random<span class="operator">
+{</span><span class="keyword">
+public</span><span class="operator">:</span>
+    Random<span class="operator">();</span><span class="type">
+    int</span> GetNext<span class="operator">(</span><span class="type">int</span> lo<span class="operator">,</span><span class="type"> int</span> hi<span class="operator">);</span><span class="keyword">
+private</span><span class="operator">:</span><span class="comment">
+    //----------------------------------------------------------------------
+    //static member variable keeps the random number generator from being seeded everytime a
+    // new Random object is instantiated.
+    //Note the initialization of the static variable in the .cpp file.
+</span><span class="keyword">    static</span><span class="type"> int</span> objectCount<span class="operator">;</span><span class="comment">
+    //----------------------------------------------------------------------
+</span><span class="operator">};</span><span class="pre">
+
+#endif // RANDOM_H</span></pre>
+<p><strong>random.cpp:</strong></p>
+<pre><span class="pre">#include "random.h"
+#include &lt;time.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;iostream&gt;
+</span><span class="keyword">
+using namespace</span> std<span class="operator">;</span><span class="comment">
+
+//----------------------------------------------------------------------
+//initialization of the static member variable must be done in the .cpp file.
+//
+</span><span class="type">int</span> Random<span class="operator">::</span>objectCount<span class="operator">=</span><span class="int">0</span><span class="operator">;</span><span class="comment">
+//
+//----------------------------------------------------------------------
+</span>
+
+Random<span class="operator">::</span>Random<span class="operator">(){</span>
+    objectCount<span class="operator">++;</span><span class="flow">
+    if</span><span class="operator"> (</span>objectCount<span class="operator">==</span><span class="int">1</span><span class="operator">){</span><span class="comment">
+        //cout&lt;&lt;endl&lt;&lt;"random number generator seeded..."&lt;&lt;endl;
+        //-----------------------------------------------
+</span>        srand<span class="operator">(</span>time<span class="operator">(</span><span class="int">0</span><span class="operator">));</span><span class="comment"> //this is bad!!//
+</span><span class="operator">    }
+}</span><span class="type">
+
+int</span> Random<span class="operator">::</span>GetNext<span class="operator">(</span><span class="type">int</span> lo<span class="operator">,</span><span class="type"> int</span> hi<span class="operator">){</span><span class="type">
+    int</span> r<span class="operator"> =</span> rand<span class="operator">()%(</span>hi<span class="operator">-</span>lo<span class="operator">+</span><span class="int">1</span><span class="operator">)+</span>lo<span class="operator">;</span><span class="flow">
+    return</span> r<span class="operator">;
+
+}</span>
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><strong>Output:</strong></h2>
+<pre><span class="operator">[+</span><span class="float">7.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ] &amp; [+</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator"> +</span><span class="float">7.0</span><span class="operator"> ]:   
+-------</span> p<span class="operator"> +</span> q<span class="operator"> ----------------------
+[[+</span><span class="float">7.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ]] + [[+</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator"> +</span><span class="float">7.0</span><span class="operator"> ]]
+      = [+</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">11.</span>0X<span class="operator"> +</span><span class="float">17.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> q<span class="operator"> +</span> p<span class="operator"> ----------------------
+[[+</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator"> +</span><span class="float">7.0</span><span class="operator"> ]] + [[+</span><span class="float">7.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ]]
+      = [+</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">11.</span>0X<span class="operator"> +</span><span class="float">17.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> p<span class="operator"> -</span> q<span class="operator"> ----------------------
+[+</span><span class="float">7.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ] - [+</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator"> +</span><span class="float">7.0</span><span class="operator"> ]
+      = [-</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> q<span class="operator"> -</span> p<span class="operator"> ----------------------
+[+</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator"> +</span><span class="float">7.0</span><span class="operator"> ] - [+</span><span class="float">7.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ]
+      = [+</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> -</span><span class="float">3.</span>0X<span class="operator"> -</span><span class="float">3.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> p<span class="operator"> *</span> q<span class="operator"> ----------------------
+[+</span><span class="float">7.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ] * [+</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator"> +</span><span class="float">7.0</span><span class="operator"> ]
+      = [+</span><span class="float">63.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">104.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">48.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">89.</span>0X<span class="operator"> +</span><span class="float">70.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> *</span> p<span class="operator"> ----------------------
+[+</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator"> +</span><span class="float">7.0</span><span class="operator"> ] * [+</span><span class="float">7.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ]
+      = [+</span><span class="float">63.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">104.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">48.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">89.</span>0X<span class="operator"> +</span><span class="float">70.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> p<span class="operator"> /</span> q<span class="operator"> ----------------------
+[+</span><span class="float">7.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ] / [+</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator"> +</span><span class="float">7.0</span><span class="operator"> ]
+      = []</span>  rem<span class="operator"> = [+</span><span class="float">7.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> /</span> p<span class="operator"> ----------------------
+[+</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator"> +</span><span class="float">7.0</span><span class="operator"> ] / [+</span><span class="float">7.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ]
+      = [+</span><span class="float">1.</span>3X<span class="operator">^</span><span class="int">2</span><span class="operator"> -</span><span class="float">1.</span>6X<span class="operator"> +</span><span class="float">2.8</span><span class="operator"> ]</span>  rem<span class="operator"> = [-</span><span class="float">20.9</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+========================================================================
+-----------------</span> VERIFIED<span class="operator"> ----------------
+========================================================================
+[+</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">9.0</span><span class="operator"> ] &amp; [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">9.</span>0X<span class="operator"> +</span><span class="float">4.0</span><span class="operator"> ]:   
+-------</span> p<span class="operator"> +</span> q<span class="operator"> ----------------------
+[[+</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">9.0</span><span class="operator"> ]] + [[+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">9.</span>0X<span class="operator"> +</span><span class="float">4.0</span><span class="operator"> ]]
+      = [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">14.</span>0X<span class="operator"> +</span><span class="float">13.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> q<span class="operator"> +</span> p<span class="operator"> ----------------------
+[[+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">9.</span>0X<span class="operator"> +</span><span class="float">4.0</span><span class="operator"> ]] + [[+</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">9.0</span><span class="operator"> ]]
+      = [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">14.</span>0X<span class="operator"> +</span><span class="float">13.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> p<span class="operator"> -</span> q<span class="operator"> ----------------------
+[+</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">9.0</span><span class="operator"> ] - [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">9.</span>0X<span class="operator"> +</span><span class="float">4.0</span><span class="operator"> ]
+      = [-</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> -</span>X<span class="operator">^</span><span class="int">4</span><span class="operator"> -</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> -</span><span class="float">4.</span>0X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> q<span class="operator"> -</span> p<span class="operator"> ----------------------
+[+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">9.</span>0X<span class="operator"> +</span><span class="float">4.0</span><span class="operator"> ] - [+</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">9.0</span><span class="operator"> ]
+      = [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator"> -</span><span class="float">5.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> p<span class="operator"> *</span> q<span class="operator"> ----------------------
+[+</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">9.0</span><span class="operator"> ] * [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">9.</span>0X<span class="operator"> +</span><span class="float">4.0</span><span class="operator"> ]
+      = [+</span><span class="float">10.</span>0X<span class="operator">^</span><span class="int">6</span><span class="operator"> +</span><span class="float">23.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">44.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">68.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">54.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">101.</span>0X<span class="operator"> +</span><span class="float">36.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> *</span> p<span class="operator"> ----------------------
+[+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">9.</span>0X<span class="operator"> +</span><span class="float">4.0</span><span class="operator"> ] * [+</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">9.0</span><span class="operator"> ]
+      = [+</span><span class="float">10.</span>0X<span class="operator">^</span><span class="int">6</span><span class="operator"> +</span><span class="float">23.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">44.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">68.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">54.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">101.</span>0X<span class="operator"> +</span><span class="float">36.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> p<span class="operator"> /</span> q<span class="operator"> ----------------------
+[+</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">9.0</span><span class="operator"> ] / [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">9.</span>0X<span class="operator"> +</span><span class="float">4.0</span><span class="operator"> ]
+      = []</span>  rem<span class="operator"> = [+</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">9.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> /</span> p<span class="operator"> ----------------------
+[+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">9.</span>0X<span class="operator"> +</span><span class="float">4.0</span><span class="operator"> ] / [+</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">9.0</span><span class="operator"> ]
+      = [+</span><span class="float">0.</span>4X<span class="operator">^</span><span class="int">4</span><span class="operator"> -</span><span class="float">0.</span>5X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>3X<span class="operator">^</span><span class="int">2</span><span class="operator"> -</span><span class="float">4.</span>0X<span class="operator"> +</span><span class="float">9.0</span><span class="operator"> ]</span>  rem<span class="operator"> = [-</span><span class="float">77.1</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+========================================================================
+-----------------</span> VERIFIED<span class="operator"> ----------------
+========================================================================
+[+</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ] &amp; [+</span><span class="float">8.0</span><span class="operator"> ]:   
+-------</span> p<span class="operator"> +</span> q<span class="operator"> ----------------------
+[[+</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ]] + [[+</span><span class="float">8.0</span><span class="operator"> ]]
+      = [+</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">18.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> q<span class="operator"> +</span> p<span class="operator"> ----------------------
+[[+</span><span class="float">8.0</span><span class="operator"> ]] + [[+</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ]]
+      = [+</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">18.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> p<span class="operator"> -</span> q<span class="operator"> ----------------------
+[+</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ] - [+</span><span class="float">8.0</span><span class="operator"> ]
+      = [+</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">2.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> q<span class="operator"> -</span> p<span class="operator"> ----------------------
+[+</span><span class="float">8.0</span><span class="operator"> ] - [+</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ]
+      = [-</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> -</span><span class="float">5.</span>0X<span class="operator"> -</span><span class="float">2.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> p<span class="operator"> *</span> q<span class="operator"> ----------------------
+[+</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ] * [+</span><span class="float">8.0</span><span class="operator"> ]
+      = [+</span><span class="float">56.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">8.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">40.</span>0X<span class="operator"> +</span><span class="float">80.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> *</span> p<span class="operator"> ----------------------
+[+</span><span class="float">8.0</span><span class="operator"> ] * [+</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ]
+      = [+</span><span class="float">56.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">8.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">40.</span>0X<span class="operator"> +</span><span class="float">80.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> p<span class="operator"> /</span> q<span class="operator"> ----------------------
+[+</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ] / [+</span><span class="float">8.0</span><span class="operator"> ]
+      = [+</span><span class="float">0.</span>9X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">0.</span>1X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">0.</span>6X<span class="operator"> +</span><span class="float">1.2</span><span class="operator"> ]</span>  rem<span class="operator"> = []</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> /</span> p<span class="operator"> ----------------------
+[+</span><span class="float">8.0</span><span class="operator"> ] / [+</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">5.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ]
+      = []</span>  rem<span class="operator"> = [+</span><span class="float">8.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+========================================================================
+-----------------</span> VERIFIED<span class="operator"> ----------------
+========================================================================
+******************************************************************************
+******************************************************************************</span>
+                         V E R I F I E D<span class="operator">
+******************************************************************************
+******************************************************************************
+
+
+
+----------------------</span>
+Press<span class="operator"> &lt;</span>RETURN<span class="operator">&gt;</span> to close<span class="keyword"> this</span> window<span class="operator">...</span>
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

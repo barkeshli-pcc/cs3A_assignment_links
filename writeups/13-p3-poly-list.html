@@ -1,0 +1,111 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 13_p3_poly_list</title>
+</head>
+<body>
+<h2 style="text-align: center;"><strong>Polynomial Class</strong></h2>
+<h3 style="text-align: center;">With a unique sorted list</h3>
+<p>&nbsp;</p>
+<p><img src="https://www.dropbox.com/s/xhw3vj5lw8zcan3/Screenshot%202017-10-15%2019.25.30.png?dl=1" loading="lazy"></p>
+<p>&nbsp;</p>
+<p>Poly class stores terms in a unique sorted list class.&nbsp;</p>
+<p><strong>NOTE:</strong></p>
+<p>You will need to write a function to do "approximate" comparison of doubles. 3.0 may not always be equal to 3.0. Discuss.</p>
+<p>&nbsp;</p>
+<p><strong>NOTE:</strong></p>
+<p>The only function in the Poly class that accesses the Term member variables (_exp) is the += compound assignment operator. All other functions reference Term through its operators and constructors.</p>
+<p>My Poly class only uses the sorted list's Insert function only once. (you should do the same)</p>
+<p>Think Layered Architecture.&nbsp;</p>
+<h3><strong>Term class:</strong></h3>
+<p>The Term class provides&nbsp;enough operators that the higher level Poly class can stop thinking of the exponent and coefficient fields:</p>
+<div style="background: #ffffff; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;"><span style="color: #333399;">bool</span> <span style="color: #0066bb;">double_equals</span>(<span style="color: #333399;">double</span> left, <span style="color: #333399;">double</span> right);
+
+<span style="color: #008800;">struct</span> Term{
+    <span style="color: #333399;">double</span> _coef;
+    <span style="color: #333399;">int</span> _exp;
+
+    Term();
+    Term(<span style="color: #333399;">double</span> coef, <span style="color: #333399;">int</span> order);
+
+    Term<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">+=</span>(<span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> rhs);
+    Term<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">-=</span>(<span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> rhs);
+    Term<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">*=</span>(<span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> rhs);
+    Term<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">/=</span>(<span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> rhs);
+
+    <span style="color: #008800;">friend</span> <span style="color: #333399;">bool</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">==</span>(<span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> rhs);
+    <span style="color: #008800;">friend</span> <span style="color: #333399;">bool</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">!=</span>(<span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> rhs);
+    <span style="color: #008800;">friend</span> <span style="color: #333399;">bool</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">&gt;</span>(<span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> rhs);
+    <span style="color: #008800;">friend</span> <span style="color: #333399;">bool</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">&lt;</span>(<span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> rhs);
+
+    <span style="color: #888888;">//used in Poly division operator</span>
+    <span style="color: #008800;">friend</span> Term <span style="color: #008800;">operator</span> <span style="color: #333333;">+</span> (<span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> rhs);
+    <span style="color: #008800;">friend</span> Term <span style="color: #008800;">operator</span> <span style="color: #333333;">-</span> (<span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> rhs);
+    <span style="color: #008800;">friend</span> Term <span style="color: #008800;">operator</span> <span style="color: #333333;">*</span> (<span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> rhs);
+    <span style="color: #008800;">friend</span> Term <span style="color: #008800;">operator</span> <span style="color: #333333;">/</span> (<span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> rhs);
+
+    <span style="color: #008800;">friend</span> ostream<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">&lt;&lt;</span>(ostream<span style="color: #333333;">&amp;</span> outs, <span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> t);
+    <span style="color: #008800;">friend</span> istream<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">&gt;&gt;</span>(istream<span style="color: #333333;">&amp;</span> ins, Term<span style="color: #333333;">&amp;</span> t);
+    Term <span style="color: #008800;">operator</span> <span style="color: #333333;">-</span>() <span style="color: #008800;">const</span>; <span style="color: #888888;">//unary operator</span>
+};
+</pre>
+</div>
+<h3><strong>Poly class:</strong></h3>
+<p>The Poly class uses the operators of the Term class to build it's own Poly/Term operators. Then, it builds its own Poly / Poly operators and compund assignment operators.</p>
+<div style="background: #ffffff; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;"><span style="color: #557799;">#include "../node/node.h"</span>
+<span style="color: #557799;">#include "../list_sorted/list_sorted.h"</span>
+<span style="color: #557799;">#include "term.h"</span>
+<span style="color: #557799;">#include &lt;iostream&gt;</span>
+<span style="color: #557799;">#include &lt;vector&gt;</span>
+
+<span style="color: #008800;">using</span> <span style="color: #008800;">namespace</span> std;
+
+
+<span style="color: #008800;">class</span> <span style="color: #bb0066;">Poly</span>
+{
+<span style="color: #997700;">public:</span>
+
+    Poly();
+    Poly(<span style="color: #333399;">double</span> <span style="color: #333333;">*</span>term_array, <span style="color: #333399;">int</span> order);
+    Poly(<span style="color: #008800;">const</span> vector<span style="color: #333333;">&lt;</span><span style="color: #333399;">double</span><span style="color: #333333;">&gt;&amp;</span> terms);
+    <span style="color: #888888;">//big three?</span>
+
+    Poly<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">+=</span>(<span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> t);
+    Poly<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">*=</span>(<span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> t);
+
+    Poly<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">+=</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> RHS);
+    Poly<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">*=</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> RHS);
+    Poly<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">-=</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> RHS);
+
+    <span style="color: #008800;">friend</span> <span style="color: #333399;">bool</span> <span style="color: #008800;">operator</span><span style="color: #333333;">==</span>(<span style="color: #008800;">const</span> Poly <span style="color: #333333;">&amp;</span>left, <span style="color: #008800;">const</span> Poly <span style="color: #333333;">&amp;</span>right);
+    <span style="color: #008800;">friend</span> <span style="color: #333399;">bool</span> <span style="color: #008800;">operator</span><span style="color: #333333;">!=</span>(<span style="color: #008800;">const</span> Poly <span style="color: #333333;">&amp;</span>left, <span style="color: #008800;">const</span> Poly <span style="color: #333333;">&amp;</span>right);
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span><span style="color: #333333;">+</span>(<span style="color: #008800;">const</span> Poly <span style="color: #333333;">&amp;</span>left, <span style="color: #008800;">const</span> Poly <span style="color: #333333;">&amp;</span>right);
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span> <span style="color: #333333;">-</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> left, <span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> right);
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span> <span style="color: #333333;">*</span> (<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> left, <span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> right);
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span><span style="color: #333333;">/</span>(<span style="color: #008800;">const</span> Poly <span style="color: #333333;">&amp;</span>left, <span style="color: #008800;">const</span> Poly <span style="color: #333333;">&amp;</span>right);
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span><span style="color: #333333;">%</span>(<span style="color: #008800;">const</span> Poly <span style="color: #333333;">&amp;</span>left, <span style="color: #008800;">const</span> Poly <span style="color: #333333;">&amp;</span>right);
+    Poly <span style="color: #008800;">operator</span><span style="color: #333333;">-</span>() <span style="color: #008800;">const</span>;
+
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span> <span style="color: #333333;">+</span> (<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> left, <span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> t);
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span> <span style="color: #333333;">*</span> (<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> left, <span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> t);
+
+    <span style="color: #008800;">friend</span> ostream<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">&lt;&lt;</span> (ostream<span style="color: #333333;">&amp;</span> outs, <span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> print_me);
+    <span style="color: #008800;">friend</span> istream<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">&gt;&gt;</span> (istream<span style="color: #333333;">&amp;</span> outs, Poly<span style="color: #333333;">&amp;</span> read_me);
+
+    <span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> [](<span style="color: #008800;">const</span> <span style="color: #333399;">int</span> exp) <span style="color: #008800;">const</span>;
+    Term<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> [](<span style="color: #008800;">const</span> <span style="color: #333399;">int</span> exp);
+    List<span style="color: #333333;">&lt;</span>Term<span style="color: #333333;">&gt;</span> list() <span style="color: #008800;">const</span> { <span style="color: #008800;">return</span> _poly; }
+
+<span style="color: #997700;">private:</span>
+    List<span style="color: #333333;">&lt;</span>Term<span style="color: #333333;">&gt;</span> _poly; <span style="color: #888888;">//descending sorted list</span>
+    <span style="color: #333399;">int</span> _order;
+
+};
+</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Pointers</title>
+<meta name="identifier" content="gf1276353a707895e29bd25f583fe607a"/>
+<meta name="editing_roles" content="teachers"/>
+<meta name="workflow_state" content="unpublished"/>
+</head>
+<body>
+<pre><span class="type">
+int</span><span class="operator">*</span> p<span class="operator">;</span><span class="comment">              //declare an integer pointer. p can hold the address of an int</span><span class="type">
+<br><img src="https://www.dropbox.com/s/qgewom9kv29jx0b/Screenshot%202017-08-31%2022.51.00.png?dl=1" width="286" height="217" loading="lazy"><br>int</span> x<span class="operator">;</span><span class="type">
+int</span> y<span class="operator">;</span><span class="type">
+int</span> a<span class="operator">[</span><span class="int">10</span><span class="operator">];</span>
+
+p<span class="operator"> = &amp;</span>x<span class="comment">             //p holds the address of x, p "points" to x
+<img src="https://www.dropbox.com/s/19h1947v69ti3p0/Screenshot%202017-08-31%2022.52.37.png?dl=1" loading="lazy"></span><span class="operator">
+<br><br>*</span>p<span class="operator"> =</span><span class="int"> 42</span><span class="comment">           //p is being dereferenced. assign value 42 to the place p is pointing to
+<img src="https://www.dropbox.com/s/cdr0cxv73oi7si3/Screenshot%202017-08-31%2022.53.25.png?dl=1" loading="lazy"></span>
+<br><br>p<span class="operator"> = &amp;</span>y<span class="comment">             //p holds the address of y, p "points" to y
+<img src="https://www.dropbox.com/s/u185xdjmamuatih/Screenshot%202017-08-31%2022.54.25.png?dl=1" loading="lazy"></span><span class="operator">
+<br><br>*</span>p<span class="operator"> =</span><span class="int"> 9</span><span class="comment">           //p is being dereferenced. assign value 9 to the place p is pointing to
+<img src="https://www.dropbox.com/s/knsgcq6qtkw95uc/Screenshot%202017-08-31%2022.55.05.png?dl=1" loading="lazy"></span>
+<br><br>p<span class="operator"> =</span> a<span class="operator">;<br><img src="https://www.dropbox.com/s/qcs2looog6xcw5z/Screenshot%202017-08-31%2023.00.42.png?dl=1" loading="lazy">
+<br><br>*</span>p<span class="operator"> =</span><span class="int"> 72</span><span class="operator">;</span>
+<img src="https://www.dropbox.com/s/xltgkdt343ucsh5/Screenshot%202017-08-31%2023.01.17.png?dl=1" width="857" height="128" loading="lazy">
+<br><br>p<span class="operator">++;</span><span class="comment">              //advance p to the next integer (next element in the array)
+<img src="https://www.dropbox.com/s/iikw8shp3iow0kd/Screenshot%202017-08-31%2023.02.21.png?dl=1" loading="lazy"><br></span><span class="operator"><br><br>*</span>p<span class="operator"> =</span><span class="int"> 0</span><span class="operator">;                //Place 0 in the cell p is pointing to.<br><img src="https://www.dropbox.com/s/xpw3chikv6cskfj/Screenshot%202017-08-31%2023.02.59.png?dl=1" loading="lazy"><br><img src="https://screenshot.net/oxvlofl" loading="lazy"></span></pre>
+<pre><span class="operator">(*</span>p<span class="operator">)++</span><span class="comment">                 //increment the contents of where p is pointing to<br><img src="https://www.dropbox.com/s/9b4imbna1nsg3x2/Screenshot%202017-08-31%2023.10.59.png?dl=1" loading="lazy"><br>
+<br><br></span><span class="operator">*(</span>p<span class="operator">+</span><span class="int">1</span><span class="operator">) =</span><span class="int"> 77</span><span class="comment">           //place 77 in the cell ONE cell away from p [I don't want to see you do this!]<br></span><span class="operator"><img src="https://www.dropbox.com/s/lzxscrk7hgiwi52/Screenshot%202017-08-31%2023.11.44.png?dl=1" loading="lazy"><br><br></span></pre>
+<pre>Assigning one pointer to another<span class="operator">:</span><span class="type">
+int</span><span class="operator">*</span> p2<span class="operator">;</span>
+p2<span class="operator"> =</span> p1<span class="comment">          //make p2 point to the same place p1 is pointing to</span></pre>
+<pre><span class="operator"><img src="https://www.dropbox.com/s/2ijsgze9nev7zoh/Screenshot%202017-08-31%2023.26.49.png?dl=1" loading="lazy"><br></span></pre>
+<p>&nbsp;</p>
+</body>
+</html>

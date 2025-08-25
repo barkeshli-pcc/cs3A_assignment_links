@@ -1,0 +1,310 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 11_p6_polynomial</title>
+</head>
+<body>
+<h2 style="text-align: center;"><strong>11.P6 Polynomials</strong></h2>
+<h2><span style="color: #ff0000;"><strong><img src="https://www.dropbox.com/s/cfo82ydanv2ewov/Screenshot%202017-09-28%2022.06.41.png?dl=1" loading="lazy"></strong></span></h2>
+<p><span style="color: #ff0000;"><a title="READ ME (Chapter 10, 11)" href="$CANVAS_OBJECT_REFERENCE$/assignments/gc9baabedc65f6aa37e060beacf65cccb" data-api-endpoint="https://canvas.pasadena.edu/api/v1/courses/1129406/assignments/9361790" data-api-returntype="Assignment">READ ME (Chapter 10, 11)</a></span></p>
+<p><strong>NOTE:</strong></p>
+<p>You will need functions to compare doubles by&nbsp; "approximation."&nbsp; 3.0 may not be equal to 3.0. Discuss.</p>
+<h2><span style="color: #ff0000;"><strong>IMPORTANT:&nbsp;</strong></span></h2>
+<p>None of the high level Poly operators will be accessing the Poly::_coefs array. As far as they are concerned, the Polynomial is made up of terms accessed by the subscript operator.</p>
+<p>The low level Poly functions access the Poly::_coefs array in a minimal fashion. They will call the array functions to allocate and resize the Poly::_coefs.</p>
+<p>Pay attention to where you are in the hierarchy and behave accordingly.</p>
+<h3><strong>Project Description:</strong></h3>
+<p>We will design a class that allows addition, subtraction, multiplication, division and comparison of polynomials. As the saying goes, "if it looks easy, it's difficult. If it looks difficult, it's impossible." and this project looks pretty easy. So, be prepared to spend more time on this than you have on other projects:</p>
+<h3><strong>struct Term</strong></h3>
+<p>First, let's design a Term structure. This struct will help simplify the Poly functions quite a bit:</p>
+<pre><span class="keyword">struct</span> Term<span class="operator">{</span><span class="type">
+    double</span> _coef<span class="operator">;</span><span class="type">
+    int</span> _exp<span class="operator">;</span>
+
+    Term<span class="operator">(</span><span class="type">double</span> coef<span class="operator">,</span><span class="type"> int</span> exp<span class="operator">);</span><span class="keyword">
+    friend</span><span class="type"> bool</span><span class="keyword"> operator</span><span class="operator"> ==(</span><span class="keyword">const</span> Term<span class="operator">&amp;</span> lhs<span class="operator">,</span><span class="keyword"> const</span> Term<span class="operator">&amp;</span> rhs<span class="operator">);</span><span class="keyword">
+    friend</span><span class="type"> bool</span><span class="keyword"> operator</span><span class="operator"> !=(</span><span class="keyword">const</span> Term<span class="operator">&amp;</span> lhs<span class="operator">,</span><span class="keyword"> const</span> Term<span class="operator">&amp;</span> rhs<span class="operator">);</span><span class="keyword">
+    friend</span><span class="type"> bool</span><span class="keyword"> operator</span><span class="operator"> &gt;(</span><span class="keyword">const</span> Term<span class="operator">&amp;</span> lhs<span class="operator">,</span><span class="keyword"> const</span> Term<span class="operator">&amp;</span> rhs<span class="operator">);</span><span class="keyword">
+    friend</span><span class="type"> bool</span><span class="keyword"> operator</span><span class="operator"> &lt;(</span><span class="keyword">const</span> Term<span class="operator">&amp;</span> lhs<span class="operator">,</span><span class="keyword"> const</span> Term<span class="operator">&amp;</span> rhs<span class="operator">);</span><span class="comment">
+
+    //used in Poly division operator
+</span><span class="keyword">    friend</span> Term<span class="keyword"> operator</span><span class="operator"> / (</span><span class="keyword">const</span> Term<span class="operator">&amp;</span> lhs<span class="operator">,</span><span class="keyword"> const</span> Term<span class="operator">&amp;</span> rhs<span class="operator">);</span><span class="keyword">
+
+    friend</span> ostream<span class="operator">&amp;</span><span class="keyword"> operator</span><span class="operator"> &lt;&lt;(</span>ostream<span class="operator">&amp;</span> outs<span class="operator">,</span><span class="keyword"> const</span> Term<span class="operator">&amp;</span> t<span class="operator">);
+};</span></pre>
+<p>Now that we have the Term class, we can design our Poly class much more easily. Many of the Poly functions will, directly or indirectly, go through the Term class.&nbsp;</p>
+<p>Use assert to prevent some of the functions of the Term to be called with different exponents. For example, + and - are meaningless for terms of different exponents.</p>
+<h3><strong>class Poly</strong></h3>
+<p>This class is pretty self explanatory. You will allow the user to perform arithmetics on polynomials.</p>
+<p>&nbsp;</p>
+<pre style="margin: 0; line-height: 125%;"><span style="color: #008800;">class</span> <span style="color: #bb0066;">Poly</span>
+{
+<span style="color: #997700;">public:</span>
+    Poly();
+    Poly(<span style="color: #333399;">double</span><span style="color: #333333;">*</span> coefs, <span style="color: #333399;">int</span> order);
+
+    <span style="color: #888888;">//the BIG 3</span>
+    Poly(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> other);
+    Poly<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">=</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> rhs);
+    <span style="color: #333333;">~</span>Poly();
+
+
+    <span style="color: #008800;">friend</span> <span style="color: #333399;">bool</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">==</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> rhs);
+    <span style="color: #008800;">friend</span> <span style="color: #333399;">bool</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">!=</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> rhs);
+    <span style="color: #008800;">friend</span> <span style="color: #333399;">bool</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">&gt;</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> rhs);
+    <span style="color: #008800;">friend</span> <span style="color: #333399;">bool</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">&lt;</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> rhs);
+
+    Term <span style="color: #008800;">operator</span>[](<span style="color: #333399;">int</span> order) <span style="color: #008800;">const</span>;
+
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span> <span style="color: #333333;">+</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> t);
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span> <span style="color: #333333;">+</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> rhs);
+
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span> <span style="color: #333333;">-</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> p);
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span> <span style="color: #333333;">-</span> (<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> rhs);
+
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span> <span style="color: #333333;">*</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Term<span style="color: #333333;">&amp;</span> t);
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span> <span style="color: #333333;">*</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> rhs);
+
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span> <span style="color: #333333;">/</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> rhs);
+    <span style="color: #008800;">friend</span> Poly <span style="color: #008800;">operator</span> <span style="color: #333333;">%</span>(<span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> lhs, <span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> rhs);
+
+    <span style="color: #008800;">friend</span> ostream<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">&lt;&lt;</span>(ostream<span style="color: #333333;">&amp;</span> outs, <span style="color: #008800;">const</span> Poly<span style="color: #333333;">&amp;</span> p);
+    <span style="color: #008800;">friend</span> istream<span style="color: #333333;">&amp;</span> <span style="color: #008800;">operator</span> <span style="color: #333333;">&gt;&gt;</span>(istream<span style="color: #333333;">&amp;</span> ins, Poly<span style="color: #333333;">&amp;</span> p);
+   
+
+    <span style="color: #333399;">double</span><span style="color: #333333;">*</span> get_coefs() <span style="color: #008800;">const</span>;
+    <span style="color: #333399;">int</span> order() <span style="color: #008800;">const</span> { <span style="color: #008800;">return</span> _order; }
+    <span style="color: #333399;">void</span> set_order(<span style="color: #333399;">int</span> new_order);                              <span style="color: #888888;">//Not used!</span>
+    <span style="color: #333399;">void</span> <span style="color: #0066bb;">fix_order</span>();           <span style="color: #888888;">//get rid of highest terms with zero coefs</span>
+<span style="color: #997700;">private:</span>
+    <span style="color: #333399;">int</span> _order;
+    <span style="color: #333399;">double</span><span style="color: #333333;">*</span> _coefs;
+};
+</pre>
+<h3><strong>CTORS:</strong></h3>
+<p>Default constructor: What is an empty polynomial. What are its allocation needs?</p>
+<p>Two argument constructor: assume term 0 of the Poly is stored at index 0 of the array</p>
+<h3><strong>The subscript operator [ ]:</strong></h3>
+<p>create and return a Term object from the index of this operator and the coeficient of the Polynomical at that position. This makes your other functions much easier to manage.</p>
+<h3><strong>operator &gt;&gt;</strong></h3>
+<p>Simply loop through the coeficients of the polynomial and send p[i] to the ostream object.</p>
+<h3><strong>operator + (Poly, Term)</strong></h3>
+<p>If you can add a term to a Polynomial, then you can add a bunch of terms to a polynomial. This makes your +(Poly, Poly) trivial</p>
+<p>Note that when you add a Term to a Polynomial, you may need to reallocate the array inside the object to fit that Term. [3X<sup>2</sup> + 5X ] + [4x<sup>6</sup>] : Now, you need an array to fit a Poly of order 6</p>
+<h3><strong>operator +(Poly, Poly)</strong></h3>
+<p>Way easier now that you have your +(Poly, Term) and &nbsp;your [ ]( ) functions.</p>
+<h3><strong>operator *(Poly, Term)</strong></h3>
+<p>Similar to +(Poly, Term). You will need to reallocate the array.</p>
+<h3><strong>operator /(Poly, Poly)</strong></h3>
+<p>For a refresher lesson on performing long division on polynomials consult your old math books.</p>
+<p>this function will also produce the remainder polynomial.</p>
+<p>The divide operator will stop dividing when the exponent of the quotient gets to zero. No negative quotients. What's left will be the remainder. (This is reminiscent&nbsp;to the way we divide ints)</p>
+<h3><strong>operator %(Poly, Poly)</strong></h3>
+<pre>    Poly div<span class="operator"> =</span> lhs<span class="operator"> /</span> rhs<span class="operator">;</span><span class="flow">
+    return</span> lhs<span class="operator"> -</span> div<span class="operator"> *</span> rhs<span class="operator">;</span></pre>
+<p>You are welcome!</p>
+<h3><strong>Comparison operators:</strong></h3>
+<p>if you can manage to pass the work to the Term object, your life will be vastly simplified and your grade will &nbsp;not suffer. Do not brute force this.</p>
+<h3><strong>fix_order()</strong></h3>
+<p>Sometimes while performing operations on Poly objects, you end up with a Poly with higher order terms having zero coeficients. This function modifies the object and resets the _order to its real value.</p>
+<p>&nbsp;</p>
+<h3>
+<strong>T E S T I N G</strong>&nbsp;</h3>
+<p>For each of the major arithmetic operations (+, -, *, /) write a test function that will take two const by reference Poly arguments.</p>
+<p>The function will show the two Polys and indicate what operation is being conducted before displaying the result.</p>
+<p>The function will then perform a test to see if the result is valid. (think back to your third grade math classes) and will display "VERIFIED" if the result passes the test and " &nbsp;**** VERIFICATION FAILED" if it does not. If the verification fails, you must show the steps you took to test the result and the outcome of each step:</p>
+<p>&nbsp;</p>
+<pre><span class="type">void</span> test_div<span class="operator">(</span><span class="keyword">const</span> Poly<span class="operator">&amp;</span> p<span class="operator">,</span><span class="keyword"> const</span> Poly<span class="operator">&amp;</span> q<span class="operator">){</span>
+    Poly r<span class="operator"> =</span> p<span class="operator"> /</span> q<span class="operator">;</span>
+    cout<span class="operator">&lt;&lt;</span>p<span class="operator">&lt;&lt;</span><span class="string">" / "</span><span class="operator">&lt;&lt;</span>q<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    cout<span class="operator">&lt;&lt;</span><span class="string">"      = "</span><span class="operator">&lt;&lt;</span>r<span class="operator">;</span>
+    cout<span class="operator">&lt;&lt;</span><span class="string">"  rem = "</span><span class="operator">&lt;&lt;</span>p<span class="operator"> %</span> q<span class="operator">&lt;&lt;</span><span class="string">"  "</span><span class="operator">;</span><span class="comment">
+    //if r = p / q then r * q + p % q should be equal to p:
+</span><span class="flow">    if</span><span class="operator">(</span>r<span class="operator"> *</span> q<span class="operator"> +</span> p<span class="operator"> %</span> q<span class="operator"> ==</span> p<span class="operator">){</span>
+        cout<span class="operator">&lt;&lt;</span><span class="string">"VERIFIED"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;
+    }</span><span class="flow">
+    else</span><span class="operator">{</span>
+        cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"   ***VERIFICATION FAILED"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+        cout<span class="operator">&lt;&lt;</span><span class="string">"   r * q: "</span><span class="operator">&lt;&lt;</span>r<span class="operator"> *</span> q<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+        cout<span class="operator">&lt;&lt;</span><span class="string">"   p % q: "</span><span class="operator">&lt;&lt;</span>p<span class="operator"> %</span> q<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+        cout<span class="operator">&lt;&lt;</span><span class="string">"   r * q + p % q: "</span><span class="operator">&lt;&lt;</span>r<span class="operator"> *</span> q<span class="operator"> +</span> p<span class="operator"> %</span> q<span class="operator">&lt;&lt;</span><span class="string">"=/="</span><span class="operator">&lt;&lt;</span>p<span class="operator">&lt;&lt;</span>endl<span class="operator">;
+    }
+}<br></span></pre>
+<h3><strong>Sample Output</strong></h3>
+<p>(your output must look very close to this in terms of the way p and q and the results and verification appears on the screen. I am sure this can be improved to make it more readable. If you want to take on that challenge, I would be very happy to incorporte your style into this assignment and give you credit, of course.)</p>
+<p>&nbsp;</p>
+<pre><span class="operator">
+----------------------</span>
+P<span class="operator">: [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]</span>
+Q<span class="operator">: [+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]
+
+
+-------</span> p<span class="operator"> +</span> q<span class="operator"> ----------------------
+[+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ] + [+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]
+      = [+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> q<span class="operator"> +</span> p<span class="operator"> ----------------------
+[+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ] + [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]
+      = [+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">10.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> p<span class="operator"> -</span> q<span class="operator"> ----------------------
+[+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ] - [+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]
+      = [-</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> q<span class="operator"> -</span> p<span class="operator"> ----------------------
+[+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ] - [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]
+      = [+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> p<span class="operator"> *</span> q<span class="operator"> ----------------------
+[+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ] * [+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]
+      = [+</span><span class="float">12.</span>0X<span class="operator">^</span><span class="int">7</span><span class="operator"> +</span><span class="float">17.</span>0X<span class="operator">^</span><span class="int">6</span><span class="operator"> +</span><span class="float">16.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">30.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">34.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">21.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">10.</span>0X<span class="operator"> +</span><span class="float">25.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> *</span> p<span class="operator"> ----------------------
+[+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ] * [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]
+      = [+</span><span class="float">12.</span>0X<span class="operator">^</span><span class="int">7</span><span class="operator"> +</span><span class="float">17.</span>0X<span class="operator">^</span><span class="int">6</span><span class="operator"> +</span><span class="float">16.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">30.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">34.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">21.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">10.</span>0X<span class="operator"> +</span><span class="float">25.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> /</span> p<span class="operator"> ----------------------
+[+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ] / [+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]
+      = []</span>  rem<span class="operator"> = [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> /</span> p<span class="operator"> ----------------------
+[+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ] / [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]
+      = [+</span><span class="float">1.</span>3X<span class="operator"> +</span><span class="float">0.1</span><span class="operator"> ]</span>  rem<span class="operator"> = [+</span><span class="float">0.</span>4X<span class="operator">^</span><span class="int">2</span><span class="operator"> -</span><span class="float">5.</span>8X<span class="operator"> +</span><span class="float">4.4</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+[</span>P<span class="operator">]  [</span>Q<span class="operator">]</span>     e<span class="operator">[</span>X<span class="operator">]</span>it p<span class="operator">
+[</span>P<span class="operator">]:</span><span class="int"> 6</span> x5<span class="operator"> +</span><span class="int">4</span> x3<span class="operator"> -</span><span class="int">2</span> x1<span class="operator"> +</span><span class="int">3</span> x0
+
+
+
+P<span class="operator">: [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]</span>
+Q<span class="operator">: [+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]
+
+
+-------</span> p<span class="operator"> +</span> q<span class="operator"> ----------------------
+[+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ] + [+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]
+      = [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> -</span>X<span class="operator"> +</span><span class="float">8.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> q<span class="operator"> +</span> p<span class="operator"> ----------------------
+[+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ] + [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]
+      = [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">7.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> -</span>X<span class="operator"> +</span><span class="float">8.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> p<span class="operator"> -</span> q<span class="operator"> ----------------------
+[+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ] - [+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]
+      = [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> -</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span>X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> -</span><span class="float">3.</span>0X<span class="operator"> -</span><span class="float">2.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> q<span class="operator"> -</span> p<span class="operator"> ----------------------
+[+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ] - [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]
+      = [-</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> -</span>X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator"> +</span><span class="float">2.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> p<span class="operator"> *</span> q<span class="operator"> ----------------------
+[+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ] * [+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]
+      = [+</span><span class="float">24.</span>0X<span class="operator">^</span><span class="int">9</span><span class="operator"> +</span><span class="float">18.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> +</span><span class="float">28.</span>0X<span class="operator">^</span><span class="int">7</span><span class="operator"> +</span><span class="float">18.</span>0X<span class="operator">^</span><span class="int">6</span><span class="operator"> +</span><span class="float">30.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">10.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">25.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> -</span><span class="float">7.</span>0X<span class="operator"> +</span><span class="float">15.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> *</span> p<span class="operator"> ----------------------
+[+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ] * [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]
+      = [+</span><span class="float">24.</span>0X<span class="operator">^</span><span class="int">9</span><span class="operator"> +</span><span class="float">18.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> +</span><span class="float">28.</span>0X<span class="operator">^</span><span class="int">7</span><span class="operator"> +</span><span class="float">18.</span>0X<span class="operator">^</span><span class="int">6</span><span class="operator"> +</span><span class="float">30.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">10.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">25.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> -</span><span class="float">7.</span>0X<span class="operator"> +</span><span class="float">15.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> /</span> p<span class="operator"> ----------------------
+[+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ] / [+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]
+      = [+</span><span class="float">1.</span>5X<span class="operator"> -</span><span class="float">1.1</span><span class="operator"> ]</span>  rem<span class="operator"> = [+</span><span class="float">4.</span>4X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">0.</span>8X<span class="operator">^</span><span class="int">2</span><span class="operator"> -</span><span class="float">8.</span>4X<span class="operator"> +</span><span class="float">8.6</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> /</span> p<span class="operator"> ----------------------
+[+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ] / [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]
+      = []</span>  rem<span class="operator"> = [+</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">4</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> +</span><span class="float">5.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+[</span>P<span class="operator">]  [</span>Q<span class="operator">]</span>     e<span class="operator">[</span>X<span class="operator">]</span>it q<span class="operator">
+[</span>Q<span class="operator">]:</span><span class="int"> 3</span> x8
+
+
+
+P<span class="operator">: [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]</span>
+Q<span class="operator">: [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]
+
+
+-------</span> p<span class="operator"> +</span> q<span class="operator"> ----------------------
+[+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ] + [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]
+      = [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> +</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> q<span class="operator"> +</span> p<span class="operator"> ----------------------
+[+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ] + [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]
+      = [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> +</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> p<span class="operator"> -</span> q<span class="operator"> ----------------------
+[+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ] - [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]
+      = [-</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> +</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> q<span class="operator"> -</span> p<span class="operator"> ----------------------
+[+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ] - [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]
+      = [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> -</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> -</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> +</span><span class="float">2.</span>0X<span class="operator"> -</span><span class="float">3.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> p<span class="operator"> *</span> q<span class="operator"> ----------------------
+[+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ] * [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]
+      = [+</span><span class="float">18.</span>0X<span class="operator">^</span><span class="int">13</span><span class="operator"> +</span><span class="float">12.</span>0X<span class="operator">^</span><span class="int">11</span><span class="operator"> -</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">9</span><span class="operator"> +</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> *</span> p<span class="operator"> ----------------------
+[+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ] * [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]
+      = [+</span><span class="float">18.</span>0X<span class="operator">^</span><span class="int">13</span><span class="operator"> +</span><span class="float">12.</span>0X<span class="operator">^</span><span class="int">11</span><span class="operator"> -</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">9</span><span class="operator"> +</span><span class="float">9.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> /</span> p<span class="operator"> ----------------------
+[+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ] / [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]
+      = []</span>  rem<span class="operator"> = [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> /</span> p<span class="operator"> ----------------------
+[+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ] / [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">5</span><span class="operator"> +</span><span class="float">4.</span>0X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">2.</span>0X<span class="operator"> +</span><span class="float">3.0</span><span class="operator"> ]
+      = [+</span><span class="float">0.</span>5X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">0.</span>3X<span class="operator"> ]</span>  rem<span class="operator"> = [+</span><span class="float">2.</span>3X<span class="operator">^</span><span class="int">4</span><span class="operator"> -</span><span class="float">1.</span>5X<span class="operator">^</span><span class="int">3</span><span class="operator"> -</span><span class="float">0.</span>7X<span class="operator">^</span><span class="int">2</span><span class="operator"> +</span>X<span class="operator"> ]</span>  VERIFIED<span class="operator">
+[</span>P<span class="operator">]  [</span>Q<span class="operator">]</span>     e<span class="operator">[</span>X<span class="operator">]</span>it p<span class="operator">
+[</span>P<span class="operator">]:</span><span class="int"> 2</span> x12
+
+
+
+P<span class="operator">: [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">12</span><span class="operator"> ]</span>
+Q<span class="operator">: [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]
+
+
+-------</span> p<span class="operator"> +</span> q<span class="operator"> ----------------------
+[+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">12</span><span class="operator"> ] + [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]
+      = [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">12</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> q<span class="operator"> +</span> p<span class="operator"> ----------------------
+[+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ] + [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">12</span><span class="operator"> ]
+      = [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">12</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> p<span class="operator"> -</span> q<span class="operator"> ----------------------
+[+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">12</span><span class="operator"> ] - [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]
+      = [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">12</span><span class="operator"> -</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> q<span class="operator"> -</span> p<span class="operator"> ----------------------
+[+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ] - [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">12</span><span class="operator"> ]
+      = [-</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">12</span><span class="operator"> +</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]</span>  VERIFIED<span class="operator"> 
+
+-------</span> p<span class="operator"> *</span> q<span class="operator"> ----------------------
+[+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">12</span><span class="operator"> ] * [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]
+      = [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">20</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> *</span> p<span class="operator"> ----------------------
+[+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ] * [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">12</span><span class="operator"> ]
+      = [+</span><span class="float">6.</span>0X<span class="operator">^</span><span class="int">20</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> /</span> p<span class="operator"> ----------------------
+[+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">12</span><span class="operator"> ] / [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]
+      = [+</span><span class="float">0.</span>7X<span class="operator">^</span><span class="int">4</span><span class="operator"> ]</span>  rem<span class="operator"> = []</span>  VERIFIED<span class="operator">
+
+-------</span> q<span class="operator"> /</span> p<span class="operator"> ----------------------
+[+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ] / [+</span><span class="float">2.</span>0X<span class="operator">^</span><span class="int">12</span><span class="operator"> ]
+      = []</span>  rem<span class="operator"> = [+</span><span class="float">3.</span>0X<span class="operator">^</span><span class="int">8</span><span class="operator"> ]</span>  VERIFIED<span class="operator">
+[</span>P<span class="operator">]  [</span>Q<span class="operator">]</span>     e<span class="operator">[</span>X<span class="operator">]</span>it x<span class="operator">
+
+
+
+
+
+
+----------------------</span>
+Press<span class="operator"> &lt;</span>RETURN<span class="operator">&gt;</span> to close<span class="keyword"> this</span> window<span class="operator">...</span></pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

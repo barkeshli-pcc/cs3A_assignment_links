@@ -1,0 +1,177 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 10_e3_counter_type</title>
+</head>
+<body>
+<h2 style="text-align: center;"><strong>Counter_Type</strong></h2>
+<p><a title="READ ME (Chapter 10, 11)" href="$CANVAS_OBJECT_REFERENCE$/assignments/gc9baabedc65f6aa37e060beacf65cccb" data-api-endpoint="https://canvas.pasadena.edu/api/v1/courses/1112354/assignments/8766721" data-api-returntype="Assignment">READ ME (Chapter 10, 11)</a></p>
+<p>Design the class using the specifications in the textbook.</p>
+<p>CounterType will have the following declarations:</p>
+<p>&nbsp;</p>
+<p></p>
+<div style="background: #ffffff; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;"><span style="color: #008800; ">class</span> <span style="color: #bb0066; ">Counter_Type</span>
+{
+<span style="color: #997700; ">public:</span>
+    Counter_Type();
+    Counter_Type(<span style="color: #333399; ">int</span> n);            <span style="color: #888888;">//set initial value of the counter</span>
+    <span style="color: #333399; ">bool</span> <span style="color: #0066bb; ">inc</span>();                     <span style="color: #888888;">//increment by one</span>
+    <span style="color: #333399; ">bool</span> <span style="color: #0066bb; ">dec</span>();                     <span style="color: #888888;">//decrement by one</span>
+    <span style="color: #333399; ">bool</span> is_error() <span style="color: #008800; ">const</span>;          <span style="color: #888888;">//true: the object is in error (underflow)</span>
+    <span style="color: #333399; ">bool</span> <span style="color: #0066bb; ">reset</span>();                   <span style="color: #888888;">//reset _count to zero and _error to false</span>
+    <span style="color: #333399; ">int</span> count() <span style="color: #008800; ">const</span>;              <span style="color: #888888;">//retrieve the _count</span>
+<span style="color: #997700; ">private:</span>
+    <span style="color: #333399; ">int</span> _count;
+    <span style="color: #333399; ">bool</span> _error;
+};
+</pre>
+</div>
+<p>&nbsp;</p>
+<p>The dec() function will set the _error to true if the count is zero upon being called.</p>
+<p>&nbsp;</p>
+<h3><strong>Testing:</strong></h3>
+<p>Your main() function calls the test_CounterType() function.</p>
+<p><strong>test_Counter_Type()</strong> presents the user with the following menu:</p>
+<pre><span class="operator">[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it  </pre>
+<p>as the user presses + and -, you will call the appropriate functions from the CounterType object and call the display_counter() function and pass it the CounterType object.&nbsp;</p>
+<p>The <strong>display_counter()</strong> object will display the count if the object is not in error. Otherwise, it will display ERROR.</p>
+<h3><strong>Sample Run:</strong></h3>
+<p>&nbsp;</p>
+<pre><span class="operator">-------
+|</span><span class="int"> 0000</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span><span class="int"> 0001</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span><span class="int"> 0002</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span><span class="int"> 0003</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span><span class="int"> 0004</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span><span class="int"> 0005</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span><span class="int"> 0006</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span><span class="int"> 0007</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span> 0008<span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span> 0009<span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span><span class="int"> 0010</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span><span class="int"> 0011</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  -
+-------
+|</span><span class="int"> 0010</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  -
+-------
+|</span> 0009<span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  -
+-------
+|</span> 0008<span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  -
+-------
+|</span><span class="int"> 0007</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  -
+-------
+|</span><span class="int"> 0006</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  -
+-------
+|</span><span class="int"> 0005</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  -
+-------
+|</span><span class="int"> 0004</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  -
+-------
+|</span><span class="int"> 0003</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  -
+-------
+|</span><span class="int"> 0002</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  -
+-------
+|</span><span class="int"> 0001</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  -
+-------
+|</span><span class="int"> 0000</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  -
+-------
+|</span>ERROR<span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  -
+-------
+|</span>ERROR<span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  -
+-------
+|</span>ERROR<span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span>ERROR<span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span>ERROR<span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it  r<span class="operator">
+-------
+|</span><span class="int"> 0000</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span><span class="int"> 0001</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator">  +
+-------
+|</span><span class="int"> 0002</span><span class="operator">|
+-------
+[+]  [-]     [</span>R<span class="operator">]</span>eset<span class="operator">:</span>  e<span class="operator">[</span>X<span class="operator">]</span>it  x<span class="operator">
+
+-------------------</span>
+Press<span class="operator"> &lt;</span>RETURN<span class="operator">&gt;</span> to close<span class="keyword"> this</span> window<span class="operator">...</span></pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

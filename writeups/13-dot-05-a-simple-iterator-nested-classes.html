@@ -1,0 +1,189 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 13.05 A Simple Iterator (Nested Classes)</title>
+</head>
+<body>
+<h2 style="text-align: center;"><strong>Nested Classes</strong></h2>
+<p style="text-align: center;">(an example)</p>
+<p style="text-align: left;">We will define Iterators as nested classes to our List classes. This will allow us to have customized Iterators for each of our List classes. For example, a simple list will need the Iterator to be able to give access to the _items in the list but restrict access to memory management. i.e. does not allow the caller to delete a node unless it goes through the List's Delete function. A Stack and a Queue would want access to see what is in the structure (to print or debug) but not change the items.</p>
+<p style="text-align: left;">Here is a simple List class with a dynamic array and a nested Iterator:</p>
+<pre><span class="keyword">template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span><span class="keyword">
+class</span> List<span class="operator">{</span><span class="keyword">
+public</span><span class="operator">:</span><span class="keyword">
+    class</span> Iterator<span class="operator">{</span><span class="comment">
+    //the nested class
+</span><span class="keyword">    public</span><span class="operator">:</span><span class="keyword">
+        friend class</span> List<span class="operator">;</span><span class="comment">                  //this will allow List
+                                            //  to access the private
+                                            //  members of Iterator
+</span>        Iterator next<span class="operator">()</span><span class="comment">                     //return an iterator to the 
+</span><span class="operator">        {</span><span class="comment">                                   //  next location in the list
+</span><span class="flow">            return</span> Iterator<span class="operator">(</span>p + 1<span class="operator">);
+        }</span>
+
+        Iterator<span class="operator">(</span>T<span class="operator">*</span> p<span class="operator"> =</span> NULL<span class="operator">):</span>_ptr<span class="operator">(</span>p<span class="operator">){}</span><span class="comment">     //ctor
+</span>        T<span class="operator">&amp;</span><span class="keyword"> operator</span><span class="operator"> *(){</span><span class="comment">                    //dereference oprator
+</span>            assert<span class="operator">(</span>_ptr<span class="operator">);</span><span class="flow">
+            return</span><span class="operator"> *</span>_ptr<span class="operator">;
+        }</span><span class="keyword">
+
+        friend</span> Iterator<span class="keyword"> operator</span><span class="operator"> ++(</span>Iterator<span class="operator">&amp;</span> it<span class="operator">,</span><span class="comment">       //it++
+</span><span class="type">                                    int</span> unused<span class="operator">){</span>
+            Iterator hold<span class="operator">;</span>
+            hold<span class="operator"> =</span> it<span class="operator">;</span>
+            it<span class="operator">.</span>_ptr<span class="operator">++;</span><span class="flow">
+            return</span> hold<span class="operator">;
+        }</span>
+        Iterator<span class="operator">&amp;</span><span class="keyword"> operator</span><span class="operator"> ++(){</span><span class="comment">                        //++it
+</span>            _ptr<span class="operator">++;</span><span class="flow">
+            return</span><span class="operator"> *</span><span class="keyword">this</span><span class="operator">;
+        }</span><span class="keyword">
+
+        friend</span><span class="type"> bool</span><span class="keyword"> operator</span><span class="operator"> !=(</span><span class="keyword">const</span> Iterator<span class="operator">&amp;</span> left<span class="operator">,</span><span class="comment">   //it != it
+</span><span class="keyword">                                const</span> Iterator<span class="operator">&amp;</span> right<span class="operator">){</span><span class="flow">
+            return</span> left<span class="operator">.</span>_ptr<span class="operator"> !=</span> right<span class="operator">.</span>_ptr<span class="operator">;
+        }</span><span class="keyword">
+
+    private</span><span class="operator">:</span>
+        T<span class="operator">*</span> _ptr<span class="operator">;</span><span class="comment">                    //pointer being
+                                    //  encapsulated
+</span><span class="operator">    };</span>
+
+    List<span class="operator">(</span>T<span class="operator">*</span> array<span class="operator">,</span><span class="type"> int</span> size<span class="operator">);</span><span class="comment">       //List ctor
+    //---------------------------- big three -----------------------------------
+</span><span class="operator">    ~</span>List<span class="operator">();</span>
+    List<span class="operator">(</span><span class="keyword">const</span> List<span class="operator">&amp;</span> other<span class="operator">);</span>
+    List<span class="operator">&amp;</span><span class="keyword"> operator</span><span class="operator"> =(</span><span class="keyword">const</span> List<span class="operator">&amp;</span> RHS<span class="operator">);</span><span class="comment">
+    //---------------------------------------------------------------------------
+</span>    Iterator Begin<span class="operator">()</span><span class="keyword"> const</span><span class="operator">;</span><span class="comment">         //an iterator to the start of List
+</span>    Iterator End<span class="operator">()</span><span class="keyword"> const</span><span class="operator">;</span><span class="comment">           //an iterator to the end of List
+</span><span class="keyword">private</span><span class="operator">:</span>
+    T<span class="operator">*</span> _a_list<span class="operator">;</span><span class="comment">                     //the List raw data
+</span><span class="type">    int</span> _how_many<span class="operator">;</span><span class="comment">                  //size of List
+</span><span class="operator">};</span></pre>
+<p style="text-align: left;"><span class="keyword"></span><strong>Notes:</strong></p>
+<ul>
+<li>Declare the nested class right inside the declration of the class. The syntax for a templated nested class is too much trouble to spend time on.</li>
+<li>A descent Iterator will provide functions for comarison (==, !=), dereference (*) and member access, if needed (-&gt;) along with a constructor so that the list can point the Iterator to a particular location.</li>
+<li>The List class will provide a Begin and an End function that will return an Iterator to the start and end of the List.</li>
+<li>None of the List functions will return or expect a pointer to the nodes. Iterators are used for all functions who need to communicate via pointers: search, delete, insert after, etc.</li>
+<li>The calling function, will declare an Iterator of the List (or any other data structure) to gain access to the internal nodes of the List.&nbsp;</li>
+</ul>
+<p>&nbsp;</p>
+<h3><strong>Class Function Definitions:</strong></h3>
+<pre><span class="keyword">template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span>
+List<span class="operator">&lt;</span>T<span class="operator">&gt;::</span>List<span class="operator">(</span>T<span class="operator"> *</span>array<span class="operator">,</span><span class="type"> int</span> size<span class="operator">){</span>
+    _a_list<span class="operator"> =</span> copy_array<span class="operator">(</span>array<span class="operator">,</span> size<span class="operator">);</span>
+    _how_many<span class="operator"> =</span> size<span class="operator">;
+
+}</span><span class="comment">
+//---- BIG THREE --------------------------------
+</span><span class="keyword">template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span>
+List<span class="operator">&lt;</span>T<span class="operator">&gt;::~</span>List<span class="operator">(){</span>
+    destroy_array<span class="operator">(</span>_a_list<span class="operator">);
+}</span><span class="keyword">
+
+template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span>
+List<span class="operator">&lt;</span>T<span class="operator">&gt;::</span>List<span class="operator">(</span><span class="keyword">const</span> List<span class="operator">&amp;</span> other<span class="operator">){</span>
+    _a_list<span class="operator"> =</span> copy_array<span class="operator">(</span>other<span class="operator">.</span>_a_list, other._how_many<span class="operator">);</span>
+    _how_many<span class="operator"> =</span> other<span class="operator">.</span>_how_many<span class="operator">;
+
+}</span><span class="keyword">
+
+template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span>
+List<span class="operator">&lt;</span>T<span class="operator">&gt;&amp;</span> List<span class="operator">&lt;</span>T<span class="operator">&gt;::</span><span class="keyword">operator</span><span class="operator"> =(</span><span class="keyword">const</span> List<span class="operator">&amp;</span> RHS<span class="operator">){</span><span class="flow">
+    if</span><span class="operator"> (</span><span class="keyword">this</span><span class="operator"> == &amp;</span>RHS<span class="operator">)</span><span class="flow"> return</span><span class="operator"> *</span><span class="keyword">this</span><span class="operator">;</span>
+    destroy_array<span class="operator">(</span>_a_list<span class="operator">);</span>
+    _a_list<span class="operator"> =</span> copy_array<span class="operator">(</span>RHS<span class="operator">.</span>_a_list, RHS._how_many<span class="operator">);</span>
+    _how_many<span class="operator"> =</span> RHS<span class="operator">.</span>_how_many<span class="operator">;
+}</span><span class="comment">
+//-----------------------------------------------------
+</span><span class="keyword">
+
+template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span><span class="keyword">
+typename</span> List<span class="operator">&lt;</span>T<span class="operator">&gt;::</span>Iterator List<span class="operator">&lt;</span>T<span class="operator">&gt;::</span>Begin<span class="operator">()</span><span class="keyword"> const</span><span class="operator">{</span><span class="comment">
+    //C++ requires you to use the keyword typename when referring to the Iterator outside
+    //      the class declaration
+</span><span class="flow">    return</span> Iterator<span class="operator">(</span>_a_list<span class="operator">);
+}</span><span class="keyword">
+
+template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span><span class="keyword">
+typename</span> List<span class="operator">&lt;</span>T<span class="operator">&gt;::</span>Iterator List<span class="operator">&lt;</span>T<span class="operator">&gt;::</span>End<span class="operator">()</span><span class="keyword"> const</span><span class="operator">{</span><span class="comment">
+    //probably a terrible idea!
+</span><span class="flow">    return</span> Iterator<span class="operator">(</span>_a_list<span class="operator">+</span>_how_many<span class="operator">);
+}</span><span class="keyword">
+
+
+
+template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span><span class="type">
+void</span> destroy_array<span class="operator">(</span>T<span class="operator">* &amp;</span>src<span class="operator">){</span><span class="flow">
+    if</span><span class="operator"> (</span>src<span class="operator">){</span><span class="keyword">
+        delete</span><span class="operator">[]</span> src<span class="operator">;
+    }</span>
+    src<span class="operator"> =</span> NULL<span class="operator">;
+}</span><span class="keyword">
+
+template</span><span class="operator"> &lt;</span><span class="keyword">class</span> T<span class="operator">&gt;</span>
+T<span class="operator">*</span> copy_array<span class="operator">(</span>T<span class="operator">*</span> src<span class="operator">,</span><span class="type"> int</span> size<span class="operator">){</span>
+    T<span class="operator">*</span> copy<span class="operator"> =</span><span class="keyword"> new</span> T<span class="operator">[</span>size<span class="operator">];</span><span class="flow">
+    for</span><span class="operator"> (</span><span class="type">int</span> i<span class="operator">=</span><span class="int">0</span><span class="operator">;</span> i<span class="operator">&lt;</span>size<span class="operator">;</span> i<span class="operator">++){</span>
+        copy<span class="operator">[</span>i<span class="operator">] =</span> src<span class="operator">[</span>i<span class="operator">];
+    }</span><span class="flow">
+    return</span> copy<span class="operator">;
+}</span></pre>
+<p><strong>The calling function:</strong></p>
+<ul>
+<li>The main function instatiates a List object (of type int)</li>
+<li>It also declares an Iterator of the List class</li>
+<li>The for loop is initialized with the List::Begin() iterator and ends with the List::End() iterator</li>
+<li>Inside the loop, the Iterator is dereferenced and the value it is pointing to is printed.</li>
+</ul>
+<pre><span class="type">int</span><span class="keyword"> main</span><span class="operator">(</span><span class="type">int</span> argc<span class="operator">,</span><span class="type"> char</span><span class="operator"> *</span>argv<span class="operator">[])
+{</span>
+    cout<span class="operator"> &lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string"> "======================="</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"Testing a list of ints:"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="type">
+    int</span> a<span class="operator">[] = {</span><span class="int">1</span><span class="operator">,</span><span class="int">1</span><span class="operator">,</span><span class="int">3</span><span class="operator">,</span><span class="int">5</span><span class="operator">,</span><span class="int">8</span><span class="operator">,</span><span class="int">13</span><span class="operator">};</span><span class="comment">           //an array! (sorry about this!)
+</span>    List<span class="operator">&lt;</span><span class="type">int</span><span class="operator">&gt;</span> list<span class="operator">(</span>a<span class="operator">,</span><span class="int"> 6</span><span class="operator">);</span><span class="comment">               //instantiate a List object
+</span>    List<span class="operator">&lt;</span><span class="type">int</span><span class="operator">&gt;::</span>Iterator it<span class="operator">;</span><span class="comment">             //a List Itertor object
+</span><span class="flow">    for</span><span class="operator"> (</span>it<span class="operator">=</span>list<span class="operator">.</span>Begin<span class="operator">();</span> 
+         it<span class="operator">!=</span>list<span class="operator">.</span>End<span class="operator">();</span> 
+         it<span class="operator">++){</span><span class="comment">                         //postfix ++
+        //looping through all the elements of List using the Iterator
+</span>        cout<span class="operator">&lt;&lt;*</span>it<span class="operator">&lt;&lt;</span><span class="string">"|"</span><span class="operator">;
+    }</span><span class="comment">
+    //delete it;      //cannot be done.
+    //delete it._ptr; //cannot be done.
+</span>    cout<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string">"Testing a list of strings:"</span><span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="comment">
+    //
+</span>    string s<span class="operator">[] = {</span>string<span class="operator">(</span><span class="string">"Curly"</span><span class="operator">),</span> string<span class="operator">(</span><span class="string">"Moe"</span><span class="operator">),</span> string<span class="operator">(</span><span class="string">"Larry"</span><span class="operator">)};</span>
+    List<span class="operator">&lt;</span>string<span class="operator">&gt;</span> slist<span class="operator">(</span>s<span class="operator">,</span><span class="int"> 3</span><span class="operator">);</span>
+    List<span class="operator">&lt;</span>string<span class="operator">&gt;::</span>Iterator sit<span class="operator">;</span><span class="comment">           //a List Itertor object
+</span><span class="flow">    for</span><span class="operator"> (</span>sit<span class="operator">=</span>slist<span class="operator">.</span>Begin<span class="operator">();</span> 
+         sit<span class="operator">!=</span>slist<span class="operator">.</span>End<span class="operator">(); 
+         ++</span>sit<span class="operator">){</span><span class="comment">                          //prefix ++
+        //looping through all the elements of List using the Iterator
+</span>        cout<span class="operator">&lt;&lt;*</span>sit<span class="operator">&lt;&lt;</span><span class="string">"|"</span><span class="operator">;
+    }</span>
+
+    cout<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span>
+    cout<span class="operator"> &lt;&lt;</span>endl<span class="operator">&lt;&lt;</span>endl<span class="operator">&lt;&lt;</span><span class="string"> "======================="</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">&lt;&lt;</span>endl<span class="operator">;</span><span class="flow">
+    return</span><span class="int"> 0</span><span class="operator">;
+}</span></pre>
+<p><strong>The output:</strong></p>
+<pre><span class="operator">=======================</span>
+
+
+
+Testing a list of ints<span class="operator">:</span><span class="int">
+1</span><span class="operator">|</span><span class="int">1</span><span class="operator">|</span><span class="int">3</span><span class="operator">|</span><span class="int">5</span><span class="operator">|</span><span class="int">8</span><span class="operator">|</span><span class="int">13</span><span class="operator">|</span>
+
+Testing a list of strings<span class="operator">:</span>
+Curly<span class="operator">|</span>Moe<span class="operator">|</span>Larry<span class="operator">|
+
+
+=======================</span></pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

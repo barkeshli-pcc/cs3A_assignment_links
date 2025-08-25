@@ -1,0 +1,40 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: 99_00_final_project</title>
+</head>
+<body>
+<h2 style="text-align: center;"><strong>Final Project</strong></h2>
+<p>NOTE:</p>
+<p>Remember, the project is to be submitted by the date and time. Late submissions will lose 10%</p>
+<p>&nbsp;</p>
+<p>NOTE:&nbsp;</p>
+<p>Code must be FULLY COMMENTED.</p>
+<p>Include a COMPLETE TEST with your project.</p>
+<p>You must appear on the time specified (see my announcement) to present your project. Failure to do so will earn a zero on the final.</p>
+<p>_______________________________________________________________</p>
+<p>Create a graphing calculator.</p>
+<p>The calculator will take an expression made up of numbers, instances of a single variable, Trig functions, in addition to functions taking more than one argument such as Max(a, b)</p>
+<p>The calculator will draw a graph of the function for a given interval and given increments:</p>
+<p class="p1"><span class="s1"><strong>queue&lt;Point&gt; PlotExpression (string expression, double low, double high, double increments);</strong></span></p>
+<p class="p1">This function takes an expression as a string, the high and low values for the function variable and the increments and produces a queue of points that represent the graph.</p>
+<p class="p1">&nbsp;Make sure you handle:</p>
+<ul>
+<li class="p1">Functions (specially, the Trig functions)</li>
+<li class="p1">The unary operator</li>
+</ul>
+<p class="p1"><strong>Hints:</strong></p>
+<p class="p1"><span class="s1">Shunting Yard Algorithm:</span></p>
+<p class="p1"><span class="s1"> Handing Variables:&nbsp;</span></p>
+<p class="p1"><span class="s1">variables are just like numbers. So, When you see a variable, push into output queue.</span></p>
+<p class="p2">&nbsp;</p>
+<p class="p1"><span class="s1">Handling Functions:&nbsp;</span></p>
+<p class="p1"><span class="s1">Functions are like operators with highest precedence:</span></p>
+<p class="p1"><span class="s1">5*(Max(x,4) + 6) &nbsp;-&gt;&gt; 5 x 4 Max 6 + *&nbsp;</span></p>
+<p class="p1">&nbsp;</p>
+<p class="p1"><span class="s1"><strong>Notes:</strong> </span></p>
+<p class="p1"><span class="s1">Follow all the design guidelines discussed in class for the Shunting Yard algorithm, Evaluation algorithm etc.</span></p>
+<p class="p1"><span class="s1">No Test = No Score: This project is meaningless without complete and accurate testing.</span></p>
+<p class="p1">&nbsp;</p>
+</body>
+</html>

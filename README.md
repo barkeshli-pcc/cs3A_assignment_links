@@ -6,42 +6,35 @@
 
 # <p align="center">CS 3A Assignment links:</p>
 
-## 00_Lab_0
-
-| GitHub Assignment | Basic Test | Writeup |
-|-------------------|------------|---------|
-| [lab-00 assignment](https://classroom.github.com/a/qidO1KYV) | [basic_test.cpp](basic_tests/lab-00/basic_test.cpp) | [00-lab-0](https://github.com/barkeshli-pcc/lab-00-writeup) |
-
-
 ## Labs
 
 | GitHub Assignment | Basic Test | Writeup |
 |-------------------|------------|---------|
-| [lab-00 assignment] | [basic_test.cpp]| [00-lab-0](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-0.html) |
-| [lab-01 array library testing suite](https://classroom.github.com/a/p02xacUI) | [basic_test.cpp](basic_tests/lab-01/basic_test.cpp) | [00-lab-1](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-1.html) |
-| [lab-02](https://classroom.github.com/a/c8S8DcIV) | - | [00-lab-2](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-2.html) |
-| [lab-03](https://classroom.github.com/a/Z0BSqLU_) | - | [00-lab-3-class-declarations](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-3-class-declarations.html) |
-| [lab-04](https://classroom.github.com/a/h0VMUsCY) | - | [00-lab-4](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-4.html) |
-| [lab-05](https://classroom.github.com/a/glS7JhNr) | - | [00-lab-5](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-5.html) |
+| <a href="https://classroom.github.com/a/qidO1KYV" target="_blank">lab-00 assignment</a> | <a href="basic_tests/lab-00/basic_test.cpp" target="_blank">basic_test.cpp</a> | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-0.html" target="_blank">00-lab-0</a> |
+| <a href="https://classroom.github.com/a/p02xacUI" target="_blank">lab-01 array library testing suite</a> | <a href="basic_tests/lab-01/basic_test.cpp" target="_blank">basic_test.cpp</a> | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-1.html" target="_blank">00-lab-1</a> |
+| <a href="https://classroom.github.com/a/c8S8DcIV" target="_blank">lab-02</a> | - | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-2.html" target="_blank">00-lab-2</a> |
+| <a href="https://classroom.github.com/a/Z0BSqLU_" target="_blank">lab-03</a> | - | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-3-class-declarations.html" target="_blank">00-lab-3-class-declarations</a> |
+| <a href="https://classroom.github.com/a/h0VMUsCY" target="_blank">lab-04</a> | - | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-4.html" target="_blank">00-lab-4</a> |
+| <a href="https://classroom.github.com/a/glS7JhNr" target="_blank">lab-05</a> | - | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-5.html" target="_blank">00-lab-5</a> |
 
 ## Review
 
 | GitHub Assignment | Basic Test | Writeup |
 |-------------------|------------|---------|
-| [7_2__7_7_add_numbers_any_base](https://classroom.github.com/a/TmwJyjFg) | - | [7-2-7-7-add-numbers-any-base](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/7-2-7-7-add-numbers-any-base.html) |
+| <a href="https://classroom.github.com/a/TmwJyjFg" target="_blank">7_2__7_7_add_numbers_any_base</a> | - | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/7-2-7-7-add-numbers-any-base.html" target="_blank">7-2-7-7-add-numbers-any-base</a> |
 
 ## Chapter 9
 
 | GitHub Assignment | Basic Test | Writeup |
 |-------------------|------------|---------|
-| [09.00 EXTRA: fun_with_pointers](https://classroom.github.com/a/IRC876ms) | - | [09-00-fun-with-dynamic-arrays-extra-cr](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/09-00-fun-with-dynamic-arrays-extra-cr.html) |
-| [09_01 pointer_array_functions](https://classroom.github.com/a/adfUtOuD) | [basic_test.cpp](basic_tests/09_01_pointer_array_functions/basic_test.cpp) | [09-01-pointer-array-functions](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/09-01-pointer-array-functions.html) |
-| [09.p2 delete_repeats](https://classroom.github.com/a/vZtmeQ3x) | [basic_test.cpp](basic_tests/09-p2-delete_repeats/basic_test.cpp) | [09-p2-delete-repeats](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/09-p2-delete-repeats.html) |
-| - | [basic_test.cpp](basic_tests/09-03-union_intersection/basic_test.cpp) | - |
-| [09.00 EXTRA: fun_with_dynamic_arrays](https://classroom.github.com/a/vZcOyz9U) | - | [09-00-fun-with-two-d-pointers-extra-cr](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/09-00-fun-with-two-d-pointers-extra-cr.html) |
-| [09-p6 add_entry](https://classroom.github.com/a/lhTwoGSe) | [basic_test.cpp](basic_tests/09-p6-add_entry/basic_test.cpp) | [09-p6-add-entry](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/09-p6-add-entry.html) |
-| [09-00 EXTRA: func_with_two_d_pointers](https://classroom.github.com/a/9Y3H8Pci) | - | [09-00-pointer-array-functions-description](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/09-00-pointer-array-functions-description.html) |
-| [09-p3-p5 lab_and_plane](https://classroom.github.com/a/n8CIYltG) | [basic_test.cpp](basic_tests/09-p3-lab_and_plane/basic_test.cpp) | [09-p3-p5-lab-and-plane](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/09-p3-p5-lab-and-plane.html) |
+| <a href="https://classroom.github.com/a/IRC876ms" target="_blank">09.00 EXTRA: fun_with_pointers</a> | - | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/09-00-fun-with-dynamic-arrays-extra-cr.html" target="_blank">09-00-fun-with-dynamic-arrays-extra-cr</a> |
+| <a href="https://classroom.github.com/a/adfUtOuD" target="_blank">09_01 pointer_array_functions</a> | <a href="basic_tests/09_01_pointer_array_functions/basic_test.cpp" target="_blank">basic_test.cpp</a> | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/09-01-pointer-array-functions.html" target="_blank">09-01-pointer-array-functions</a> |
+| <a href="https://classroom.github.com/a/vZtmeQ3x" target="_blank">09.p2 delete_repeats</a> | <a href="basic_tests/09-p2-delete_repeats/basic_test.cpp" target="_blank">basic_test.cpp</a> | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/09-p2-delete-repeats.html" target="_blank">09-p2-delete-repeats</a> |
+| - | <a href="basic_tests/09-03-union_intersection/basic_test.cpp" target="_blank">basic_test.cpp</a> | - |
+| <a href="https://classroom.github.com/a/vZcOyz9U" target="_blank">09.00 EXTRA: fun_with_dynamic_arrays</a> | - | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/09-00-fun-with-two-d-pointers-extra-cr.html" target="_blank">09-00-fun-with-two-d-pointers-extra-cr</a> |
+| <a href="https://classroom.github.com/a/lhTwoGSe" target="_blank">09-p6 add_entry</a> | <a href="basic_tests/09-p6-add_entry/basic_test.cpp" target="_blank">basic_test.cpp</a> | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/09-p6-add-entry.html" target="_blank">09-p6-add-entry</a> |
+| <a href="https://classroom.github.com/a/9Y3H8Pci" target="_blank">09-00 EXTRA: func_with_two_d_pointers</a> | - | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/09-00-pointer-array-functions-description.html" target="_blank">09-00-pointer-array-functions-description</a> |
+| <a href="https://classroom.github.com/a/n8CIYltG" target="_blank">09-p3-p5 lab_and_plane</a> | <a href="basic_tests/09-p3-lab_and_plane/basic_test.cpp" target="_blank">basic_test.cpp</a> | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/09-p3-p5-lab-and-plane.html" target="_blank">09-p3-p5-lab-and-plane</a> |
 
 ## Chapter 10, 11
 

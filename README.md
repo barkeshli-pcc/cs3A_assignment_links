@@ -6,11 +6,18 @@
 
 # <p align="center">CS 3A Assignment links:</p>
 
+## Labs 0
+
+| GitHub Assignment | Basic Test | Writeup |
+|-------------------|------------|---------|
+| <a href="https://classroom.github.com/a/qidO1KYV" target="_blank">lab-00 assignment</a> | <a href="basic_tests/lab-00/basic_test.cpp" target="_blank">basic_test.cpp</a> | <a href="https://github.com/barkeshli-pcc/lab-00-writeup" target="_blank">00-lab-0</a> |
+
+
 ## Labs
 
 | GitHub Assignment | Basic Test | Writeup |
 |-------------------|------------|---------|
-| <a href="https://classroom.github.com/a/qidO1KYV" target="_blank">lab-00 assignment</a> | <a href="basic_tests/lab-00/basic_test.cpp" target="_blank">basic_test.cpp</a> | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-0.html" target="_blank">00-lab-0</a> |
+| <a href="https://classroom.github.com/a/qidO1KYV" target="_blank">lab-00 assignment</a> | <a href="basic_tests/lab-00/basic_test.cpp" target="_blank">basic_test.cpp</a> | <a href="https://github.com/barkeshli-pcc/lab-00-writeup" target="_blank">00-lab-0</a> |
 | <a href="https://classroom.github.com/a/p02xacUI" target="_blank">lab-01 array library testing suite</a> | <a href="basic_tests/lab-01/basic_test.cpp" target="_blank">basic_test.cpp</a> | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-1.html" target="_blank">00-lab-1</a> |
 | <a href="https://classroom.github.com/a/c8S8DcIV" target="_blank">lab-02</a> | - | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-2.html" target="_blank">00-lab-2</a> |
 | <a href="https://classroom.github.com/a/Z0BSqLU_" target="_blank">lab-03</a> | - | <a href="https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/00-lab-3-class-declarations.html" target="_blank">00-lab-3-class-declarations</a> |

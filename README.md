@@ -11,13 +11,6 @@
 
 
 
-# <p align="center">DO NOT _accept_ these assignments </p>
-
-## <p align="center">until you are told to do so by me.</p>
-
-<br/>
-
-# <p align="center">CS 3A Assignment links:</p>
 
 ## Labs 0
 

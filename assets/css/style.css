@@ -1,87 +1,198 @@
 @import url("{{ site.theme }}");
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=Fira+Code&display=swap');
 
-/* Support for browser's native dark/light mode */
+/* Force light mode regardless of the visitor's OS/browser
+   preference — no longer following prefers-color-scheme */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 }
 
-body { 
-  font-family: Roboto, sans-serif; 
-  background-color: rgb(238, 241, 245); 
-  padding: 40px; 
+/* =====================================================
+   BASE SITE STYLES (default look — used for assignment
+   tables and general pages, from style.css)
+   ===================================================== */
+body {
+  font-family: Roboto, sans-serif;
+  background-color: rgb(238, 241, 245);
+  padding: 40px;
 }
 
-.container { 
-  max-width: 850px; 
-  margin: auto; 
-  background-color: rgb(255, 255, 255); 
-  padding: 30px; 
-  border-radius: 10px; 
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; 
+.container {
+  max-width: 850px;
+  margin: auto;
+  background-color: rgb(255, 255, 255);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
-h2 { 
-  text-align: left; 
-  font-size: 1.8em; 
-  margin-bottom: 25px; 
+h2 {
+  text-align: left;
+  font-size: 1.8em;
+  margin-bottom: 25px;
 }
 
-img { 
-  display: block; 
-  margin: 0px auto 20px; 
-  border-radius: 6px; 
+img {
+  display: block;
+  margin: 0px auto 20px;
+  border-radius: 6px;
 }
 
-p { 
-  margin-bottom: 16px; 
+p {
+  margin-bottom: 16px;
 }
 
-a { 
-  color: rgb(0, 119, 204); 
-  font-weight: bold; 
+a {
+  color: rgb(0, 119, 204);
+  font-weight: bold;
 }
 
 /* Table Styles */
-.assignment-table { 
-  table-layout: fixed; 
-  width: 100%; 
-  max-width: 700px;      /* Set max width to 500px */
-  margin-left: 0;        /* Align table to the left */
+.assignment-table {
+  table-layout: fixed;
+  width: 100%;
+  max-width: 700px;
+  margin-left: 0;
   margin-right: auto;
-  border-collapse: collapse; /* For thin, clean borders */
+  border-collapse: collapse;
   border: 1px solid #ccc;
 }
 
-.assignment-table th, 
+.assignment-table th,
 .assignment-table td {
   padding: 10px;
-  border: 1px solid #ccc;  /* Stylish thin border */
-  overflow-wrap: break-word; 
+  border: 1px solid #ccc;
+  overflow-wrap: break-word;
 }
 
 .assignment-table th:nth-child(1), .assignment-table td:nth-child(1) { width: 45%; }
 .assignment-table th:nth-child(2), .assignment-table td:nth-child(2) { width: 25%; }
 .assignment-table th:nth-child(3), .assignment-table td:nth-child(3) { width: 30%; }
 
-/* Dark Mode Enhancements */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #121212;
-    color: #e0e0e0;
-  }
-  
-  .container {
-    background-color: #1e1e1e;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  }
-
-  .assignment-table, 
-  .assignment-table th, 
-  .assignment-table td {
-    border-color: #444; /* Subtler border for dark mode */
-  }
-
-  a {
-    color: #4da3ff; /* Lighter blue for readability in dark mode */
-  }
+/* =====================================================
+   EDITORIAL / PROSE THEME (opt-in via .doc-modern wrapper)
+   Wrap prose/code write-ups like:
+     <div class="doc-modern"> ... </div>
+   so it never collides with body/h2/a above.
+   ===================================================== */
+.doc-modern {
+  font-family: 'EB Garamond', serif;
+  color: #1a1a1a;
+  line-height: 1.8;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
+
+.doc-modern h2 {
+  text-align: center;
+  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #2a2a2a;
+  border-bottom: 2px solid #bbb;
+  padding-bottom: 0.4rem;
+}
+
+.doc-modern h3 {
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #2a2a2a;
+}
+
+.doc-modern h4 {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.8rem;
+  color: #2a2a2a;
+}
+
+.doc-modern a {
+  color: #005c99;
+  text-decoration: none;
+  border-bottom: 1px dotted #888;
+  transition: all 0.3s ease-in-out;
+}
+
+.doc-modern a:hover {
+  color: #003366;
+  border-bottom: 1px solid #003366;
+}
+
+.doc-modern p {
+  margin-bottom: 1.2rem;
+}
+
+.doc-modern strong {
+  font-weight: 600;
+}
+
+.doc-modern ul {
+  padding-left: 1.5rem;
+}
+
+.doc-modern ul li {
+  margin-bottom: 0.75rem;
+}
+
+.doc-modern .underline {
+  text-decoration: underline;
+}
+
+.doc-modern .highlight {
+  background-color: #ffff00;
+  color: #1a1a1a;
+  padding: 0.1em 0.2em;
+}
+
+/* =====================================================
+   C++ CODE BLOCKS & SYNTAX HIGHLIGHTING
+   Page is fixed to light mode (see :root above), so these
+   are the only colors in play — no dark variant needed.
+   ===================================================== */
+pre {
+  background-color: #f5f5f5;
+  border-left: 4px solid #999;
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.92rem;
+  color: #2e2e2e;
+  border-radius: 4px;
+  margin: 1.5rem 0;
+}
+
+.bordered-code {
+  background: #ffffff;
+  border: solid gray;
+  border-width: .1em .1em .1em .8em;
+  padding: .2em .6em;
+  margin: 1rem 0;
+  overflow: auto;
+}
+
+code {
+  background-color: #eaeaea;
+  padding: 0.25em 0.4em;
+  font-family: 'Fira Code', monospace;
+  border-radius: 4px;
+  font-size: 0.95em;
+}
+
+.keyword   { color: #008800; font-weight: bold; }
+.operator  { color: #333333; }
+.string    { color: #aa5500; }
+.flow      { color: #008800; font-weight: bold; }
+.comment   { color: #888888; }
+.int       { color: #880000; }
+.float     { color: #880000; }
+.class     { color: #bb0066; font-weight: bold; }
+.public    { color: #997700; }
+.function  { color: #0066bb; }
+.typename  { color: #008800; }
+.type      { color: #333399; }

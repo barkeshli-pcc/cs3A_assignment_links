@@ -1,0 +1,87 @@
+@import url("{{ site.theme }}");
+
+/* Support for browser's native dark/light mode */
+:root {
+  color-scheme: light dark;
+}
+
+body { 
+  font-family: Roboto, sans-serif; 
+  background-color: rgb(238, 241, 245); 
+  padding: 40px; 
+}
+
+.container { 
+  max-width: 850px; 
+  margin: auto; 
+  background-color: rgb(255, 255, 255); 
+  padding: 30px; 
+  border-radius: 10px; 
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; 
+}
+
+h2 { 
+  text-align: left; 
+  font-size: 1.8em; 
+  margin-bottom: 25px; 
+}
+
+img { 
+  display: block; 
+  margin: 0px auto 20px; 
+  border-radius: 6px; 
+}
+
+p { 
+  margin-bottom: 16px; 
+}
+
+a { 
+  color: rgb(0, 119, 204); 
+  font-weight: bold; 
+}
+
+/* Table Styles */
+.assignment-table { 
+  table-layout: fixed; 
+  width: 100%; 
+  max-width: 700px;      /* Set max width to 500px */
+  margin-left: 0;        /* Align table to the left */
+  margin-right: auto;
+  border-collapse: collapse; /* For thin, clean borders */
+  border: 1px solid #ccc;
+}
+
+.assignment-table th, 
+.assignment-table td {
+  padding: 10px;
+  border: 1px solid #ccc;  /* Stylish thin border */
+  overflow-wrap: break-word; 
+}
+
+.assignment-table th:nth-child(1), .assignment-table td:nth-child(1) { width: 45%; }
+.assignment-table th:nth-child(2), .assignment-table td:nth-child(2) { width: 25%; }
+.assignment-table th:nth-child(3), .assignment-table td:nth-child(3) { width: 30%; }
+
+/* Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+  
+  .container {
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+
+  .assignment-table, 
+  .assignment-table th, 
+  .assignment-table td {
+    border-color: #444; /* Subtler border for dark mode */
+  }
+
+  a {
+    color: #4da3ff; /* Lighter blue for readability in dark mode */
+  }
+}

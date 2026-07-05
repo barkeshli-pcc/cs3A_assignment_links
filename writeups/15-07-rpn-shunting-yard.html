@@ -1,39 +1,108 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>Assignment: 15_07_rpn_shunting_yard</title>
-    <link rel="stylesheet" href="/cs3A_assignment_links/assets/css/style.css">
+<meta charset="UTF-8">
+<title>CS — Data Structures · Project: Expression Evaluator (Shunting Yard / RPN)</title>
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
-<p><strong>Step 1:</strong> Input</p>
-<p>input: a string containing an infix expression<br>output: a queue of (token) pointers to Operator and Operand objects</p>
-<p><strong>Step 2:</strong> Convert: (Shunting Yard)</p>
-<p>Input: a queue of token pointers to Operator and Operand objects representing an infix expression</p>
-<p>output: a queue of token pointers to Operator and Operand objects representing an postfix expression</p>
-<p><strong>Step 3:</strong> Evaluate (RPN)</p>
-<p>Input: a&nbsp;queue of token pointers to Operator and Operand objects representing an postfix expression</p>
-<p>output: a double number</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p><strong>RPN:</strong></p>
-<p>Write a function rpn that will take a queue of token pointers and returns a double.</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p><strong>Token, Number, Operator</strong></p>
-<p>Design a class Token with an integer _type to indicate what type of token it is: 1 for numbers, 2 for operators.</p>
-<p>Design two derived classes: Number and Operator.&nbsp;</p>
-<p>Number will have a double member variable named. _val, Operator will have a character _op to hold the operator.</p>
-<p>The operator will have a function evaluate() that takes two doubles and returns the resulting double value</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p><strong>Input Queue:</strong><span>&nbsp;</span>holds the inputted expression one token at a time:&nbsp;</p>
-<p>Queue&lt;Token*&gt; input_q</p>
-<p>&nbsp;</p>
-<p><strong>RPN Stack</strong>:</p>
-<p>Stack&lt;Token*&gt; rpn_stack will be used in the rpn function</p>
-<p><strong>rpn()</strong></p>
-<p>double rpn(Queue&lt;Token*&gt; input_q);</p>
-<p>takes in an input queue and returns the evaluation of the expression.</p>
+
+<h1>Shunting Yard / RPN</h1>
+<p><em>Shunting Yard and Reverse Polish Notation (RPN)</em></p>
+
+<h2>1. Overview</h2>
+<p>This project evaluates ordinary infix math expressions — the way you'd write them by hand, like <code>3 * (5 + 6 - X) / 9</code> — including parentheses, a fixed set of built-in named functions, and a single variable. The classic way to do this is in two stages: first reorder the expression into postfix (Reverse Polish Notation) using the shunting-yard algorithm, then evaluate the postfix form with a simple stack machine.</p>
+<p>You're given an expression already broken into a queue of typed tokens (numbers, operators, parentheses, function names) — turning a raw string like <code>"3*(5+6-X)/9"</code> into that token queue is not part of this project.</p>
+<p>Unlike some earlier projects, malformed input here is not just "rejected" — it must raise a specific, meaningful exception. Silently printing an error and continuing, or crashing, are both incorrect.</p>
+
+<h2>2. What It Must Accept / Do</h2>
+
+<h3>Token types</h3>
+<ul>
+<li>A <strong>number</strong> — a literal value.</li>
+<li>An <strong>operator</strong> — one of <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code>.</li>
+<li>A <strong>left parenthesis</strong> / <strong>right parenthesis</strong> — used for grouping, exactly as in ordinary math notation.</li>
+<li>A <strong>function</strong> — a named, built-in operation. Function names are not case-sensitive.</li>
+</ul>
+
+<h3>Precedence and associativity</h3>
+<p><code>+</code> and <code>-</code> share the lowest precedence; <code>*</code> and <code>/</code> bind tighter; <code>^</code> binds tighter still; a function call binds tighter than any operator. <strong>All operators — including <code>^</code> — are left-associative.</strong> This means <code>2 ^ 3 ^ 2</code> evaluates as <code>(2 ^ 3) ^ 2 = 64</code>, not the right-associative convention (<code>2 ^ (3 ^ 2) = 512</code>) some other languages use. This is a deliberate, testable property of this evaluator, not an oversight — don't "fix" it toward right-associativity.</p>
+
+<h3>Built-in functions</h3>
+<p>Each of the following takes exactly one argument, itself possibly a full sub-expression (e.g. <code>sin(x + 1)</code> is valid): <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cot</code>, <code>log</code> (base 10), <code>ln</code> (natural log), <code>abs</code>.</p>
+<p>One function takes zero arguments: <code>pi</code>, which evaluates to the constant <code>3.14159</code>.</p>
+<p>One special name represents <strong>the single variable</strong> this evaluator supports: whatever name you choose for it evaluates, at call time, to a runtime value supplied to the evaluation call — not to a stored or looked-up value. An expression that never references the variable simply ignores whatever value is supplied.</p>
+
+<h3>Multi-argument functions (open design challenge)</h3>
+<p>Add support for at least one function that takes <strong>two</strong> arguments, separated by a comma inside one set of parentheses — for example, <code>max(a, b)</code>, evaluating to the larger of its two argument values. Each argument may itself be an arbitrary sub-expression, e.g. <code>max(3 + 1, 2 * 5)</code>.</p>
+<p>This is not exercised by the autograder. It's included because it's a genuinely interesting extension of the pipeline you've already built, and there's real design room in how you choose to handle it — you're encouraged to work out your own approach rather than looking for "the" standard answer.</p>
+
+<h3>Error handling</h3>
+<ul>
+<li>A parenthesis mismatch — an unmatched right parenthesis with no corresponding left parenthesis, or a left parenthesis left over once the whole expression has been processed — must raise the provided missing-parenthesis exception. It must not just print a message and keep going.</li>
+<li>A division whose right-hand operand evaluates to zero must raise the provided divide-by-zero exception. It must not produce infinity, NaN, or a crash.</li>
+</ul>
+
+<h2>3. Where It Fits</h2>
+<pre>Infix token queue (already built — not this project's job)
+        |
+        v
+  Shunting Yard   -- reorders tokens into postfix, respecting
+        |             precedence, associativity, and parentheses
+        v
+Postfix token queue
+        |
+        v
+     RPN          -- evaluates postfix with a stack, given one
+        |             runtime value for the variable, if used
+        v
+   double result
+</pre>
+<p>Each stage only depends on the type of queue the previous stage produces — not on where the tokens originally came from.</p>
+
+<h2>4. Input/Output Contract</h2>
+
+<p>Basic precedence, no parentheses:</p>
+<pre>4 + 2 * 3   -->   10</pre>
+
+<p>Parentheses override default precedence:</p>
+<pre>(4 + 2) * 3   -->   18</pre>
+
+<p>Left-associativity, made concrete:</p>
+<pre>8 / 4 / 2   -->   1      (evaluated as (8 / 4) / 2, not 8 / (4 / 2))
+2 ^ 3 ^ 2   -->   64     (evaluated as (2 ^ 3) ^ 2, not 2 ^ (3 ^ 2))</pre>
+
+<p>A function call with a compound argument, and the single variable, evaluated with a supplied runtime value:</p>
+<pre>2 * X + 1     evaluated with X = 5   -->   11
+sin(X * 0)    evaluated with X = 7   -->   0</pre>
+
+<p>Error cases raise exceptions rather than producing a numeric result:</p>
+<pre>3 + (4 * 2          -->  raises the missing-parenthesis exception (unmatched "(")
+5 / 2)              -->  raises the missing-parenthesis exception (unmatched ")")
+4 / (2 - 2)         -->  raises the divide-by-zero exception</pre>
+
+<p>A well-formed multi-argument call, each argument itself a sub-expression:</p>
+<pre>max(3 + 1, 2 * 5)   -->   10</pre>
+
+<h2>5. Design</h2>
+<p>Three ideas carry this whole project:</p>
+<ul>
+<li><strong>Precedence-directed reordering.</strong> Walking the infix queue left to right, an operator only gets pushed onto a working stack once every higher-or-equal-precedence operator already sitting on that stack has first been moved to the output. This single rule, applied uniformly, is what turns infix into postfix — including handling parentheses (which simply reset what "already on the stack" means inside them).</li>
+<li><strong>Evaluating postfix with one stack.</strong> A number pushes itself. An operator or function pops however many operands it needs, computes a result, and pushes that result back — the same mechanism works whether it's a plus sign, a trig function, or (if you take on the challenge above) a two-argument function, as long as each one knows its own arity.</li>
+<li><strong>A comma is a boundary, not an operand or an operator.</strong> If you take on multi-argument functions: think about what a comma needs to trigger during the shunting-yard pass so that everything belonging to the current argument is fully resolved before the next argument begins — without disturbing the enclosing function call's own parentheses, which are still needed to know where the whole call ends.</li>
+</ul>
+<p>A good sign your evaluator is well-factored: the code that walks the postfix queue and evaluates it shouldn't need a special case for every individual function name — only for how many operands a token consumes and how it computes its result from them.</p>
+
+<h2>6. What You Are Building</h2>
+<ul>
+<li>Correct postfix conversion respecting the stated precedence, with every operator — including <code>^</code> — treated as left-associative.</li>
+<li>Correct handling of parentheses for grouping, including nested parentheses.</li>
+<li>Correct evaluation of every listed built-in function, including when its argument is itself a compound sub-expression.</li>
+<li>Correct evaluation of expressions that reference the single variable, given a runtime-supplied value.</li>
+<li>The missing-parenthesis exception raised for any parenthesis mismatch — unmatched close or leftover open.</li>
+<li>The divide-by-zero exception raised whenever a division's right-hand operand is zero.</li>
+<li><em>(Not autograded)</em> Correct evaluation of at least one two-argument function such as <code>max</code>, with comma-separated, independently-evaluated arguments.</li>
+</ul>
+
 </body>
 </html>

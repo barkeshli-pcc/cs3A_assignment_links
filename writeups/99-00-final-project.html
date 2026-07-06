@@ -85,6 +85,18 @@
 └─────────────────────────────────────────────┘
 </code></pre>
 
+  <h3>Memory Management</h3>
+  <p>Every time an equation is tokenized, you allocate a fresh set of <code>token</code> objects. It's easy to accidentally allocate <em>new</em> tokens again on a later pass instead of reusing the ones you already built — and since <code>plot</code> can re-run for every point, on every frame, while zooming or panning, that mistake compounds fast. If nothing ever deletes the old tokens, the program leaks memory the entire time it runs, even though it still looks like it's working correctly.</p>
+  <p>Two places to check carefully:</p>
+  <ul>
+    <li><strong>Re-tokenizing on equation change.</strong> Each time <code>set_info()</code> runs a new equation through the tokenizer and shunting yard, decide which object owns the <em>previous</em> queue of tokens, and make sure something deletes them before they're replaced.</li>
+    <li><strong>Re-evaluating the same equation every frame.</strong> Zooming and panning re-run the postfix queue through <code>rpn</code> for every point, every frame. This should only read the tokens you already built — it should never call <code>new</code> on a token just to evaluate it.</li>
+  </ul>
+ 
+  <div class="bordered-code">
+    <strong>Test for this directly:</strong> leave the program running and pan or zoom continuously for a minute or two, watching memory usage in Task Manager (Windows) or Activity Monitor (Mac). If memory climbs steadily and never levels off, you're leaking tokens somewhere in the pipeline above.
+  </div>
+ 
   <h3>Minimum Requirements</h3>
   <ol>
     <li><strong>History in the sidebar.</strong> When an equation is entered, it's added to the top of the history list.</li>

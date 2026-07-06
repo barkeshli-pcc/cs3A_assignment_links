@@ -77,8 +77,10 @@ private</span><span class="operator">:</span>
 <h3><strong>Handling Errors</strong></h3>
 <p>private function is_error() will check for error conditions (in this case _d==0) It simply returns the error state, it does not set _error. _error can be set like this:</p>
 <pre>    _error<span class="operator">=is_</span>error<span class="operator">();</span></pre>
-<p><span style="text-decoration: underline;">Any function that alters the denominator of the rational number will have to call&nbsp;is_error()&nbsp;to see if _error code must be set.</span></p>
+<p><span style="text-decoration: underline;">Any function that alters the denominator of the rational number will have to call&nbsp;is_error()&nbsp;to see if _error code must be set.</span> A function that only changes the numerator (such as set_num()) does not need to, since it cannot make the object invalid.</p>
+<p>Constructors that cannot possibly produce an invalid object (for example, the default constructor, or the one that takes a single whole number and always sets the denominator to 1) do not strictly need to call is_error(), but they must still explicitly initialize _error to 0 in the member-initializer list. Never leave _error uninitialized.</p>
 <p>All operators will have to call the CTOR to return their result. Therefore, if one of the operands is in _error, the operator must ensure the result will be as well.</p>
+<p><strong>Important:</strong> do not assume the arithmetic itself will naturally produce a zero denominator whenever an operand is invalid. For addition, subtraction, and multiplication this happens to work out, because the two denominators are multiplied together. For division, however, if only the second operand is invalid, the resulting denominator will not necessarily come out to zero on its own. Check is_error() on both operands explicitly, before doing any calculation, in every operator.</p>
 <p>Do NOT output error messages from inside any of class functions. Except the insertion operator will output "UNDEFINED" if the rational number is in _error.</p>
 <p>The calling function may call rational::error_description() to get a string containing the error message.</p>
 <p>Operators are friends of the class, not members of the class.</p>
@@ -94,70 +96,84 @@ private</span><span class="operator">:</span>
 <pre><span class="operator">[</span>A<span class="operator">] [</span>B<span class="operator">]</span>   e<span class="operator">[</span>X<span class="operator">]</span>it </pre>
 <p>When the user presses A or B, ask for a rational and input the new values of a or b.</p>
 <p>Continue this process until X is inputted.</p>
+<p>Make sure to test the case where <strong>B</strong> (not just A) becomes invalid before a division &mdash; this is the one case where an operator that doesn't explicitly check is_error() on both operands can silently produce a wrong, non-UNDEFINED result.</p>
 <p>&nbsp;</p>
 <h3><strong>Sample output:</strong></h3>
-<pre>A<span class="operator">:</span><span class="int"> 4</span><span class="operator">/</span><span class="int">1</span>    B<span class="operator">:</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5
-4</span><span class="operator">/</span><span class="int">1</span><span class="operator"> +</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 21</span><span class="operator">/</span><span class="int">5
-4</span><span class="operator">/</span><span class="int">1</span><span class="operator"> *</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 4</span><span class="operator">/</span><span class="int">5
-4</span><span class="operator">/</span><span class="int">1</span><span class="operator"> -</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 19</span><span class="operator">/</span><span class="int">5
-4</span><span class="operator">/</span><span class="int">1</span><span class="operator"> /</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 20</span><span class="operator">/</span><span class="int">1</span><span class="operator">
+<pre>A: 4/1    B: 1/5
+4/1 + 1/5 = 21/5
+4/1 * 1/5 = 4/5
+4/1 - 1/5 = 19/5
+4/1 / 1/5 = 20/1
 ============================================
 
-[</span>A<span class="operator">] [</span>B<span class="operator">]</span>   e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator"> 
-:</span> a
-A<span class="operator">:</span><span class="int"> 3</span><span class="operator">/</span><span class="int">4</span><span class="operator">
+[A] [B]   e[X]it 
+: a
+A: 3/4
 
-============================================</span>
-
-A<span class="operator">:</span><span class="int"> 3</span><span class="operator">/</span><span class="int">4</span>    B<span class="operator">:</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5
-3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> +</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 19</span><span class="operator">/</span><span class="int">20
-3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> *</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 3</span><span class="operator">/</span><span class="int">20
-3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> -</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 11</span><span class="operator">/</span><span class="int">20
-3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> /</span><span class="int"> 1</span><span class="operator">/</span><span class="int">5</span><span class="operator"> =</span><span class="int"> 15</span><span class="operator">/</span><span class="int">4</span><span class="operator">
 ============================================
 
-[</span>A<span class="operator">] [</span>B<span class="operator">]</span>   e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator"> 
-:</span> b
-B<span class="operator">:</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator">
-
-============================================</span>
-
-A<span class="operator">:</span><span class="int"> 3</span><span class="operator">/</span><span class="int">4</span>    B<span class="operator">:</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13
-3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> +</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span><span class="int"> 63</span><span class="operator">/</span><span class="int">52
-3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> *</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span><span class="int"> 18</span><span class="operator">/</span><span class="int">52
-3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> -</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span><span class="int"> 15</span><span class="operator">/</span><span class="int">52
-3</span><span class="operator">/</span><span class="int">4</span><span class="operator"> /</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span><span class="int"> 39</span><span class="operator">/</span><span class="int">24</span><span class="operator">
+A: 3/4    B: 1/5
+3/4 + 1/5 = 19/20
+3/4 * 1/5 = 3/20
+3/4 - 1/5 = 11/20
+3/4 / 1/5 = 15/4
 ============================================
 
-[</span>A<span class="operator">] [</span>B<span class="operator">]</span>   e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator"> 
-:</span> a
-A<span class="operator">:</span><span class="int"> 1</span><span class="operator">/</span><span class="int">0</span><span class="operator">
+[A] [B]   e[X]it 
+: b
+B: 6/13
 
-============================================</span>
-
-A<span class="operator">:</span> UNDEFINED    B<span class="operator">:</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span>
-UNDEFINED<span class="operator"> +</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span> UNDEFINED
-UNDEFINED<span class="operator"> *</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span> UNDEFINED
-UNDEFINED<span class="operator"> -</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span> UNDEFINED
-UNDEFINED<span class="operator"> /</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span> UNDEFINED<span class="operator">
 ============================================
 
-[</span>A<span class="operator">] [</span>B<span class="operator">]</span>   e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator"> 
-:</span> a
-A<span class="operator">:</span><span class="int"> 2</span><span class="operator">/</span><span class="int">5</span><span class="operator">
-
-============================================</span>
-
-A<span class="operator">:</span><span class="int"> 2</span><span class="operator">/</span><span class="int">5</span>    B<span class="operator">:</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13
-2</span><span class="operator">/</span><span class="int">5</span><span class="operator"> +</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span><span class="int"> 56</span><span class="operator">/</span><span class="int">65
-2</span><span class="operator">/</span><span class="int">5</span><span class="operator"> *</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span><span class="int"> 12</span><span class="operator">/</span><span class="int">65
-2</span><span class="operator">/</span><span class="int">5</span><span class="operator"> -</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> = -</span><span class="int">4</span><span class="operator">/</span><span class="int">65
-2</span><span class="operator">/</span><span class="int">5</span><span class="operator"> /</span><span class="int"> 6</span><span class="operator">/</span><span class="int">13</span><span class="operator"> =</span><span class="int"> 26</span><span class="operator">/</span><span class="int">30</span><span class="operator">
+A: 3/4    B: 6/13
+3/4 + 6/13 = 63/52
+3/4 * 6/13 = 18/52
+3/4 - 6/13 = 15/52
+3/4 / 6/13 = 39/24
 ============================================
 
-[</span>A<span class="operator">] [</span>B<span class="operator">]</span>   e<span class="operator">[</span>X<span class="operator">]</span>it<span class="operator"> 
-:</span> x
-Press<span class="operator"> &lt;</span>RETURN<span class="operator">&gt;</span> to close<span class="keyword"> this</span> window<span class="operator">...</span></pre>
+[A] [B]   e[X]it 
+: a
+A: 1/0
+
+============================================
+
+A: UNDEFINED    B: 6/13
+UNDEFINED + 6/13 = UNDEFINED
+UNDEFINED * 6/13 = UNDEFINED
+UNDEFINED - 6/13 = UNDEFINED
+UNDEFINED / 6/13 = UNDEFINED
+============================================
+
+[A] [B]   e[X]it 
+: a
+A: 2/5
+
+============================================
+
+A: 2/5    B: 6/13
+2/5 + 6/13 = 56/65
+2/5 * 6/13 = 12/65
+2/5 - 6/13 = -4/65
+2/5 / 6/13 = 26/30
+============================================
+
+[A] [B]   e[X]it 
+: b
+B: 1/0
+
+============================================
+
+A: 2/5    B: UNDEFINED
+2/5 + UNDEFINED = UNDEFINED
+2/5 * UNDEFINED = UNDEFINED
+2/5 - UNDEFINED = UNDEFINED
+2/5 / UNDEFINED = UNDEFINED
+============================================
+
+[A] [B]   e[X]it 
+: x
+Press &lt;RETURN&gt; to close this window...</pre>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>

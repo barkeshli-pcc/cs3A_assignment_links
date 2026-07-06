@@ -73,7 +73,8 @@
 
 | GitHub Assignment | Basic Test | Writeup |
 |-------------------|------------|---------|
-| Readme Ch 10, 11 | | [README CH 10, 11](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/read-me-chapter-10-11.html) |
+| Readme Ch 10, 11 | | [README CH 10, 11](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/10-read-me-chapter-10-11.html) |
+| Error Handling | | [Error Handling](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/10_error_handling_document)|
 | [10-p6 counter_type](https://classroom.github.com/a/QE5CLJ1-) | [basic_test.cpp](basic_tests/10-p6-counter_type/basic_test..cpp) | [10-e3-counter-type](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/10-e3-counter-type.html) |
 | [10-p6 moms_counter](https://classroom.github.com/a/noDza1ZR) | [basic_test.cpp](basic_tests/10_p6_moms_counter/basic_test.cpp) | [10-p6-moms-counter](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/10-p6-moms-counter.html) |
 | [11-p2 rational](https://classroom.github.com/a/ZNfu6rgz) | [basic_test.cpp](basic_tests/11-p2-rational/basic_test.cpp) | [11-p2-rational](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/11-p2-rational.html) |

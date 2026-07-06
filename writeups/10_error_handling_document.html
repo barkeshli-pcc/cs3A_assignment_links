@@ -1,0 +1,30 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Error Handling Without Exceptions</title>
+    <link rel="stylesheet" href="/cs3A_assignment_links/assets/css/style.css">
+</head>
+<body>
+<h2 style="text-align: center;"><strong>Error Handling Without Exceptions</strong></h2>
+
+<h3>You already know this idiom</h3>
+<p>You've used this pattern before, without naming it:</p>
+<pre>if (!(cin &gt;&gt; x)) {
+    cout &lt;&lt; "input failed" &lt;&lt; endl;
+}</pre>
+<p><code>cin</code> doesn't throw an exception when input fails. It quietly sets an internal flag, and it's on <em>you</em> to check it. C's old <code>errno</code> variable works the same way. We haven't covered exceptions yet, so our classes (Rational, MCounter, and similar) use this exact same idiom: a hidden flag, and functions to check and clear it.</p>
+
+<h3>The three functions</h3>
+<p><strong>is_error()</strong> &mdash; checks whether the object's data is currently in a bad state (e.g. denominator is 0, count is too big). Recomputes the answer every time it's called; doesn't just remember the past.</p>
+<p><strong>error()</strong> &mdash; returns the flag that was set the last time something went wrong. Doesn't recompute anything, just reports the stored state.</p>
+<p><strong>reset()</strong> &mdash; clears the error flag and puts the object back to a safe, default state (like clearing <code>cin</code> after a bad input).</p>
+
+<h3>The one rule that matters most</h3>
+<p><strong>Nothing forces you to check for an error.</strong> Unlike an exception, a forgotten error check will not crash your program or stop execution &mdash; it will silently let you keep using a broken object.</p>
+<pre>a.add_1000();
+a.add_1000();   //if 'a' is already in error, you must check first!
+b = a + b;      //using 'a' here without checking error() is a bug</pre>
+<p>Always check <code>error()</code> before you trust an object's value or use it in another operation. This is exactly the discipline exceptions were invented to remove &mdash; you'll see that once we get there.</p>
+
+</body>
+</html>

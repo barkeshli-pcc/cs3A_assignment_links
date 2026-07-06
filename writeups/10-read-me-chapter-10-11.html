@@ -26,7 +26,12 @@
 <li>A private member variable _error and four functions is_error(), error(), reset() and error_description() manage the error handing in all objects:&nbsp;</li>
 <li>int or bool private member variable _error: This variable will be set when the class enters an error state.
 <ul>
-<li>In every constructor, mutator, and input function, you will call the is_error() function to check for errors and will set the _error variable to the appropriate value: _error = is_error();</li>
+<li>In every constructor, mutator, and input function <strong>that could affect the object's error state</strong>, you will call the is_error() function to check for errors and will set the _error variable to the appropriate value: _error = is_error();
+<ul>
+<li>Not every function needs to call is_error() &mdash; only the ones that touch a member variable that the error check actually depends on. For example, in the Rational class, is_error() only looks at the denominator, so any function that alters the denominator (a constructor that sets it, set_denom(), set()) must call is_error(). A function that only changes the numerator (set_num()) does not, since it cannot possibly make the object invalid.</li>
+<li>A constructor that cannot possibly produce an invalid object (for example, one that only takes a single whole number and always sets the denominator to 1) does not strictly need to call is_error(), but it must still explicitly initialize _error to 0 in its initializer list. Never leave _error uninitialized.</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>is_error() will check for errors in the object and return an int (or bool) corresponding to the error state it discovers: 0 for no error.</li>

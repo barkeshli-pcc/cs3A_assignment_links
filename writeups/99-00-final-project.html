@@ -1,41 +1,413 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>Assignment: 99_00_final_project</title>
-    <link rel="stylesheet" href="/cs3A_assignment_links/assets/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SFML Particle Simulation — Architecture Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap');
+
+  /* ── PALETTE pulled from the actual source code ──────────────────
+     sf::Color(105,105,105)   → sidebar bg       #696969
+     sf::Color::Yellow        → sidebar text      #ffff00
+     sf::Color::Green         → main text label   #00ff00
+     sf::Color::Red           → mouse dot         #ff0000
+     sf::Color(192,192,192)   → silver (comment)  #c0c0c0
+  ────────────────────────────────────────────────────────────────── */
+  :root {
+    --bg:        #111318;
+    --surface:   #1c1f28;
+    --border:    #2e3140;
+    --text:      #dde0ee;
+    --muted:     #6e738f;
+    --code-bg:   #0d0f15;
+
+    /* class colours — from the SFML source colours */
+    --animate:   #a78bfa;   /* purple  — top layer  */
+    --system:    #34d399;   /* green   — sf::Color::Green */
+    --particle:  #fbbf24;   /* yellow  — sf::Color::Yellow */
+    --sidebar:   #f87171;   /* red     — sf::Color::Red */
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* ── HEADER ─────────────────────────────────────────────────── */
+  header {
+    padding: 52px 40px 44px;
+    border-bottom: 1px solid var(--border);
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--animate);
+    margin-bottom: 14px;
+  }
+  h1 { font-size: clamp(26px, 4vw, 42px); font-weight: 700; line-height: 1.15; margin-bottom: 14px; }
+  h1 span { color: var(--animate); }
+  .subtitle { color: var(--muted); font-size: 16px; max-width: 600px; }
+
+  /* ── LAYOUT ─────────────────────────────────────────────────── */
+  main { max-width: 980px; margin: 0 auto; padding: 0 40px 80px; }
+  section { margin-top: 64px; }
+
+  h2 {
+    font-size: 20px; font-weight: 700; margin-bottom: 22px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  h2::before {
+    content: ''; display: inline-block;
+    width: 4px; height: 20px;
+    background: var(--animate); border-radius: 2px; flex-shrink: 0;
+  }
+  p { margin-bottom: 12px; }
+  p:last-child { margin-bottom: 0; }
+  code {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    background: var(--code-bg); border: 1px solid var(--border);
+    padding: 1px 6px; border-radius: 4px; color: var(--system);
+  }
+
+  /* ── LAYER CARDS ─────────────────────────────────────────────── */
+  .layer-stack { display: flex; flex-direction: column; gap: 4px; margin-top: 24px; }
+  .layer {
+    border-radius: 10px; padding: 22px 26px;
+    border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .layer::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  }
+  .layer-animate  { background: #18152a; } .layer-animate::before  { background: var(--animate); }
+  .layer-system   { background: #0f1f1a; } .layer-system::before   { background: var(--system);  }
+  .layer-particle { background: #1e1a0e; } .layer-particle::before { background: var(--particle);}
+  .layer-sidebar  { background: #1e1010; } .layer-sidebar::before  { background: var(--sidebar); }
+
+  .layer-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.04em; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .layer-title .files { font-size: 11px; font-weight: 400; color: var(--muted); }
+  .tag {
+    font-size: 10px; padding: 2px 8px; border-radius: 20px;
+    font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .tag-sfml { background: #1e1740; color: var(--animate); }
+  .tag-sim  { background: #0b1e18; color: var(--system);  }
+  .tag-ent  { background: #281f08; color: var(--particle);}
+  .tag-ui   { background: #281010; color: var(--sidebar); }
+
+  .pills { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    padding: 3px 9px; border-radius: 6px;
+    background: var(--code-bg); color: var(--muted); border: 1px solid var(--border);
+  }
+
+  /* ── DIAGRAM  ────────────────────────────────────────────────── */
+  .diagram-wrap {
+    background: var(--code-bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 30px 28px; margin-top: 24px; overflow-x: auto;
+  }
+  pre {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    line-height: 1.55; color: #b0b4cc; white-space: pre;
+  }
+  .ca { color: var(--animate);  }
+  .cs { color: var(--system);   }
+  .cp { color: var(--particle); }
+  .cb { color: var(--sidebar);  }
+  .cm { color: var(--muted);    }
+  .cd { color: #3a3f55;         }   /* dim — box drawing */
+
+  /* ── CALLOUT ─────────────────────────────────────────────────── */
+  .callout {
+    background: #141720; border: 1px solid var(--border);
+    border-left: 4px solid var(--system);
+    border-radius: 10px; padding: 18px 22px; margin-top: 22px; font-size: 15px;
+  }
+  .callout strong { color: var(--system); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  /* ── REUSE GRID ──────────────────────────────────────────────── */
+  .reuse-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+  @media (max-width: 600px) { .reuse-grid { grid-template-columns: 1fr; } }
+
+  .reuse-card { border-radius: 10px; border: 1px solid var(--border); padding: 20px; background: var(--surface); }
+  .reuse-card h3 { font-size: 13px; font-weight: 700; margin-bottom: 10px; font-family: 'JetBrains Mono', monospace; }
+  .keep h3 { color: var(--system);   }
+  .swap h3 { color: var(--particle); }
+  .reuse-card ul { list-style: none; }
+  .reuse-card ul li {
+    font-size: 14px; padding: 5px 0;
+    border-bottom: 1px solid var(--border); color: var(--muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .reuse-card ul li:last-child { border-bottom: none; }
+  .keep ul li::before { content: '✓'; color: var(--system);   font-size: 12px; flex-shrink:0; }
+  .swap ul li::before { content: '⟳'; color: var(--particle); font-size: 12px; flex-shrink:0; }
+
+  /* ── STEPS ───────────────────────────────────────────────────── */
+  .steps { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+  .step { display: flex; gap: 18px; align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; }
+  .step-num {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--animate); color: #fff; font-weight: 700; font-size: 14px;
+    display: flex; align-items: center; justify-content: center; margin-top: 2px;
+  }
+  .step-body h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .step-body p  { font-size: 14px; color: var(--muted); margin: 0; }
+
+  /* ── FOOTER ──────────────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--border); text-align: center;
+    padding: 28px; color: var(--muted); font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+</style>
 </head>
 <body>
-<h2 style="text-align: center;"><strong>Final Project</strong></h2>
-<p>NOTE:</p>
-<p>Remember, the project is to be submitted by the date and time. Late submissions will lose 10%</p>
-<p>&nbsp;</p>
-<p>NOTE:&nbsp;</p>
-<p>Code must be FULLY COMMENTED.</p>
-<p>Include a COMPLETE TEST with your project.</p>
-<p>You must appear on the time specified (see my announcement) to present your project. Failure to do so will earn a zero on the final.</p>
-<p>_______________________________________________________________</p>
-<p>Create a graphing calculator.</p>
-<p>The calculator will take an expression made up of numbers, instances of a single variable, Trig functions, in addition to functions taking more than one argument such as Max(a, b)</p>
-<p>The calculator will draw a graph of the function for a given interval and given increments:</p>
-<p class="p1"><span class="s1"><strong>queue&lt;Point&gt; PlotExpression (string expression, double low, double high, double increments);</strong></span></p>
-<p class="p1">This function takes an expression as a string, the high and low values for the function variable and the increments and produces a queue of points that represent the graph.</p>
-<p class="p1">&nbsp;Make sure you handle:</p>
-<ul>
-<li class="p1">Functions (specially, the Trig functions)</li>
-<li class="p1">The unary operator</li>
-</ul>
-<p class="p1"><strong>Hints:</strong></p>
-<p class="p1"><span class="s1">Shunting Yard Algorithm:</span></p>
-<p class="p1"><span class="s1"> Handing Variables:&nbsp;</span></p>
-<p class="p1"><span class="s1">variables are just like numbers. So, When you see a variable, push into output queue.</span></p>
-<p class="p2">&nbsp;</p>
-<p class="p1"><span class="s1">Handling Functions:&nbsp;</span></p>
-<p class="p1"><span class="s1">Functions are like operators with highest precedence:</span></p>
-<p class="p1"><span class="s1">5*(Max(x,4) + 6) &nbsp;-&gt;&gt; 5 x 4 Max 6 + *&nbsp;</span></p>
-<p class="p1">&nbsp;</p>
-<p class="p1"><span class="s1"><strong>Notes:</strong> </span></p>
-<p class="p1"><span class="s1">Follow all the design guidelines discussed in class for the Shunting Yard algorithm, Evaluation algorithm etc.</span></p>
-<p class="p1"><span class="s1">No Test = No Score: This project is meaningless without complete and accurate testing.</span></p>
-<p class="p1">&nbsp;</p>
+
+<header>
+  <div class="eyebrow">CS / SFML Project — Architecture Overview</div>
+  <h1>SFML Particle Simulation<br><span>Bird's-Eye Architecture</span></h1>
+  <p class="subtitle">What each class does, how they talk to each other, and why this design makes future projects much easier to build.</p>
+</header>
+
+<main>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <section>
+    <h2>The Big Idea</h2>
+    <p>The project separates three very different concerns into three distinct layers. Each layer has one job and one job only. This is what makes the code readable, maintainable, and — most importantly — <strong>reusable</strong>.</p>
+    <p>Think of it like a restaurant: the <strong>dining room</strong> (animate) deals with the customers. The <strong>kitchen manager</strong> (System) coordinates the cooks. The <strong>individual cooks</strong> (Particle) each handle their own dish. The kitchen manager never goes to the dining room, and the dining room never touches the stove.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <section>
+    <h2>The Three Layers</h2>
+    <div class="layer-stack">
+
+      <div class="layer layer-animate">
+        <div class="layer-title">
+          <span class="ca">animate</span>
+          <span class="files">animate.h / animate.cpp</span>
+          <span class="tag tag-sfml">SFML Shell</span>
+        </div>
+        <p>The <strong>only</strong> class that knows SFML exists. It creates the window, runs the game loop, polls keyboard/mouse events, and controls frame rate. Nothing below this layer needs to know what graphics library is being used.</p>
+        <p>Every frame does exactly three things: <code>processEvents()</code> → <code>update()</code> → <code>render()</code>.</p>
+        <div class="pills">
+          <span class="pill">Window creation</span><span class="pill">Game loop</span>
+          <span class="pill">Event polling</span><span class="pill">Frame timing</span>
+          <span class="pill">clear / draw / display</span><span class="pill">Events → command int</span>
+        </div>
+      </div>
+
+      <div class="layer layer-system">
+        <div class="layer-title">
+          <span class="cs">System</span>
+          <span class="files">system.h / system.cpp</span>
+          <span class="tag tag-sim">Simulation Manager</span>
+        </div>
+        <p>Owns a <code>vector&lt;Particle&gt;</code> and manages the simulation as a whole. Receives a simple integer command from <code>animate</code> and decides what forces to apply. No knowledge of windows, events, or frame timing.</p>
+        <div class="pills">
+          <span class="pill">Owns all Particles</span><span class="pill">Step(command)</span>
+          <span class="pill">Apply forces</span><span class="pill">Delegates Draw()</span>
+        </div>
+      </div>
+
+      <div class="layer layer-particle">
+        <div class="layer-title">
+          <span class="cp">Particle</span>
+          <span class="files">particle.h / particle.cpp</span>
+          <span class="tag tag-ent">Physics Entity</span>
+        </div>
+        <p>Fully self-contained. Knows its own position, velocity, acceleration, mass, and color. Can move itself (Euler integration), bounce off walls, detect collisions, and draw itself when handed a window reference.</p>
+        <div class="pills">
+          <span class="pill">pos / velocity / acc / mass</span><span class="pill">Move(force)</span>
+          <span class="pill">Wall bouncing</span><span class="pill">ElasticCollision()</span><span class="pill">Draw(window)</span>
+        </div>
+      </div>
+
+      <div class="layer layer-sidebar">
+        <div class="layer-title">
+          <span class="cb">Sidebar</span>
+          <span class="files">sidebar.h / sidebar.cpp</span>
+          <span class="tag tag-ui">UI Utility</span>
+        </div>
+        <p>A standalone display panel. <code>animate</code> owns it and writes to named slots via <code>sidebar[SB_KEY_PRESSED] = "..."</code>. Completely decoupled from the simulation — neither System nor Particle knows it exists.</p>
+        <div class="pills">
+          <span class="pill">operator[]</span><span class="pill">draw(window)</span><span class="pill">Display-only</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <section>
+    <h2>Class Relationship Diagram</h2>
+    <p>Arrows show ownership and method calls. SFML only appears at the very top — the only thing crossing downward is a <code>RenderWindow&amp;</code> reference passed in for drawing.</p>
+
+    <div class="diagram-wrap"><pre>
+<span class="ca">┌─────────────────────────────────────────────────────────────────────┐
+│                            animate                                  │
+│                                                                     │
+│   run()                                                             │
+│    ├─ processEvents() ──► translates input to command (int)         │
+│    ├─ update()        ──► system.Step(command)                      │
+│    └─ render()        ──► window.clear() / Draw() / display()       │
+│                                                                     │
+│   OWNS ──► ┌──────────┐    ┌───────────┐    ┌──────────────────┐   │
+│            │  System  │    │  Sidebar  │    │  RenderWindow    │   │
+│            └────┬─────┘    └───────────┘    └──────────────────┘   │
+└─────────────────┼───────────────────────────────────────────────────┘</span>
+                  <span class="cm">│</span>
+                  <span class="cm">│  window& passed as parameter into Draw()</span>
+                  <span class="cm">▼</span>
+<span class="cs">┌─────────────────────────────────────────────────────────────────────┐
+│                            System                                   │
+│                                                                     │
+│   Step(command)                                                     │
+│    └─ for each Particle:                                            │
+│        ├─ particle[i].ApplyForce( Vector(-5,0) / Vector(5,0) )      │
+│        └─ particle[i].Move( Vector(0, 0.15) )   ← gravity          │
+│                                                                     │
+│   Draw(window&)                                                     │
+│    └─ for each Particle:                                            │
+│        └─ particle[i].Draw(window)                                  │
+│                                                                     │
+│   vector&lt;Particle&gt;                                                 │
+│   ┌─────────┐   ┌─────────┐   ┌─────────┐   ┌─────────┐           │
+│   │  P[ 0 ] │   │  P[ 1 ] │   │  P[ 2 ] │   │  P[ n ] │  ...      │
+│   └────┬────┘   └────┬────┘   └────┬────┘   └────┬────┘           │
+└────────┼─────────────┼─────────────┼──────────────┼────────────────┘</span>
+         <span class="cm">│             │             │              │</span>
+         <span class="cm">└─────────────┴──────┬──────┴──────────────┘</span>
+                              <span class="cm">│  each Particle is self-contained</span>
+                              <span class="cm">▼</span>
+<span class="cp">┌─────────────────────────────────────────────────────────────────────┐
+│                           Particle                                  │
+│                                                                     │
+│   DATA:  pos  velocity  acc  mass  color                            │
+│                                                                     │
+│   Move(appliedForce)                                                │
+│    ├─ acc      += force / mass                                      │
+│    ├─ velocity += acc                                               │
+│    ├─ pos      += velocity                                          │
+│    └─ bounce if hitting walls (flip velocity component)             │
+│                                                                     │
+│   ApplyForce(f)          ──► acc += f                               │
+│   Collided(other)        ──► bool  (distance check)                 │
+│   ElasticCollision(other)──► update velocity from mass ratio        │
+│   Draw(window&)          ──► draw sf::CircleShape at pos            │
+└─────────────────────────────────────────────────────────────────────┘</span>
+
+<span class="cd">  Dependency direction:   animate  ──►  System  ──►  Particle</span>
+<span class="cd">  SFML boundary:          animate owns the window.</span>
+<span class="cd">                          window& is the only SFML thing passed downward.</span>
+<span class="cd">                          System and Particle never create or manage a window.</span>
+</pre></div>
+
+    <div class="callout">
+      <strong>THE KEY INSIGHT:</strong>&nbsp; The only thing that crosses the layer boundary is <code>sf::RenderWindow&amp;</code>, passed as a parameter to <code>Draw()</code>. <code>System</code> and <code>Particle</code> contain zero window-management code — they just accept a reference when it's time to render. This single seam is what makes the whole design swappable.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <section>
+    <h2>Reusing This Skeleton for New Projects</h2>
+    <p>Because each layer has a single clear responsibility, you can build a completely different simulation by replacing only the bottom two layers and leaving the SFML plumbing untouched.</p>
+
+    <div class="reuse-grid">
+      <div class="reuse-card keep">
+        <h3>✓ Keep As-Is</h3>
+        <ul>
+          <li>animate.h / animate.cpp</li>
+          <li>sidebar.h / sidebar.cpp</li>
+          <li>constants.h (adjust sizes)</li>
+          <li>The game loop structure</li>
+          <li>Event handling skeleton</li>
+          <li>The command integer pattern</li>
+        </ul>
+      </div>
+      <div class="reuse-card swap">
+        <h3>⟳ Replace With Your Own</h3>
+        <ul>
+          <li>System → Flock, BallPit, Grid …</li>
+          <li>Particle → Bird, Ball, Cell, Agent …</li>
+          <li>Your own physics / rules logic</li>
+          <li>Your own Draw() per entity</li>
+          <li>Your own Step() per simulation</li>
+          <li>New sidebar labels for your data</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:24px; border-left-color: var(--particle);">
+      <strong>THE CONTRACT (never changes):</strong><br><br>
+      <code>system.Step(int command)</code> — advance the simulation one frame<br><br>
+      <code>system.Draw(sf::RenderWindow&amp; window)</code> — draw everything to the window<br><br>
+      As long as your new manager class implements these two methods with these exact signatures, <code>animate</code> doesn't care what's inside. You never touch SFML directly in your simulation code.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <section>
+    <h2>Starting a New Project — Step by Step</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Copy the skeleton files</h3>
+          <p>Copy <code>animate.h/.cpp</code>, <code>sidebar.h/.cpp</code>, and <code>constants.h</code> into your new project. These never need to change.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Design your entity class</h3>
+          <p>Create <code>Bird</code>, <code>Ball</code>, <code>Cell</code>, etc. Give it <code>Move()</code> and <code>Draw(sf::RenderWindow&amp;)</code>. All drawing stays inside this class. This replaces <code>Particle</code>.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Design your manager class</h3>
+          <p>Create <code>Flock</code>, <code>Grid</code>, etc. Hold a <code>vector</code> of your entities. Implement <code>Step(int command)</code> and <code>Draw(sf::RenderWindow&amp;)</code>. This replaces <code>System</code>.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Plug into animate</h3>
+          <p>In <code>animate.h</code>, swap <code>#include "system.h"</code> for your manager's header and change the member variable type. Everything else — the loop, events, sidebar — just works.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Wire up keyboard commands (optional)</h3>
+          <p>The <code>command</code> int already flows from key events into <code>Step(command)</code>. Add new key cases in <code>processEvents()</code>, handle them in your own <code>Step()</code>. No SFML code needed in your simulation layer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>SFML Particle Simulation &nbsp;·&nbsp; Architecture Reference &nbsp;·&nbsp; For student use</footer>
+
 </body>
 </html>

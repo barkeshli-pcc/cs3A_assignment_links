@@ -105,6 +105,7 @@
 | GitHub Assignment | Basic Test | Writeup |
 |-------------------|------------|---------|
 | [start_SFML](https://classroom.github.com/a/aSSkyzPk) | - | - |
+| animate architecture | | [architecture](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/15-dot-animate-big-picture.html)|
 | [bouncing bubbles](https://classroom.github.com/a/LxZMA8mY) | - | [15-dot-03-bouncing-bubbles](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/15-dot-03-bouncing-bubbles.html) |
 | [bouncing shapes](https://classroom.github.com/a/go1Mz8Lr) | - | [15-05-bouncing-shapes](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/15-05-bouncing-shapes.html) |
 {: .assignment-table}

@@ -1,8 +1,10 @@
+<link rel="stylesheet" type="text/css" href="style.css" />
+
 # Graphing Calculator
 
-**Student:** {Student Name}
-**Course:** CS003A
-**Semester:** {Semester and Year}
+**Student:** {Student Name}</BR>
+**Course:** CS003A</BR>
+**Semester:** {Semester and Year}</BR>
 
 ---
 

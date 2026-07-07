@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" href="/cs3A_assignment_links/assets/css/style.css">
 
 # Graphing Calculator
 

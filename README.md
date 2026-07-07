@@ -128,6 +128,6 @@
 
 | GitHub Assignment | Basic Test | Writeup |
 |-------------------|------------|---------|
-| README.MD | | [README.MD]( ../cs3A_assignment_links/writeups/99-00-final-project-read-me.md)|
+| README.MD | | [README.MD]( ../cs3A_assignment_links/writeups/99-00-final-project-read-me.html)|
 | [final_project](https://classroom.github.com/a/cinAbsYq) | - | [99-00-final-project](https://barkeshli-pcc.github.io/cs3A_assignment_links/writeups/99-00-final-project.html) |
 {: .assignment-table}
